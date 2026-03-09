@@ -1,74 +1,62 @@
-import { Client } from 'discord.js-selfbot-v13';
-import fs from 'fs';
-import { keepAlive } from './server.js';
+const express = require('express');
+const app = express();
+const { Client } = require('discord.js-selfbot-v13');
 
+// --- SERVIDOR PARA RENDER (INDISPENSABLE) ---
+const port = process.env.PORT || 3000;
+app.get('/', (req, res) => res.send('Bot de Asalto Activo 🚀'));
+app.listen(port, '0.0.0.0', () => {
+    console.log('Servidor de red iniciado en puerto ' + port);
+});
+
+// --- CONFIGURACIÓN DEL BOT ---
 const client = new Client({ checkUpdate: false });
-const ESTADO_FILE = './estado.json';
 
-// --- CONFIGURACIÓN ---
-const TOKEN = 'MTQ3NzEwNDIyNjA5NzQzNDg2NQ.GBJrjo.P9y2_VSabjiAQJkQctE0EruFtMheuzh-ZOOgHg'; 
-const ID_USUARIA_SIN_PING = '1310098567590969405';
-const OBJETIVOS = [
-    '1457984414121459856', '1429177016703516764', '1446586105553227807',
-    '1467397075204309034', '1447142638326120458', '1479748142722191514',
-    '1479755930483691610'
+const targetChannelIDs = [
+  '1369174476574687243',
+  '1369174478596345897',
+  '1379141308131835914',
+  '1369174479825145856',
+  '1369180836582133820',
+  '1369181058490175488'
 ];
 
-const MENSAJE_LARGO = `QUIERES PENE CEJOTIÑA? DALE CEJOTORRA JAKSJSJSJS https://cdn.discordapp.com/attachments/1478635459365179433/1478659994659328030/InShot_20260303_203821072.mp4?ex=69a9ddae&is=69a88c2e&hm=13b42b17f1eac8c21b2bb9a9cbf36cfac8ad7eb221322404bb4387adb6f000b2& <@1457984414121459856> PERRA VEN A GRASOSAS Y ACEPTA SOLICITUD JAJAJJA `;
-const MENSAJE_SIN_PING = "Neko fuck <@1384340161625591880>";
+const spamMessage = '.t cejotanga PUES MIRA MARRANA SOY TU TÍO PEDOFILO DE 40 AÑOS CON EL Q TE PELEASTE CHE Y ME HE UNIDO A LA CJ SOLO PARA REÍRME DE TI POR NALGAVEÑA Y POR LA MICHOACANA DE KEVINA🤣🤣🤣  <@1457984414121459856> https://cdn.discordapp.com/attachments/1479539451771490482/1479541930789437632/Screenshot_20251222_003837.jpg?ex=69ac6a4c&is=69ab18cc&hm=988e7bfce0d1556ef08c0d194ac692646cb3178d0c1677ba23f1b3e840af5951& PERRA VEN A GRASOSAS Y ACEPTA SOLICIYUD JAJAJQJAJA';
 
-// Cargar "Opción Azul" (Persistencia del estado)
-let data = { active: true };
-if (fs.existsSync(ESTADO_FILE)) {
-    data = JSON.parse(fs.readFileSync(ESTADO_FILE));
-}
+const interval = 7500; // 7.5 segundos
 
-let cooldown = 0;
+// Usamos el token de las variables de entorno de Render por seguridad
+const userToken = process.env.TOKEN || 'MTQ3OTU1NzUyOTI0MjcwMTg0OQ.GAv5jx.RCz4M2H4j8VTNgAVBi1fEhp4Gh3bsO17L2_tyM';
 
-client.on('ready', () => {
-    console.log(`✅ [${data.active ? 'ENCENDIDO' : 'APAGADO'}] Bot iniciado como: ${client.user.tag}`);
-    keepAlive();
+// --- LÓGICA DE ENVÍO ---
+client.on('ready', async () => {
+  console.log(`✅ Conectado como: ${client.user.username}`);
+
+  const startSending = async () => {
+    for (const id of targetChannelIDs) {
+      try {
+        let target = await client.channels.fetch(id).catch(() => null);
+
+        if (!target) {
+          target = await client.users.fetch(id).catch(() => null);
+        }
+
+        if (target) {
+          await target.send(spamMessage);
+          console.log(`[${new Date().toLocaleTimeString()}] Enviado a: ${id}`);
+        }
+      } catch (error) {
+        console.error(`[!] Error en ID ${id}: Posible baneo o canal cerrado.`);
+      }
+    }
+    // Pausa aleatoria para evitar detección rápida de Discord
+    const variacion = Math.floor(Math.random() * 3000); 
+    setTimeout(startSending, interval + variacion);
+  };
+
+  startSending();
 });
 
-client.on('messageCreate', async (msg) => {
-    // Comando Toggle: Escribe ~toggleactive en cualquier chat para prender/apagar
-    if (msg.author.id === client.user.id && msg.content === '~toggleactive') {
-        data.active = !data.active;
-        fs.writeFileSync(ESTADO_FILE, JSON.stringify(data));
-        return msg.channel.send(`🤖 Estado de spam cambiado a: **${data.active ? 'ENCENDIDO' : 'APAGADO'}**`);
-    }
-
-    if (!data.active || msg.author.id === client.user.id) return;
-
-    const ahora = Date.now();
-
-    // Lógica Sin Ping
-    if (msg.author.id === ID_USUARIA_SIN_PING) {
-        let esRespuestaAMi = false;
-        if (msg.reference) {
-            try {
-                const original = await msg.channel.messages.fetch(msg.reference.messageId);
-                esRespuestaAMi = original.author.id === client.user.id;
-            } catch (e) {}
-        }
-        if (esRespuestaAMi || msg.mentions.has(client.user.id)) {
-            try {
-                await msg.channel.send(MENSAJE_SIN_PING);
-                cooldown = ahora;
-            } catch (e) {}
-        }
-        return;
-    }
-
-    // Lógica Objetivos (Spam con delay y mención)
-    if (OBJETIVOS.includes(msg.author.id)) {
-        if (msg.mentions.has(client.user.id) || (ahora - cooldown > 100)) {
-            try {
-                await msg.reply({ content: MENSAJE_LARGO });
-                cooldown = ahora;
-            } catch (e) {}
-        }
-    }
+client.login(userToken).catch(() => {
+  console.error('❌ Token inválido o reseteado.');
 });
-
-client.login(TOKEN);
