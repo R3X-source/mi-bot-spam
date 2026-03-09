@@ -1,7 +1,7 @@
 {
   "name": "bot-spam-24-7",
   "version": "1.0.0",
-  "type": "module",
+  "type": "commonjs",
   "main": "index.js",
   "dependencies": {
     "discord.js-selfbot-v13": "^3.4.4",
