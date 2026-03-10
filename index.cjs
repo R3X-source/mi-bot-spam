@@ -1,12 +1,16 @@
-
 const { Client } = require('discord.js-selfbot-v13');
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('🛡️ V35 SAFE-TITANIUM ONLINE 🛡️'));
+app.get('/', (req, res) => res.send('🛡️ V35.1 FIX ONLINE 🛡️'));
 app.listen(process.env.PORT || 3000);
 
+// Esto es lo que evita que la RAM explote (Error Heap out of memory)
 if (global.gc) {
-    setInterval(() => { try { global.gc(); } catch (e) {} }, 10000);
+    setInterval(() => { 
+        try { 
+            global.gc(); 
+        } catch (e) {} 
+    }, 10000); // Limpia cada 10 segundos
 }
 
 const generarBypass = () => `\n\u200b [${Math.floor(Math.random() * 9999)}] ${Date.now().toString().slice(-4)}`;
@@ -26,7 +30,7 @@ const msgsCortos = [
 const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4].filter(t => t);
 
 tokens.forEach((token, i) => {
-    // Eliminamos el bloque makeCache problemático
+    // SIN BLOQUES DE CACHE QUE ROMPAN EL INICIO
     const client = new Client({ checkUpdate: false });
 
     const iniciarBot = () => {
@@ -34,9 +38,9 @@ tokens.forEach((token, i) => {
     };
 
     client.on('ready', () => {
-        console.log(`✅ BOT ${i+1} V35 ONLINE`);
+        console.log(`✅ BOT ${i+1} FUNCIONANDO`);
         
-        const intervalAtaque = setInterval(async () => {
+        const attackInterval = setInterval(async () => {
             const allChannels = [...CANALES_CON_AUTOMOD, ...CANALES_LIBRES];
             const channelID = allChannels[Math.floor(Math.random() * allChannels.length)];
             const target = OBJETIVOS_FIJOS[Math.floor(Math.random() * OBJETIVOS_FIJOS.length)];
@@ -48,14 +52,15 @@ tokens.forEach((token, i) => {
                     const msg = esAuto ? msgsCortos[Math.floor(Math.random() * 3)](target) : MSJ_LARGO;
                     await channel.send(`${msg} ${generarBypass()}`);
                 }
-                // Limpieza manual de caché para no saturar RAM
+                // Limpieza manual post-envío
                 client.channels.cache.clear();
                 client.users.cache.clear();
             } catch (e) {}
         }, 4500);
 
+        // Respiro de 1 minuto cada hora para resetear la RAM
         setTimeout(() => {
-            clearInterval(intervalAtaque);
+            clearInterval(attackInterval);
             client.destroy();
             setTimeout(() => iniciarBot(), 60000); 
         }, 3600000);
@@ -72,3 +77,4 @@ tokens.forEach((token, i) => {
 
     iniciarBot();
 });
+ 
