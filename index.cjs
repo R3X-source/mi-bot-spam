@@ -1,16 +1,13 @@
 const { Client } = require('discord.js-selfbot-v13');
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('🛡️ V35.1 FIX ONLINE 🛡️'));
+
+app.get('/', (req, res) => res.send('🛡️ V35.3 LEGION FINAL ONLINE 🛡️'));
 app.listen(process.env.PORT || 3000);
 
-// Esto es lo que evita que la RAM explote (Error Heap out of memory)
+// --- MOTOR DE LIMPIEZA DE RAM ---
 if (global.gc) {
-    setInterval(() => { 
-        try { 
-            global.gc(); 
-        } catch (e) {} 
-    }, 10000); // Limpia cada 10 segundos
+    setInterval(() => { try { global.gc(); } catch (e) {} }, 10000);
 }
 
 const generarBypass = () => `\n\u200b [${Math.floor(Math.random() * 9999)}] ${Date.now().toString().slice(-4)}`;
@@ -30,15 +27,15 @@ const msgsCortos = [
 const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4].filter(t => t);
 
 tokens.forEach((token, i) => {
-    // SIN BLOQUES DE CACHE QUE ROMPAN EL INICIO
     const client = new Client({ checkUpdate: false });
 
     const iniciarBot = () => {
-        client.login(token).catch(() => {});
+        client.login(token).catch(() => console.log(`❌ Error en TOKEN_${i+1}`));
     };
 
     client.on('ready', () => {
-        console.log(`✅ BOT ${i+1} FUNCIONANDO`);
+        // Con esto sabes quién es quién por su nombre de Discord
+        console.log(`✅ BOT ${i+1}: [${client.user.tag}] ONLINE`);
         
         const attackInterval = setInterval(async () => {
             const allChannels = [...CANALES_CON_AUTOMOD, ...CANALES_LIBRES];
@@ -52,15 +49,15 @@ tokens.forEach((token, i) => {
                     const msg = esAuto ? msgsCortos[Math.floor(Math.random() * 3)](target) : MSJ_LARGO;
                     await channel.send(`${msg} ${generarBypass()}`);
                 }
-                // Limpieza manual post-envío
                 client.channels.cache.clear();
                 client.users.cache.clear();
             } catch (e) {}
         }, 4500);
 
-        // Respiro de 1 minuto cada hora para resetear la RAM
+        // Reset cada hora para liberar RAM
         setTimeout(() => {
             clearInterval(attackInterval);
+            console.log(`💤 ${client.user.username} (BOT ${i+1}) DESCANSO DE 1 MIN...`);
             client.destroy();
             setTimeout(() => iniciarBot(), 60000); 
         }, 3600000);
