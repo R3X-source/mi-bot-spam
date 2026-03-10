@@ -1,7 +1,7 @@
 const { Client } = require('discord.js-selfbot-v13');
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('🛡️ V33 DEEP BREATH ONLINE 🛡️'));
+app.get('/', (req, res) => res.send('🛡️ V34 TITANIUM + BREATH ONLINE 🛡️'));
 app.listen(process.env.PORT || 3000);
 
 if (global.gc) {
@@ -19,7 +19,7 @@ const MSJ_LARGO = `.t cputiñapack \n<@1425209744603218020> <@119549531104555827
 const msgsCortos = [
     (t) => `.t cputiñagachatuber <@${t}> \nQUIERES PENE SHAM4? NALGARERA GAMAMITA PUTA DE FRANKITA BY NEG4 SHE`,
     (t) => `.t cejotiñaandgamami <@${t}> \nbrazos más lonjudos mejichanga nalga moncloveña soy tu masho`,
-    (t) => `.t cejotiñagolpeada <@${t}> \bMALDITA Q QUIERE EDITAR SUS NALG4S DESDE GROK CUANDO SU BRAZO LONJUDO ANDA FILTRADO POR LA MALDITA DE ERRE ELA EN IG🤣🤣🤣`
+    (t) => `.t cejotiñagolpeada <@${t}> \nMALDITA Q QUIERE EDITAR SUS NALG4S DESDE GROK CUANDO SU BRAZO LONJUDO ANDA FILTRADO POR LA MALDITA DE ERRE ELA EN IG🤣🤣🤣`
 ];
 
 const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4].filter(t => t);
@@ -38,9 +38,8 @@ tokens.forEach((token, i) => {
     };
 
     client.on('ready', () => {
-        console.log(`✅ BOT ${i+1} V33 ACTIVO`);
+        console.log(`✅ BOT ${i+1} V34 ACTIVO`);
         
-        // BUCLE DE ATAQUE
         const intervalAtaque = setInterval(async () => {
             const allChannels = [...CANALES_CON_AUTOMOD, ...CANALES_LIBRES];
             const channelID = allChannels[Math.floor(Math.random() * allChannels.length)];
@@ -57,19 +56,13 @@ tokens.forEach((token, i) => {
             } catch (e) {}
         }, 4500);
 
-        // --- LÓGICA DE DESCONEXIÓN (1 min cada hora) ---
+        // Desconexión cada hora (1 min de respiro)
         setTimeout(() => {
             clearInterval(intervalAtaque);
-            console.log(`💤 BOT ${i+1} TOMANDO UN RESPIRO...`);
+            console.log(`💤 BOT ${i+1} DESCANSO PROGRAMADO`);
             client.destroy();
-            
-            // Re-conectar después de 1 minuto
-            setTimeout(() => {
-                console.log(`🚀 BOT ${i+1} REINICIANDO TRAS DESCANSO`);
-                iniciarBot();
-            }, 60000); 
-
-        }, 3600000); // 1 hora
+            setTimeout(() => iniciarBot(), 60000); 
+        }, 3600000);
     });
 
     client.on('messageCreate', async (m) => {
@@ -83,4 +76,3 @@ tokens.forEach((token, i) => {
 
     iniciarBot();
 });
- 
