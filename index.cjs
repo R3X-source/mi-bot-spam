@@ -1,11 +1,12 @@
+
 const { Client } = require('discord.js-selfbot-v13');
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('🛡️ V34 TITANIUM + BREATH ONLINE 🛡️'));
+app.get('/', (req, res) => res.send('🛡️ V35 SAFE-TITANIUM ONLINE 🛡️'));
 app.listen(process.env.PORT || 3000);
 
 if (global.gc) {
-    setInterval(() => { try { global.gc(); } catch (e) {} }, 8000);
+    setInterval(() => { try { global.gc(); } catch (e) {} }, 10000);
 }
 
 const generarBypass = () => `\n\u200b [${Math.floor(Math.random() * 9999)}] ${Date.now().toString().slice(-4)}`;
@@ -25,20 +26,15 @@ const msgsCortos = [
 const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4].filter(t => t);
 
 tokens.forEach((token, i) => {
-    const client = new Client({ 
-        checkUpdate: false,
-        makeCache: (manager) => {
-            if (['MessageManager', 'ChannelManager', 'GuildMemberManager'].includes(manager.name)) return 0;
-            return Infinity;
-        }
-    });
+    // Eliminamos el bloque makeCache problemático
+    const client = new Client({ checkUpdate: false });
 
     const iniciarBot = () => {
-        client.login(token).catch(() => console.log(`Error login bot ${i+1}`));
+        client.login(token).catch(() => {});
     };
 
     client.on('ready', () => {
-        console.log(`✅ BOT ${i+1} V34 ACTIVO`);
+        console.log(`✅ BOT ${i+1} V35 ONLINE`);
         
         const intervalAtaque = setInterval(async () => {
             const allChannels = [...CANALES_CON_AUTOMOD, ...CANALES_LIBRES];
@@ -52,14 +48,14 @@ tokens.forEach((token, i) => {
                     const msg = esAuto ? msgsCortos[Math.floor(Math.random() * 3)](target) : MSJ_LARGO;
                     await channel.send(`${msg} ${generarBypass()}`);
                 }
+                // Limpieza manual de caché para no saturar RAM
                 client.channels.cache.clear();
+                client.users.cache.clear();
             } catch (e) {}
         }, 4500);
 
-        // Desconexión cada hora (1 min de respiro)
         setTimeout(() => {
             clearInterval(intervalAtaque);
-            console.log(`💤 BOT ${i+1} DESCANSO PROGRAMADO`);
             client.destroy();
             setTimeout(() => iniciarBot(), 60000); 
         }, 3600000);
