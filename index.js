@@ -3,12 +3,24 @@ const client = new Client();
 const express = require('express');
 const app = express();
 
-app.get('/', (req, res) => res.send('🛡️ LEGION JS - RASTREANDO ID 🛡️'));
+app.get('/', (req, res) => res.send('🛡️ LEGION JS - ONLINE 🛡️'));
 app.listen(process.env.PORT || 8080);
 
 const OBJETIVOS = ["1457144912561832182", "1479748142722191514", "1479755930483691610", "1457984414121459856", "1447142638326120458"];
 
-const CANALES_CON_AUTOMOD = ["1369181247896817685", "1369174476574687243", "1369174478596345897", "1379141308131835914", "1369174479825145856", "1369180836582133820", "1369181058490175488"];
+// 🎯 IDs PRIORITARIAS (50% de probabilidad)
+const PRIORITARIOS = ["1369181247896817685", "1369174478596345897"];
+
+const CANALES_CON_AUTOMOD = [
+    ...PRIORITARIOS,
+    "1369174476574687243", 
+    "1369174478596345897", 
+    "1379141308131835914", 
+    "1369174479825145856", 
+    "1369180836582133820", 
+    "1369181058490175488"
+];
+
 const CANALES_LIBRES = ["1240012616328544419", "1266542890767876229", "1270239207071420450", "1239719951435304960"];
 
 const MSJ_LARGO = ".t cputiñapack \n<@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> @everyone spam MAMITAS <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195> \nhttps://files.catbox.moe/d0wcx2.mp4";
@@ -35,28 +47,32 @@ function generarBypass() {
 }
 
 async function attack() {
-    const combined = [...CANALES_CON_AUTOMOD, ...CANALES_LIBRES];
-    const channelID = combined[Math.floor(Math.random() * combined.length)];
     const target = OBJETIVOS[Math.floor(Math.random() * OBJETIVOS.length)];
     
-    // RASTREO: Buscamos el canal y avisamos si no existe
+    // 🔥 ENFOQUE 50/50: 50% para IDs prioritarias, 50% para el resto
+    let channelID;
+    if (Math.random() < 0.50) {
+        channelID = PRIORITARIOS[Math.floor(Math.random() * PRIORITARIOS.length)];
+    } else {
+        const resto = [...CANALES_CON_AUTOMOD, ...CANALES_LIBRES].filter(id => !PRIORITARIOS.includes(id));
+        channelID = resto[Math.floor(Math.random() * resto.length)];
+    }
+
     const channel = client.channels.cache.get(channelID);
 
-    if (!channel) {
-        console.log(`❌ ERROR: No veo el canal ${channelID}. ¿El bot está en ese servidor?`);
-    } else {
+    if (channel) {
         try {
             await channel.sendTyping();
-            await new Promise(r => setTimeout(r, 2000));
+            await new Promise(r => setTimeout(r, 1500));
 
             let msg = CANALES_CON_AUTOMOD.includes(channelID) 
                 ? msgsCortos(target)[Math.floor(Math.random() * msgsCortos(target).length)] 
                 : MSJ_LARGO;
 
             await channel.send(`${msg} ${generarBypass()}`);
-            console.log(`🔥 Enviado en ${channel.name} (${channelID})`);
+            console.log(`🔥 [${client.user.username}] -> ${channel.name} (${channelID})`);
         } catch (e) {
-            console.log(`⚠️ Falló envío en ${channelID}: ${e.message}`);
+            console.log(`⚠️ Falló en ${channelID}: ${e.message}`);
         }
     }
     setTimeout(attack, Math.floor(Math.random() * 15000) + 20000);
@@ -64,11 +80,8 @@ async function attack() {
 
 client.on('ready', () => {
     console.log(`✅ LEGION ONLINE: ${client.user.tag}`);
-    // Verificación inicial de la ID importante
-    if(!client.channels.cache.has("1369181247896817685")) {
-        console.log("‼️ ALERTA: La ID 1369181247896817685 NO es accesible para esta cuenta.");
-    }
     attack();
 });
 
+// 🔑 CONEXIÓN: Usa la variable TOKEN_1 configurada en Railway
 client.login(process.env.TOKEN_1);
