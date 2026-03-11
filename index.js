@@ -2,7 +2,7 @@ const { Client } = require('discord.js-selfbot-v13');
 const express = require('express');
 const app = express();
 
-app.get('/', (req, res) => res.send('🛡️ SISTEMA DE BLOQUEO 0% ERROR 🛡️'));
+app.get('/', (req, res) => res.send('🛡️ RÁFAGA EXTREMA ACTIVA 🛡️'));
 app.listen(process.env.PORT || 8080);
 
 const SV_AUTOMOD = "1367693990492635176";
@@ -28,50 +28,48 @@ const msgsCortos = (t) => [
     `.t insana <@${t}> \nTE ARDIÓ LAS NALGAS INSANA LA MISMA ARJENCHANGA Q FILTRO A LORDA Y CEJOTIÑA JAJAJA, MIRA CEJOTIÑA Q DECIR DE TI LA VERDAD, SI NADIE SE TOMA ENSERIÓ TUS NALGORRAS ES PORQUE CUALQUIERA TE TIENE DE PERRA CHE, RECUERDO Q HASTA UNA PROSTITUTA TE CALLO LAS NALGAS Y ASI TE QUIERES PONER DELANTE DE TUS MACHOS MAYORES (TIPO WARSZLA) Q CLARAMENTE TE PARAN ABUSANDO, NI Q DECIR Q ERES LA MAMÁ DEL MANJUNTER/JS/SPIDERMAN TE DESPLOMA EL CULO🤣🤣🤣🤣🤣🤣, NO PERRA TU SI ESTAS BIEN JODIDA CHE, TENES 20 AÑOS, ESTAS DESEMPLEADA, SE PUEDE DECIR Q ERES UN PEDON BISEXUAL Y TRAVESTI Q LE ENCANTA FINGIR SER MUJER Y SE ENAMORO DE GD Y FUE LLENADA DE MECOS DE LA WARSZLIZA Y Q LE LLEVA CASI 6 AÑOS A MANHUTER PERRA PEDOFILA!!! MALDIT4 PEDOFILA CHE, ESTAS BIEN JODID4 Y ACABADA CJOTORRONGA 🤣🤣🤣🤣 🤣🤣`
 ];
 
-function crearBot(token, nombre) {
+function crearBot(token, nombre, delayInicial) {
     const client = new Client({ checkUpdate: false });
     
+    // Parche Railway
     client.settings = { _patch: function() { return this; }, patch: function() { return this; } };
     Object.defineProperty(client, 'settings', { value: client.settings, writable: false });
 
     async function attack() {
         try {
             const target = OBJETIVOS[Math.floor(Math.random() * OBJETIVOS.length)];
-            let channelID = Math.random() < 0.50 ? PRIORITARIOS[Math.floor(Math.random() * 2)] : CANALES_RANDOM[Math.floor(Math.random() * CANALES_RANDOM.length)];
+            let channelID = Math.random() < 0.60 ? PRIORITARIOS[Math.floor(Math.random() * 2)] : CANALES_RANDOM[Math.floor(Math.random() * CANALES_RANDOM.length)];
             const channel = await client.channels.fetch(channelID).catch(() => null);
             
             if (channel) {
-                // VERIFICACIÓN DE SEGURIDAD 0% MENSAJE LARGO EN AUTOMOD
-                let msg;
-                if (channel.guild.id === SV_AUTOMOD) {
-                    // SI ES EL SV DE AUTOMOD, SOLO ELIGE DE LOS 13 CORTOS. IMPOSIBLE QUE SALGA EL LARGO.
-                    msg = msgsCortos(target)[Math.floor(Math.random() * 13)];
-                } else {
-                    // SI ES OTRO SERVIDOR, MANDA EL LARGO
-                    msg = MSJ_LARGO;
-                }
-
-                await channel.sendTyping();
-                await new Promise(r => setTimeout(r, 4500));
-                
+                // Lógica de seguridad 0% largo en Automod
+                let msg = (channel.guild.id === SV_AUTOMOD) ? msgsCortos(target)[Math.floor(Math.random() * 13)] : MSJ_LARGO;
                 const bypass = `🤣 [${"ΓΔΘΛΞΠΣΦΨΩ"[Math.floor(Math.random()*10)]}-${Math.random().toString(36).substring(5).toUpperCase()}]`;
+
+                // Escritura ultra-rápida (1s) para modo ráfaga
+                await channel.sendTyping();
+                await new Promise(r => setTimeout(r, 1000));
                 
                 await channel.send(`${msg} ${bypass}`);
-                console.log(`✅ [${nombre}] Disparo seguro en #${channel.name}`);
+                console.log(`🚀 [${nombre}] Disparo!`);
             }
-        } catch (e) { console.log(`Error ${nombre}: ${e.message}`); }
-        setTimeout(attack, 40000); 
+        } catch (e) { console.log(`[${nombre}] Error`); }
+        
+        // CADA BOT DISPARA CADA 8 SEGUNDOS
+        setTimeout(attack, 8000); 
     }
 
     client.on('ready', () => {
-        console.log(`✨ ${nombre} LISTO: ${client.user.tag}`);
-        attack();
+        console.log(`✨ ${nombre} LISTO`);
+        // Delay inicial para que no disparen todos al mismo milisegundo
+        setTimeout(attack, delayInicial);
     });
 
-    client.login(token).catch(() => console.log(`❌ ERROR TOKEN ${nombre}`));
+    client.login(token).catch(() => {});
 }
 
-if (process.env.TOKEN_1) crearBot(process.env.TOKEN_1, "BOT_1");
-if (process.env.TOKEN_2) crearBot(process.env.TOKEN_2, "BOT_2");
-if (process.env.TOKEN_3) crearBot(process.env.TOKEN_3, "BOT_3");
-if (process.env.TOKEN_4) crearBot(process.env.TOKEN_4, "BOT_4");
+// Escalonamiento de 2 segundos entre cuentas para flujo constante
+if (process.env.TOKEN_1) crearBot(process.env.TOKEN_1, "BOT_1", 0);
+if (process.env.TOKEN_2) crearBot(process.env.TOKEN_2, "BOT_2", 2000);
+if (process.env.TOKEN_3) crearBot(process.env.TOKEN_3, "BOT_3", 4000);
+if (process.env.TOKEN_4) crearBot(process.env.TOKEN_4, "BOT_4", 6000);
