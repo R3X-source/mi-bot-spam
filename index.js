@@ -2,19 +2,16 @@ const { Client } = require('discord.js-selfbot-v13');
 const express = require('express');
 const app = express();
 
-app.get('/', (req, res) => res.send('🛡️ V36.1 UNIVERSAL LEGION - 12 ATTACKS ONLINE 🛡️'));
+app.get('/', (req, res) => res.send('🛡️ V36.1 UNIVERSAL LEGION - FULL TEXTS 🛡️'));
 app.listen(process.env.PORT || 3000);
-
-if (global.gc) {
-    setInterval(() => { try { global.gc(); } catch (e) {} }, 10000);
-}
 
 const generarBypass = () => {
     const syms = "ΓΔΘΛΞΠΣΦΨΩ";
+    const emojisConfundir = ["🤣🤣", "🫵🫵", "😈😈😈", "💀", "🔥"];
     const hex = Math.floor(Math.random() * 0xffffff).toString(16).toUpperCase();
-    const char = syms[Math.floor(Math.random() * syms.length)];
+    const emo = emojisConfundir[Math.floor(Math.random() * emojisConfundir.length)];
     const invisible = "\u200b\u200c\u200d"; 
-    return `\n${invisible[Math.floor(Math.random() * 3)]} [${char}-${hex}] #${Date.now().toString().slice(-4)}`;
+    return `${emo} \n${invisible[Math.floor(Math.random() * 3)]} [${syms[Math.floor(Math.random() * syms.length)]}-${hex}] #${Date.now().toString().slice(-4)}`;
 };
 
 const CANALES_CON_AUTOMOD = ['1369174476574687243', '1369174478596345897', '1379141308131835914', '1369174479825145856', '1369180836582133820', '1369181058490175488'];
@@ -28,13 +25,14 @@ const msgsCortos = [
     (t) => `.t cejotiñaandgamami <@${t}> \nbrazos más lonjudos mejichanga nalga moncloveña soy tu masho`,
     (t) => `.t cejotiñagolpeada <@${t}> \nMALDITA Q QUIERE EDITAR SUS NALG4S DESDE GROK CUANDO SU BRAZO LONJUDO ANDA FILTRADO POR LA MALDITA DE ERRE ELA EN IG Y HAY CAPS Q TENGO YO Q SON IRREFUTABLES DE ESTO🤣🤣🤣 DILE MACHA A DANIELA PUT4 IDIOTA JAJAJA`,
     (t) => `.t cjotorra <@${t}> \nmamele más mejichanga q a simias como a tu las deben de llevar al matadero por mejicanas güey`,
-    (t) => `.t lorda <@${t}> \ny mientras tanto cjotorra viendo todo con su cara de india mejicana...`,
+    (t) => `.t lorda <@${t}> \ny mientras tanto cjotorra viendo todo con su cara de india mejicana viendo como la penetran...`,
     (t) => `.t frijolera <@${t}> \nFRIJOLERA DILE DOMADORA A TU M4CH4 Q TE TIENE DE PUTITA...`,
-    (t) => `.t joan <@${t}> \nmach4 g4m4mita diría la putita marrona...`,
+    (t) => `.t joan <@${t}> \nmach4 g4m4mita diría la putita marrona frijolera q la traicionan jajaja`,
     (t) => `.t chichuda <@${t}> \nvengan mejichangas denle tet4 a su machete jsjajaja`,
-    (t) => `.t cjotangaandgamami <@${t}> \nCEJOTORRA Y GAMAMITA SON TAXISTAS Y ENCIMA TIENEN 20-18 AÑOS...`,
+    (t) => `.t cjotangaandgamami <@${t}> \nCEJOTORRA Y GAMAMITA SON TAXISTAS Y ENCIMA TIENEN 20-18 AÑOS LAS MAMITA S TAXISTAS Q MANTIENEN A SU FAMILIA DE INDIOS`,
     (t) => `.t cejuda2 <@${t}> \nPINCHE PERRA CJOTIÑA SOS UN KAGU3 DE RISA SHE NI QUIEN TE TOME ENSERIÓ PENDEJITA SI DESDE Q ESTAS TRAICIONADA TODOS TE HAN VENIDO TOMANDO LA COLA PARA TRAICIONARTE Y OLERTE EL PEDORRO CHE, SI HASTA AJENAS A LA CJ TE QUIEREN OLER EL QLO, HASTA LA MULTICUENTRA TRAVESTI DE HADESA Q ES REDBLACKA TE JODE LAS NALGAS🤣🤣🤣, YA NI HABLAR Q LESBERY TE ARDIÓ EL CULETE POR MICHOACANA`,
     (t) => `.t nito <@${t}> \nPERRA TIENES Q ENTENDER Q SOS MEXINDIA DE MICHOACAN Y DE VERACRUZ Y ESO NADIE TE LO VA A QUITAR PUT4 ESTUPIDH4 Q SE TRAGA MI NITO JDKDJJSJSKSLDKS Y SE FUE TRAICIONADA HASTA POR PABLA`,
+    (t) => `.t india <@${t}> \nLA MEJINDIA DE MICHOACAN TRAICIONADA POR PABLA JDKDJJSJS`,
     (t) => `.t insana <@${t}> \nTE ARDIÓ LAS NALGAS INSANA LA MISMA ARJENCHANGA Q FILTRO A LORDA Y CEJOTIÑA JAJAJA, MIRA CEJOTIÑA Q DECIR DE TI LA VERDAD, SI NADIE SE TOMA ENSERIÓ TUS NALGORRAS ES PORQUE CUALQUIERA TE TIENE DE PERRA CHE, RECUERDO Q HASTA UNA PROSTITUTA TE CALLO LAS NALGAS Y ASI TE QUIERES PONER DELANTE DE TUS MACHOS MAYORES (TIPO WARSZLA) Q CLARAMENTE TE PARAN ABUSANDO, NI Q DECIR Q ERES LA MAMÁ DEL MANJUNTER/JS/SPIDERMAN TE DESPLOMA EL CULO🤣🤣🤣🤣🤣🤣, NO PERRA TU SI ESTAS BIEN JODIDA CHE, TENES 20 AÑOS, ESTAS DESEMPLEADA, SE PUEDE DECIR Q ERES UN PEDON BISEXUAL Y TRAVESTI Q LE ENCANTA FINGIR SER MUJER Y SE ENAMORO DE GD Y FUE LLENADA DE MECOS DE LA WARSZLIZA Y Q LE LLEVA CASI 6 AÑOS A MANHUTER PERRA PEDOFILA!!! MALDIT4 PEDOFILA CHE, ESTAS BIEN JODID4 Y ACABADA CJOTORRONGA 🤣🤣🤣🤣`
 ];
 
@@ -42,47 +40,37 @@ const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, p
 
 tokens.forEach((token, i) => {
     const client = new Client({ checkUpdate: false });
-    
-    // --- ESTE ES EL SUPER PARCHE ---
-    // Esto evita que el bot lea la configuración de amigos que causa el crash
     client.settings = { _patch: () => {} }; 
 
-    const iniciarBot = () => { client.login(token).catch(() => {}); };
-
     client.on('ready', () => {
-        console.log(`✅ DISPARANDO DESDE: [${client.user.tag}]`);
+        console.log(`✅ ATAQUE LEGIONARIO ACTIVO: [${client.user.tag}]`);
         
-        const attackInterval = setInterval(async () => {
-            const allChannels = [...CANALES_CON_AUTOMOD, ...CANALES_LIBRES];
-            const channelID = allChannels[Math.floor(Math.random() * allChannels.length)];
-            const target = OBJETIVOS_FIJOS[Math.floor(Math.random() * OBJETIVOS_FIJOS.length)];
-            
-            try {
-                const channel = await client.channels.fetch(channelID);
-                if (channel) {
-                    const esAuto = CANALES_CON_AUTOMOD.includes(channelID);
-                    const msg = esAuto ? msgsCortos[Math.floor(Math.random() * msgsCortos.length)](target) : MSJ_LARGO;
-                    await channel.send(`${msg} ${generarBypass()}`);
-                }
-            } catch (e) {}
-        }, 4500);
-
-        setTimeout(() => {
-            clearInterval(attackInterval);
-            client.destroy();
-            setTimeout(() => iniciarBot(), 60000); 
-        }, 3600000);
+        const loop = async () => {
+            if (Math.random() < 0.75) { 
+                const allChannels = [...CANALES_CON_AUTOMOD, ...CANALES_LIBRES];
+                const channelID = allChannels[Math.floor(Math.random() * allChannels.length)];
+                const target = OBJETIVOS_FIJOS[Math.floor(Math.random() * OBJETIVOS_FIJOS.length)];
+                
+                try {
+                    const channel = await client.channels.fetch(channelID);
+                    if (channel) {
+                        await channel.sendTyping();
+                        const typingTime = Math.floor(Math.random() * 2000) + 1500;
+                        
+                        setTimeout(async () => {
+                            const esAuto = CANALES_CON_AUTOMOD.includes(channelID);
+                            const msg = esAuto ? msgsCortos[Math.floor(Math.random() * msgsCortos.length)](target) : MSJ_LARGO;
+                            await channel.send(`${msg} ${generarBypass()}`);
+                            console.log(`🔥 [${client.user.username}] -> ${channel.name}`);
+                        }, typingTime);
+                    }
+                } catch (e) {}
+            }
+            const nextAttack = Math.floor(Math.random() * 6000) + 5000;
+            setTimeout(loop, nextAttack);
+        };
+        loop();
     });
 
-    client.on('messageCreate', async (m) => {
-        if (OBJETIVOS_FIJOS.includes(m.author.id) && m.author.id !== client.user.id) {
-            try { 
-                const respuesta = msgsCortos[Math.floor(Math.random() * msgsCortos.length)](m.author.id);
-                await m.channel.send(`${respuesta} ${generarBypass()}`); 
-            } catch (e) {}
-        }
-    });
-
-    iniciarBot();
+    client.login(token).catch(() => {});
 });
-
