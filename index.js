@@ -1,17 +1,19 @@
 const { Client } = require('discord.js-selfbot-v13');
-const client = new Client({ checkUpdate: false }); // Desactiva chequeos innecesarios
+const { ClientUserSettingManager } = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager');
+
+// MATAR EL ERROR DE DISCORD (all: null) DE RAÍZ
+ClientUserSettingManager.prototype.patch = function() { return this; };
+
+const client = new Client({ 
+    checkUpdate: false,
+    syncStatus: false, // No sincronizar estados
+    patchVoice: false  // No tocar nada de voz
+});
+
 const express = require('express');
 const app = express();
-
-app.get('/', (req, res) => res.send('🛡️ LEGION JS - PARCHADO 🛡️'));
+app.get('/', (req, res) => res.send('🛡️ LEGION JS - RAID ONLY 🛡️'));
 app.listen(process.env.PORT || 8080);
-
-// Parchar el error de ClientUserSettingManager (el de tus fotos)
-// Esto evita que el bot se crashee por el error de "reading all"
-const { ClientUserSettingManager } = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager');
-if (ClientUserSettingManager) {
-    ClientUserSettingManager.prototype.patch = function() { return this; };
-}
 
 const OBJETIVOS = ["1457144912561832182", "1479748142722191514", "1479755930483691610", "1457984414121459856", "1447142638326120458"];
 const PRIORITARIOS = ["1369181247896817685", "1369174478596345897"];
@@ -48,28 +50,26 @@ async function attack() {
         let channelID = Math.random() < 0.50 ? PRIORITARIOS[Math.floor(Math.random() * PRIORITARIOS.length)] : [...CANALES_CON_AUTOMOD, ...CANALES_LIBRES].filter(id => !PRIORITARIOS.includes(id))[Math.floor(Math.random() * 9)];
 
         const channel = client.channels.cache.get(channelID);
-        if (channel && channel.isText()) {
+        
+        // FILTRO ESTRICTO: Solo si es canal de texto de un SERVIDOR (no grupos, no mds)
+        if (channel && channel.type === 'GUILD_TEXT') {
             await channel.sendTyping();
             await new Promise(r => setTimeout(r, 2000));
 
             let msg = CANALES_CON_AUTOMOD.includes(channelID) ? msgsCortos(target)[Math.floor(Math.random() * 13)] : MSJ_LARGO;
 
-            // Intentar enviar con bypass
             await channel.send(`${msg} ${generarBypass()}`);
-            console.log(`✅ Enviado a: ${channel.name}`);
+            console.log(`✅ DISPARO EN: ${channel.guild.name} -> #${channel.name}`);
         }
     } catch (e) {
-        // Silenciamos los errores de menciones y acceso para limpiar la consola
-        if (!e.message.includes("mentions") && !e.message.includes("Access")) {
-            console.log(`⚠️ Info: ${e.message}`);
-        }
+        // Ignorar errores de menciones y permisos
     }
-    setTimeout(attack, Math.floor(Math.random() * 20000) + 20000);
+    setTimeout(attack, Math.floor(Math.random() * 15000) + 20000);
 }
 
 client.on('ready', () => {
-    console.log(`🚀 LEGION EN LINEA: ${client.user.tag}`);
+    console.log(`🚀 LEGION EN LÍNEA: ${client.user.tag}`);
     attack();
 });
 
-client.login(process.env.TOKEN_1).catch(err => console.log("Error de Login"));
+client.login(process.env.TOKEN_1).catch(() => console.log("Error de Login"));
