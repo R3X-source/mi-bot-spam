@@ -1,21 +1,21 @@
 const { Client } = require('discord.js-selfbot-v13');
-const { ClientUserSettingManager } = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager');
-
-// MATAR EL ERROR DE DISCORD (all: null) DE RAÍZ
-ClientUserSettingManager.prototype.patch = function() { return this; };
-
-const client = new Client({ 
-    checkUpdate: false,
-    syncStatus: false, // No sincronizar estados
-    patchVoice: false  // No tocar nada de voz
-});
-
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('🛡️ LEGION JS - RAID ONLY 🛡️'));
+
+// Servidor para que Railway no mate el proceso
+app.get('/', (req, res) => res.send('🛡️ LEGION JS - ESTABLE 🛡️'));
 app.listen(process.env.PORT || 8080);
 
+const client = new Client({ checkUpdate: false });
+
+// 🎯 PARCHE DIRECTO AL OBJETO (Evita el error de las capturas)
+if (client.settings) {
+    client.settings.patch = function() { return this; };
+}
+
 const OBJETIVOS = ["1457144912561832182", "1479748142722191514", "1479755930483691610", "1457984414121459856", "1447142638326120458"];
+
+// PRIORIDAD 50% en estas dos IDs
 const PRIORITARIOS = ["1369181247896817685", "1369174478596345897"];
 
 const CANALES_CON_AUTOMOD = [...PRIORITARIOS, "1369174476574687243", "1379141308131835914", "1369174479825145856", "1369180836582133820", "1369181058490175488"];
@@ -26,7 +26,7 @@ const MSJ_LARGO = ".t cputiñapack \n<@1425209744603218020> <@119549531104555827
 const msgsCortos = (t) => [
     `.t cputiñagachatuber <@${t}> \nQUIERES PENE SHAM4? NALGARERA GAMAMITA PUTA DE FRANKITA BY NEG4 SHE`,
     `.t cejotiñaandgamami <@${t}> \nbrazos más lonjudos mejichanga nalga moncloveña soy tu masho`,
-    `.t cejotiñagolpeada <@${t}> \nMALDITA Q QUIERE EDITAR SUS NALG4S...`,
+    `.t cejotiñagolpeada <@${t}> \nMALDITA Q QUIERE EDITAR SUS NALG4S DESDE GROK...`,
     `.t cjotorra <@${t}> \nmamele más mejichanga...`,
     `.t lorda <@${t}> \ny mientras tanto cjotorra viendo todo...`,
     `.t frijolera <@${t}> \nFRIJOLERA DILE DOMADORA A TU M4CH4...`,
@@ -39,37 +39,42 @@ const msgsCortos = (t) => [
     `.t insana <@${t}> \nTE ARDIÓ LAS NALGAS INSANA...`
 ];
 
-function generarBypass() {
-    const syms = "ΓΔΘΛΞΠΣΦΨΩ";
-    return `🤣🤣 [${syms[Math.floor(Math.random() * syms.length)]}-${Math.random().toString(36).substring(7).toUpperCase()}]`;
-}
-
 async function attack() {
     try {
         const target = OBJETIVOS[Math.floor(Math.random() * OBJETIVOS.length)];
-        let channelID = Math.random() < 0.50 ? PRIORITARIOS[Math.floor(Math.random() * PRIORITARIOS.length)] : [...CANALES_CON_AUTOMOD, ...CANALES_LIBRES].filter(id => !PRIORITARIOS.includes(id))[Math.floor(Math.random() * 9)];
+        
+        // 50% de probabilidad para las IDs prioritarias
+        let channelID = Math.random() < 0.50 
+            ? PRIORITARIOS[Math.floor(Math.random() * PRIORITARIOS.length)] 
+            : [...CANALES_CON_AUTOMOD, ...CANALES_LIBRES].filter(id => !PRIORITARIOS.includes(id))[Math.floor(Math.random() * 9)];
 
         const channel = client.channels.cache.get(channelID);
         
-        // FILTRO ESTRICTO: Solo si es canal de texto de un SERVIDOR (no grupos, no mds)
+        // SOLO CANALES DE SERVIDOR (Nada de MDs o grupos)
         if (channel && channel.type === 'GUILD_TEXT') {
             await channel.sendTyping();
             await new Promise(r => setTimeout(r, 2000));
 
-            let msg = CANALES_CON_AUTOMOD.includes(channelID) ? msgsCortos(target)[Math.floor(Math.random() * 13)] : MSJ_LARGO;
+            let msg = CANALES_CON_AUTOMOD.includes(channelID) 
+                ? msgsCortos(target)[Math.floor(Math.random() * 13)] 
+                : MSJ_LARGO;
 
-            await channel.send(`${msg} ${generarBypass()}`);
-            console.log(`✅ DISPARO EN: ${channel.guild.name} -> #${channel.name}`);
+            await channel.send(`${msg} 🤣🤣 [${Math.random().toString(36).substring(7).toUpperCase()}]`);
+            console.log(`🔥 [${client.user.username}] -> #${channel.name}`);
         }
     } catch (e) {
-        // Ignorar errores de menciones y permisos
+        // Ignorar errores de API
     }
-    setTimeout(attack, Math.floor(Math.random() * 15000) + 20000);
+    setTimeout(attack, 25000); // Ataque cada 25 segundos
 }
 
 client.on('ready', () => {
-    console.log(`🚀 LEGION EN LÍNEA: ${client.user.tag}`);
+    console.log(`✅ RAID ACTIVADO: ${client.user.tag}`);
     attack();
 });
 
-client.login(process.env.TOKEN_1).catch(() => console.log("Error de Login"));
+// Proceso para evitar cierres inesperados
+process.on('unhandledRejection', (reason, promise) => {});
+process.on('uncaughtException', (err, origin) => {});
+
+client.login(process.env.TOKEN_1).catch(() => console.log("Login Fallido"));
