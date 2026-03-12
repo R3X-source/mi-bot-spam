@@ -2,16 +2,24 @@ const { Client } = require('discord.js-selfbot-v13');
 const express = require('express');
 const app = express();
 
-app.get('/', (req, res) => res.send('🛡️ MOTOR DE ASEDIO V19 - MENSAJES 100% ÍNTEGROS 🛡️'));
+app.get('/', (req, res) => res.send('🛡️ MOTOR DE ASEDIO V22 - MODO DEPREDADOR 🛡️'));
 app.listen(process.env.PORT || 8080);
 
+// ==========================================
+// 🎯 CONFIGURACIÓN DE IDs (TAL CUAL PIDIÓ)
+// ==========================================
 const SV_AUTOMOD = "1367693990492635176";
-const OBJETIVOS = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
-const PRIORITARIOS = ["1446586105553227807", "1457984414121459856", "1457144912561832182", "1447142638326120458", "1479748142722191514", "1479755930483691610"];
-const CANALES_RANDOM = ["1240012616328544419"] 
-// ==========================================
-// 📝 LISTA DE BARDEOS (100% TEXTO ORIGINAL)
-// ==========================================
+
+// USUARIAS (OBJETIVOS) - Se rotan menciones y se les hace auto-respuesta
+const OBJETIVOS = ["1457984414121459856", "1447142638326120458", "1479755930483691610", "1479748142722191514", "1457144912561832182"];
+
+// CANALES PRIORITARIOS - Enfoque de spam constante rotando menciones
+const PRIORITARIOS = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
+
+// CANAL RANDOM - Aquí se suelta el mensaje largo de Catbox
+const CANALES_RANDOM = ["1239719951435304960"];
+
+// --- BARDEOS (100% ORIGINALES) ---
 const MIS_MENSAJES = [
     ".T CPUTIÑAGACHATUBER MAMITA CEJOTORRA QUIERES PENE SHAM4? NALGARERA GAMAMITA PUTA DE FRANKITA Y DE NEG4 SHE",
     ".T CEJOTIÑAANDGAMAMI BRAZOS MÁS LONJUDOS MEJICHANGA NALGA MONCLOVEÑA SOY TU MASHO/TÍO DE 40 AÑOS",
@@ -33,64 +41,71 @@ const MIS_MENSAJES = [
     ".T CEJUD4 SE LE DESCONFIGURO LA NALGA A CHATARRERA GAMAMITA JAJAJAJAJAJAJAJAJAJAJA"
 ];
 
-const MSJ_LARGO = `.T CEJOTIÑAANDGAMAMI \n<@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> 
-<@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772>  <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195> \nhttps://files.catbox.moe/d0wcx2.mp4`;
+const MSJ_LARGO = `.T CEJOTIÑAANDGAMAMI \n<@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195> \nhttps://files.catbox.moe/d0wcx2.mp4`;
 
-// ==========================================
-// ⚙️ BYPASS DINÁMICO (Griegos/Números)
-// ==========================================
+// --- BYPASS ---
 function aplicarBypass(msg) {
     const griegas = "ΣΔΦΩΨΠΞΛΓ";
-    const firma = ` [${griegas[Math.floor(Math.random()*9)]}${Math.floor(Math.random()*99)}]-[${(Math.random()+1).toString(36).substring(7).toUpperCase()}]`;
+    const firma = ` **[${griegas[Math.floor(Math.random()*9)]}${Math.floor(Math.random()*99)}]-[${(Math.random()+1).toString(36).substring(7).toUpperCase()}]**`;
     return msg + firma;
 }
 
-let globalLastLargo = 0;
-
 function crearBot(token, nombre, delayInicial) {
     const client = new Client({ checkUpdate: false });
-    let contador = 0;
+    let indexObjetivo = 0; // Para rotar las menciones
 
+    // LÓGICA 1: SPAM EN CANALES PRIORITARIOS Y RANDOM
     async function attack() {
-        if (contador >= 15) { 
-            contador = 0; 
-            return setTimeout(attack, 180000); 
-        }
-
         try {
-            const target = OBJETIVOS[Math.floor(Math.random() * OBJETIVOS.length)];
-            let channelID = Math.random() < 0.65 ? PRIORITARIOS[Math.floor(Math.random() * 2)] : CANALES_RANDOM[Math.floor(Math.random() * CANALES_RANDOM.length)];
+            // Rotar objetivo para la mención
+            const target = OBJETIVOS[indexObjetivo];
+            indexObjetivo = (indexObjetivo + 1) % OBJETIVOS.length;
+
+            // Decidir canal (Prioritario o Random)
+            const esRandom = Math.random() < 0.2; // 20% de probabilidad de ir al random
+            const channelID = esRandom ? CANALES_RANDOM[0] : PRIORITARIOS[Math.floor(Math.random() * PRIORITARIOS.length)];
             const channel = await client.channels.fetch(channelID).catch(() => null);
-            
+
             if (channel) {
-                let msgFinal = "";
-                const esSvAutomod = channel.guild.id === SV_AUTOMOD;
-
-                if (esSvAutomod) {
-                    msgFinal = MIS_MENSAJES[Math.floor(Math.random() * MIS_MENSAJES.length)] + ` <@${target}>`;
-                } else {
-                    if (Date.now() - globalLastLargo > 50000) {
-                        msgFinal = MSJ_LARGO;
-                        globalLastLargo = Date.now();
-                    } else {
-                        msgFinal = MIS_MENSAJES[Math.floor(Math.random() * MIS_MENSAJES.length)] + ` <@${target}>`;
-                    }
-                }
-
-                await channel.sendTyping();
-                await new Promise(r => setTimeout(r, 3500 + Math.random() * 1500));
+                let msgFinal = esRandom ? MSJ_LARGO : MIS_MENSAJES[Math.floor(Math.random() * MIS_MENSAJES.length)] + ` <@${target}>`;
                 
+                await channel.sendTyping();
+                await new Promise(r => setTimeout(r, 3000));
                 await channel.send(aplicarBypass(msgFinal));
-                contador++;
-                console.log(`🚀 [${nombre}] ENVIADO (${contador}/15)`);
+                console.log(`🔥 [${nombre}] Ataque en ${channelID} -> Mención a ${target}`);
             }
-        } catch (e) { return setTimeout(attack, 60000); }
-        setTimeout(attack, Math.floor(Math.random() * (35000 - 25000)) + 25000); 
+        } catch (e) { }
+        setTimeout(attack, 35000 + Math.random() * 10000);
     }
 
-    client.on('ready', () => { console.log(`✅ ${nombre} ACTIVO`); setTimeout(attack, delayInicial); });
+    // LÓGICA 2: AUTO-RESPUESTA (Si el canal NO está en las listas de spam)
+    client.on('messageCreate', async (message) => {
+        if (message.author.bot) return;
+
+        // Si la que escribe es una de las OBJETIVAS
+        if (OBJETIVOS.includes(message.author.id)) {
+            // Y el canal NO es Prioritario ni Random (donde ya estamos spameando)
+            if (!PRIORITARIOS.includes(message.channel.id) && !CANALES_RANDOM.includes(message.channel.id)) {
+                
+                console.log(`🎯 [${nombre}] Cazando a ${message.author.id} en canal externo: ${message.channel.id}`);
+                
+                await new Promise(r => setTimeout(r, 2000));
+                const bardeoRandom = MIS_MENSAJES[Math.floor(Math.random() * MIS_MENSAJES.length)];
+                
+                try {
+                    await message.channel.send(aplicarBypass(`${bardeoRandom} <@${message.author.id}>`));
+                } catch (e) { }
+            }
+        }
+    });
+
+    client.on('ready', () => { 
+        console.log(`✅ ${nombre} ONLINE - PRIORITARIOS: ${PRIORITARIOS.length} | RANDOM: ${CANALES_RANDOM[0]}`); 
+        setTimeout(attack, delayInicial); 
+    });
     client.login(token).catch(() => {});
 }
 
+// Iniciar
 const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5, process.env.TOKEN_6];
-tokens.forEach((t, i) => { if (t) crearBot(t, `BOT_${i+1}`, i * 25000); });
+tokens.forEach((t, i) => { if (t) crearBot(t, `BOT_${i+1}`, i * 20000); });
