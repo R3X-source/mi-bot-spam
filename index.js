@@ -2,7 +2,7 @@ const { Client } = require('discord.js-selfbot-v13');
 const express = require('express');
 const app = express();
 
-app.get('/', (req, res) => res.send('🛡️ MOTOR DE ASEDIO V6.0 - 11K SCRIPT 🛡️'));
+app.get('/', (req, res) => res.send('🛡️ ASEDIO FANTASMA NIVEL 6 🛡️'));
 app.listen(process.env.PORT || 8080);
 
 const SV_AUTOMOD = "1367693990492635176";
@@ -13,7 +13,7 @@ const CANALES_RANDOM = ["1369174476574687243", "1379141308131835914", "136917447
 const MSJ_LARGO = ".t cejotiñaandgamami \n<@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> @everyone spam MAMITAS <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195> \nhttps://files.catbox.moe/d0wcx2.mp4";
 
 const msgsCortos = (t) => [
-    `.t cputiñagachatuber <@${t}> \n MAMITA CEJOTORRA TE DOY PENE SHAM4? NALGARERA GAMAMITA PUTA DE FRANKITA Y DE NEG4 SHE`,
+    `.t cputiñagachatuber <@${t}> \n MAMITA CEJOTORRA QUIERES PENE SHAM4? NALGARERA GAMAMITA PUTA DE FRANKITA Y DE NEG4 SHE`,
     `.t cejotiñaandgamami <@${t}> \nbrazos más lonjudos mejichanga nalga moncloveña soy tu masho/tío de 40 años`,
     `.t cejotiñagolpeada <@${t}> \nMALDITA Q QUIERE EDITAR SUS NALG4S DESDE GROK CUANDO SU BRAZO LONJUDO ANDA FILTRADO POR LA MALDITA DE ERRE ELA EN IG Y HAY CAPS Q TENGO YO Q SON IRREFUTABLES DE ESTO🤣🤣🤣 Y CJOTIÑA, DILE MACHA A DANIELA PUT4 IDIOTA JAJAJA`,
     `.t cjotorra <@${t}> \nmamele más mejichanga q a simias como a tu las deben de llevar al matadero por mejicanas güey`,
@@ -24,9 +24,10 @@ const msgsCortos = (t) => [
     `.t cjotangaandgamami <@${t}> \nCEJOTORRA Y GAMAMITA SON TAXISTAS Y ENCIMA TIENEN 20-18 AÑOS Y SU CARA ESTA MÁS DESFIGURADA Y CON LA MENSTRUACIÓN DE LA ABUELA DE CEJOTIÑA 🤣🤣🤣🤣`,
     `.t cejuda2 <@${t}> \nPINCHE PERRA CJOTIÑA SOS UN KAGU3 DE RISA SHE NI QUIEN TE TOME ENSERIÓ PENDEJITA SI DESDE Q ESTAS TRAICIONADA TODOS TE HAN VENIDO TOMANDO LA COLA PARA TRAICIONARTE Y OLERTE EL PEDORRO CHE, SI HASTA AJENAS A LA CJ TE QUIEREN OLER EL QLO, HASTA LA MULTICUENTRA TRAVESTI DE HADESA Q ES REDBLACKA TE JODE LAS NALGAS🤣🤣🤣, YA NI HABLAR Q LESBERY TE ARDIÓ EL CULETE POR MICHOACANA 😈😈😈`,
     `.t nito <@${t}> \nPERRA TIENES Q ENTENDER Q SOS MEXINDIA DE MICHOACAN Y ERES CHATARRERA/TAXISTA😈😈😈🫵🫵🫵🤣🤣😂😂😂`,
-    `.t india <@${t}> \nLA MEJINDIA DE MICHOACAN TRAICIONADA POR PABLA VERACRUZANA DE POZA RICA (HUNDIDA) Y POR GAMAMITA OTRA VEZ JDKDJJSJS, PORQUE HASTA EL INDIO DE PABLA FUE A ROMPERTE LA NALGAS ENTRE DICIEMBRE Y FEBRERO Y TE PUSO TODAS LAS NALGAS GORDAS EN RIDÍCULO COMO YA ES COSTUMBRE SHE, ME DA RISA Q ESE INDIO TE DEJO BIEN EYACULADOT4 A HASTA PODRÍA DECIR Q EL INDIO DE PABLA SIENDO HORRIBLE FUE CAPAZ DE ESTRESARTE EL CULITO POR HORAS Y POR MÁS Q ESE INDIO SEA LENTO FUE CAPAZ DE ROMPERTE LAS NALGAS POR CHANGA BISEXUAL, HABLANDO DE BISEXUAL TAMBIÉN HAY Q DECIR Q ERES UNA FRIJOLERA Q SE ARDIÓ CON EL EDUARDO PORQUE EL EDUARDO LE ARDIÓ EL CUL0 CHE, PORQUE TUS NALGAS DE MEJICANOTA TUVIERON Q COMPARTIR CUENTA CON LA BISEXUAL CHILENA DE ZATHORNA PARA CUMPLIR SU DESEO DE SER MUJER ANTE GD, GD Q LAS LLENO DE MECOS A AMBAS PEDORRONAS Q ESTÁN FURIOSAS Y CELOSAS PORQUE SU TÍO EL DESVIRGSDOR DE USTEDAS NO SE ARDE Y NO SE ESTRESADA A DIFEEJCIADE CJOTORRA Q CON EL MÁS MÍNIMO ROSON DE VERG4 YA SE ANDA ARDIENDO Y COMO TUS NLAGA SOS CHANGA PIENSA Q YO ME TOMOE ENSERIÓ SUS TETAS DE 20 AÑOS CUANDO CLARAMENGE SOLO ME BURLO DE USTAD PORWUE ERES FRACASADA Y DAS RISA CHANGA, DAS RISA PUEBLERINA DE SIERRA PUT4 SIN ACCESO AL MAR Y ENCIMA ES MARRÓNA PORQUE ERES MARRÓNA EN IG Y ERES UNA MORENA CHAPARRA🤣🤣🤣💨🇲🇽🇨🇱🍑🇨🇱🍑🇨🇱💨🍑💨 MUCHO FRÍJOL TE SACAS DE LAS NALGAS AMIGA PERRA JODIDA POR SU M4CH4 G4M4M1T4 🍑🇨🇱🇨🇱💨🇲🇽🍑🤣🤣🍑🍑🇲🇽🤣💨🤣🍑🇲🇽🍑🇲🇽🤣🍑🤣🍑🤣🍑🤣🍑🇲🇽🍑🇲🇽🍑🇲🇽🍑🇲🇽🍑🇲🇽🍑🇲🇽🤣🍑`,
+    `.t india <@${t}> \nLA MEJINDIA DE MICHOACAN TRAICIONADA POR PABLA VERACRUZANA DE POZA RICA (HUNDIDA) Y POR GAMAMITA OTRA VEZ JDKDJJSJS, PORQUE HASTA EL INDIO DE PABLA FUE A ROMPERTE LA NALGAS ENTRE DICIEMBRE Y FEBRERO Y TE PUSO TODAS LAS NALGAS GORDAS EN RIDÍCULO COMO YA ES COSTUMBRE SHE, ME DA RISA Q ESE INDIO TE DEJO BIEN EYACULADOT4 A HASTA PODRÍA DECIR Q EL INDIO DE PABLA SIENDO HORRIBLE FUE CAPAZ DE ESTRESARTE EL CULITO POR HORAS Y POR MÁS Q ESE INDIO SEA LENTO FUE CAPAZ DE ROMPERTE LAS NALGAS POR CHANGA BISEXUAL, HABLANDO DE BISEXUAL TAMBIÉN HAY Q DECIR Q ERES UNA FRIJOLERA Q SE ARDIÓ CON EL EDUARDO PORQUE EL EDUARDO LE ARDIÓ EL CUL0 CHE, PORQUE TUS NALGAS DE MEJICANOTA TUVIERON Q COMPARTIR CUENTA CON LA BISEXUAL CHILENA DE ZATHORNA PARA CUMPLIR SU DESEO DE SER MUJER ANTE GD, GD Q LAS LLENO DE MECOS A AMBAS PEDORRONAS Q ESTÁN FURIOSAS Y CELOSAS PORQUE SU TÍO EL DESVIRGSDOR DE USTEDAS NO SE ARDE Y NO SE ESTRESADA A DIFEEJCIADE CJOTORRA Q CON EL MÁS MÍNIMO ROSON DE VERG4 YA SE ANDA ARDIENDO Y COMO TUS NLAGA SOS CHANGA PIENSA Q YO ME TOMOE ENSERIÓ SUS TETAS DE 20 AÑOS CUANDO CLARAMENGE SOLO ME BURLO DE USTAD PORWUE ERES FRACASADA Y DAS RISA CHANGA, DAS RISA PUEBLERINA DE SIERRA PUT4 SIN ACCESO AL MAR Y ENCIMA ES MARRÓNA PORQUE ERES MARRÓNA Y ESTAS DOXEADA ASI Y ERES UNA MORENA CHAPARRA🤣🤣🤣💨🇲🇽🇨🇱🍑🇨🇱🍑🇨🇱💨🍑💨 MUCHO FRÍJOL TE SACAS DE LAS NALGAS AMIGA PERRA JODIDA POR SU M4CH4 G4M4M1T4 🍑🇨🇱🇨🇱💨🇲🇽🍑🤣🤣🍑🍑🇲🇽🤣💨🤣🍑🇲🇽🍑🇲🇽🤣🍑🤣🍑🤣🍑🤣🍑🇲🇽🍑🇲🇽🍑🇲🇽🍑🇲🇽🍑🇲🇽🍑🇲🇽🤣🍑`,
     `.t insana <@${t}> \nTE ARDIÓ LAS NALGAS INSANA LA MISMA ARJENCHANGA Q FILTRO A LORDA Y CEJOTIÑA JAJAJA, MIRA CEJOTIÑA Q DECIR DE TI LA VERDAD, SI NADIE SE TOMA ENSERIÓ TUS NALGORRAS ES PORQUE CUALQUIERA TE TIENE DE PERRA CHE, RECUERDO Q HASTA UNA PROSTITUTA TE CALLO LAS NALGAS Y ASI TE QUIERES PONER DELANTE DE TUS MACHOS MAYORES (TIPO WARSZLA) Q CLARAMENTE TE PARAN ABUSANDO, NI Q DECIR Q ERES LA MAMÁ DEL MANJUNTER/JS/SPIDERMAN TE DESPLOMA EL CULO🤣🤣🤣🤣🤣🤣, NO PERRA TU SI ESTAS BIEN JODIDA CHE, TENES 20 AÑOS, ESTAS DESEMPLEADA, SE PUEDE DECIR Q ERES UN PEDON BISEXUAL Y TRAVESTI Q LE ENCANTA FINGIR SER MUJER Y SE ENAMORO DE GD Y FUE LLENADA DE MECOS DE LA WARSZLIZA Y Q LE LLEVA CASI 6 AÑOS A MANHUTER PERRA PEDOFILA!!! MALDIT4 PEDOFILA CHE, ESTAS BIEN JODID4 Y ACABADA CJOTORRONGA 🤣🤣`,
-    `.t cputiña <@${t}> \n chingero de semen en sus anos de fracasadas pe jsjsjs`
+    `.t cputiña <@${t}> \n chingero de semen en sus anos de fracasadas pe jsjsjs`,
+    `.t kayada <@${t}> \n DESGRACIADA LORDA SE CALLO HACE 1H SIENDO AHORA MISMO 11:23AM HORA MONCLOVA JAJAJA`
 ];
 
 function crearBot(token, nombre, delayInicial) {
@@ -37,7 +38,7 @@ function crearBot(token, nombre, delayInicial) {
     async function attack() {
         if (contador >= 25) {
             const pausa = Math.floor(Math.random() * (90000 - 60000 + 1)) + 60000;
-            console.log(`💤 [${nombre}] Ciclo OFF. Reset de ráfaga.`);
+            console.log(`💤 [${nombre}] Ciclo OFF. Pausa de ${pausa/1000}s`);
             contador = 0;
             return setTimeout(attack, pausa);
         }
@@ -49,49 +50,44 @@ function crearBot(token, nombre, delayInicial) {
             
             if (channel) {
                 const lista = msgsCortos(target);
-                let textOriginal = (channel.guild.id === SV_AUTOMOD) ? lista[Math.floor(Math.random() * lista.length)] : MSJ_LARGO;
+                let textBase = (channel.guild.id === SV_AUTOMOD) ? lista[Math.floor(Math.random() * lista.length)] : MSJ_LARGO;
                 
-                // FIRMA TÉCNICA DINÁMICA
+                // GENERACIÓN DE BYPASS DINÁMICO (Griegos + Números + Posición Aleatoria)
                 const firma = `🤣 [${"ΣΔΦΩΨΠΞΛΓ"[Math.floor(Math.random()*9)]}${Math.floor(Math.random()*9)}-${(Math.random()+1).toString(36).substring(7).toUpperCase()}]`;
                 const invisible = "\u200B".repeat(Math.floor(Math.random() * 5));
                 
-                // INSERCIÓN POST-COMANDO (Mantiene el .t limpio)
-                let splitPos = textOriginal.indexOf(">") + 1;
-                if (splitPos <= 0) splitPos = 15;
+                // Decide dónde meter la firma: 0=inicio, 1=medio, 2=final
+                let msgFinal;
+                const rPos = Math.floor(Math.random() * 3);
+                if (rPos === 0) msgFinal = `${firma} ${textBase}${invisible}`;
+                else if (rPos === 1) msgFinal = `${textBase.substring(0, textBase.length/2)} ${firma} ${textBase.substring(textBase.length/2)}${invisible}`;
+                else msgFinal = `${textBase}${invisible} ${firma}`;
 
-                let p1 = textOriginal.substring(0, splitPos);
-                let p2 = textOriginal.substring(splitPos);
-
-                // Alterna posición de la firma dentro del bardeo
-                let msgFinal = (Math.random() > 0.5) 
-                    ? `${p1} ${firma} ${p2}${invisible}` 
-                    : `${p1} ${p2}${invisible} ${firma}`;
-
-                await new Promise(r => setTimeout(r, 1000 + Math.random() * 1500));
+                await new Promise(r => setTimeout(r, 1000 + Math.random() * 2000));
                 await channel.sendTyping();
                 await new Promise(r => setTimeout(r, 1500 + Math.random() * 1000));
                 
                 await channel.send(msgFinal);
                 contador++;
-                console.log(`🚀 [${nombre}] (${contador}/25) Enviado`);
+                console.log(`🚀 [${nombre}] (${contador}/25)`);
             }
         } catch (e) { 
             return setTimeout(attack, 45000);
         }
 
-        // Intervalo entre mensajes (8-13s)
-        setTimeout(attack, Math.floor(Math.random() * (13000 - 8000 + 1)) + 8000); 
+        const proximoAtaque = Math.floor(Math.random() * (13000 - 8000 + 1)) + 8000;
+        setTimeout(attack, proximoAtaque); 
     }
 
     client.on('ready', () => {
-        console.log(`✨ ${nombre} OPERATIVO`);
+        console.log(`✨ ${nombre} LISTO`);
         setTimeout(attack, delayInicial);
     });
 
     client.login(token).catch(() => {});
 }
 
-// SOPORTE PARA LAS 6 CUENTAS
+// SOPORTE PARA 6 CUENTAS
 if (process.env.TOKEN_1) crearBot(process.env.TOKEN_1, "BOT_1", 0);
 if (process.env.TOKEN_2) crearBot(process.env.TOKEN_2, "BOT_2", 3000);
 if (process.env.TOKEN_3) crearBot(process.env.TOKEN_3, "BOT_3", 6000);
