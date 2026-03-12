@@ -1,12 +1,21 @@
+// PARCHE OBLIGATORIO - Si quitas esto, el bot crashea (Error: reading 'all')
 const { Client } = require('discord.js-selfbot-v13');
+const ClientUserSettingManager = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager.js');
+const originalPatch = ClientUserSettingManager.prototype._patch;
+ClientUserSettingManager.prototype._patch = function (data) {
+    if (data && !data.friend_source_flags) {
+        data.friend_source_flags = { all: false, mutual_friends: false, mutual_guilds: false };
+    }
+    return originalPatch.call(this, data);
+};
+
 const express = require('express');
 const app = express();
-
-app.get('/', (req, res) => res.send('🛡️ MOTOR DE ASEDIO V22 - MODO DEPREDADOR 🛡️'));
+app.get('/', (req, res) => res.send('🛡️ MOTOR DE ASEDIO V23 - 100% FUNCIONAL 🛡️'));
 app.listen(process.env.PORT || 8080);
 
 // ==========================================
-// 🎯 CONFIGURACIÓN DE IDs (TAL CUAL PIDIÓ)
+// 🎯 CONFIGURACIÓN DE IDs
 // ==========================================
 const SV_AUTOMOD = "1367693990492635176";
 
@@ -16,7 +25,7 @@ const OBJETIVOS = ["1457984414121459856", "1447142638326120458", "14797559304836
 // CANALES PRIORITARIOS - Enfoque de spam constante rotando menciones
 const PRIORITARIOS = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
 
-// CANAL RANDOM - Aquí se suelta el mensaje largo de Catbox
+// CANALES RANDOM - Aquí se suelta el mensaje largo de Catbox
 const CANALES_RANDOM = ["1239719951435304960"];
 
 // --- BARDEOS (100% ORIGINALES) ---
@@ -32,7 +41,7 @@ const MIS_MENSAJES = [
     ".T CJOTANGAANDGAMAMI CEJOTORRA Y GAMAMITA SON TAXISTAS Y ENCIMA TIENEN 20-18 AÑOS Y SU CARA ESTA MÁS DESFIGURADA Y CON LA MENSTRUACIÓN DE LA ABUELA DE CEJOTIÑA 🤣🤣🤣🤣",
     ".T CEJUDA2 PINCHE PERRA CJOTIÑA SOS UN KAGU3 DE RISA SHE NI QUIEN TE TOME ENSERIÓ PENDEJITA SI DESDE Q ESTAS TRAICIONADA TODOS TE HAN VENIDO TOMANDO LA COLA PARA TRAICIONARTE Y OLERTE EL PEDORRO CHE, SI HASTA AJENAS A LA CJ TE QUIEREN OLER EL QLO, HASTA LA MULTICUENTRA TRAVESTI DE HADESA Q ES REDBLACKA TE JODE LAS NALGAS🤣🤣🤣, YA NI HABLAR Q LESBERY TE ARDIÓ EL CULETE POR MICHOACANA 😈😈😈",
     ".T NITO PERRA TIENES Q ENTENDER Q SOS MEXINDIA DE MICHOACAN Y ERES CHATARRERA/TAXISTA😈😈😈🫵🫵🫵🤣🤣😂😂😂",
-    ".T INDIA LA MEJINDIA DE MICHOACAN TRAICIONADA POR PABLA VERACRUZANA DE POZA RICA (HUNDIDA) Y POR GAMAMITA OTRA VEZ JDKDJJSJS, PORQUE HASTA EL INDIO DE PABLA FUE A ROMPERTE LA NALGAS ENTRE DICIEMBRE Y FEBRERO Y TE PUSO TODAS LAS NALGAS GORDAS EN RIDÍCULO COMO YA ES COSTUMBRE SHE, ME DA RISA Q ESE INDIO TE DEJO BIEN EYACULADOT4 A HASTA PODRÍA DECIR Q EL INDIO DE PABLA SIENDO HORRIBLE FUE CAPAZ DE ESTRESARTE EL CULITO POR HORAS Y POR MÁS Q ESE INDIO SEA LENTO FUE CAPAZ DE ROMPERTE LAS NALGAS POR CHANGA BISEXUAL, HABLANDO DE BISEXUAL TAMBIÉN HAY Q DECIR Q ERES UNA FRIJOLERA Q SE ARDIÓ CON EL EDUARDO PORQUE EL EDUARDO LE ARDIÓ EL CUL0 CHE, PORQUE TUS NALGAS DE MEJICANOTA TUVIERON Q COMPARTIR CUENTA CON LA BISEXUAL CHILENA DE ZATHORNA PARA CUMPLIR SU DESEO DE SER MUJER ANTE GD, GD Q LAS LLENO DE MECOS A AMBAS PEDORRONAS Q ESTÁN FURIOSAS Y CELOSAS PORQUE SU TÍO EL DESVIRGADOR DE USTEDAS NO SE ARDE Y NO SE ESTRESADA A DIFEEJCIADE CJOTORRA Q CON EL MÁS MÍNIMO ROSON DE VERG4 YA SE ANDA ARDIENDO Y COMO TUS NLAGA SOS CHANGA PIENSAS Q YO ME TOMO ENSERIÓ SUS TETAS DE 20 AÑOS CUANDO CLARAMENGE SOLO ME BURLO DE USTAD PORWUE ERES FRACASADA Y DAS RISA CHANGA, DAS RISA PUEBLERINA DE SIERRA PUT4 SIN ACCESO AL MAR Y ENCIMA ES MARRÓNA PORQUE ERES MARRÓNA EN IG Y ERES UNA MORENA CHAPARRA🤣🤣💨🇲🇽🇨🇱🍑🇨🇱🍑🇨🇱💨🍑💨 MUCHO FRÍJOL TE SACAS DE LAS NALGAS AMIGA PERRA JODIDA POR SU M4CH4 G4M4M1T4 🍑🇨🇱🇨🇱💨🇲🇽🍑🤣🤣🍑🍑🇲🇽🤣💨🤣🍑🇲🇽🍑🇲🇽🤣🍑🤣🍑🤣🍑🤣🍑🇲🇽🍑🇲🇽🍑🇲🇽🍑🇲🇽🍑🇲🇽🍑🇲🇽🤣🍑",
+    ".T INDIA LA MEJINDIA DE MICHOACAN TRAICIONADA POR PABLA VERACRUZANA DE POZA RICA (HUNDIDA) Y POR GAMAMITA OTRA VEZ JDKDJJSJS, PORQUE HASTA EL INDIO DE PABLA FUE A ROMPERTE LA NALGAS ENTRE DICIEMBRE Y FEBRERO Y TE PUSO TODAS LAS NALGAS GORDAS EN RIDÍCULO COMO YA ES COSTUMBRE SHE, ME DA RISA Q ESE INDIO TE DEJO BIEN EYACULADOT4 A HASTA PODRÍA DECIR Q EL INDIO DE PABLA SIENDO HORRIBLE FUE CAPAZ DE ESTRESARTE EL CULITO POR HORAS Y POR MÁS Q ESE INDIO SEA LENTO FUE CAPAZ DE ROMPERTE LAS NALGAS POR CHANGA BISEXUAL, HABLANDO DE BISEXUAL TAMBIÉN HAY Q DECIR Q ERES UNA FRIJOLERA Q SE ARDIÓ CON EL EDUARDO PORQUE EL EDUARDO LE ARDIÓ EL CUL0 CHE, PORQUE TUS NALGAS DE MEJICANOTA TUVIERON Q COMPARTIR CUENTA CON LA BISEXUAL CHILENA DE ZATHORNA PARA CUMPLIR SU DESEO DE SER MUJER ANTE GD, GD Q LAS LLENO DE MECOS A AMBAS PEDORRONAS Q ESTÁN FURIOSAS Y CELOSAS PORQUE SU TÍO EL DESVIRGADOR DE USTEDAS NO SE ARDE Y NO SE ESTRESADA A DIFEEJCIADE CJOTORRA Q CON EL MÁS MÍNIMO ROSON DE VERG4 YA SE ANDA ARDIENDO Y COMO TUS NLAGA SOS CHANGA PIENSAS Q YO ME TOMO ENSERIÓ SUS TETAS DE 20 AÑOS",
     ".T INSANA TE ARDIÓ LAS NALGAS INSANA LA MISMA ARJENCHANGA Q FILTRO A LORDA Y CEJOTIÑA JAJAJA, MIRA CEJOTIÑA Q DECIR DE TI LA VERDAD, SI NADIE SE TOMA ENSERIÓ TUS NALGORRAS ES PORQUE CUALQUIERA TE TIENE DE PERRA CHE, RECUERDO Q HASTA UNA PROSTITUTA TE CALLO LAS NALGAS Y ASI TE QUIERES PONER DELANTE DE TUS MACHOS MAYORES (TIPO WARSZLA) Q CLARAMENTE TE PARAN ABUSANDO, NI Q DECIR Q ERES LA MAMÁ DEL MANJUNTER/JS/SPIDERMAN TE DESPLOMA EL CULO🤣🤣🤣🤣🤣🤣, NO PERRA TU SI ESTAS BIEN JODIDA CHE, TENES 20 AÑOS, ESTAS DESEMPLEADA, SE PUEDE DECIR Q ERES UN PEDON BISEXUAL Y TRAVESTI Q LE ENCANTA FINGIR SER MUJER Y SE ENAMORO DE GD Y FUE LLENADA DE MECOS DE LA WARSZLIZA Y Q LE LLEVA CASI 6 AÑOS A MANHUTER PERRA PEDOFILA!!! MALDIT4 PEDOFILA CHE, ESTAS BIEN JODID4 Y ACABADA CJOTORRONGA 🤣🤣",
     ".T CPUTIÑA CHINGERO DE SEMEN EN SUS ANOS DE FRACASADAS PE JSJSJS",
     ".T KAYADA JDKDJDJJSS LORDA PUTITA SE CALLO EN SPAM HACE 1H EN COAHUILA JAJAJDJJSHDW Y ESTO VA A SEGUIR SHE JAKSJDJJDJDJDDK",
@@ -43,69 +52,67 @@ const MIS_MENSAJES = [
 
 const MSJ_LARGO = `.T CEJOTIÑAANDGAMAMI \n<@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195> \nhttps://files.catbox.moe/d0wcx2.mp4`;
 
-// --- BYPASS ---
 function aplicarBypass(msg) {
     const griegas = "ΣΔΦΩΨΠΞΛΓ";
-    const firma = ` **[${griegas[Math.floor(Math.random()*9)]}${Math.floor(Math.random()*99)}]-[${(Math.random()+1).toString(36).substring(7).toUpperCase()}]**`;
-    return msg + firma;
+    return msg + ` **[${griegas[Math.floor(Math.random()*9)]}${Math.floor(Math.random()*99)}]-[${(Math.random()+1).toString(36).substring(7).toUpperCase()}]**`;
 }
 
 function crearBot(token, nombre, delayInicial) {
     const client = new Client({ checkUpdate: false });
-    let indexObjetivo = 0; // Para rotar las menciones
+    let indexObj = 0;
 
-    // LÓGICA 1: SPAM EN CANALES PRIORITARIOS Y RANDOM
+    // LÓGICA 1: SPAM EN PRIORITARIOS (ROTANDO MENCIONES)
     async function attack() {
         try {
-            // Rotar objetivo para la mención
-            const target = OBJETIVOS[indexObjetivo];
-            indexObjetivo = (indexObjetivo + 1) % OBJETIVOS.length;
-
-            // Decidir canal (Prioritario o Random)
-            const esRandom = Math.random() < 0.2; // 20% de probabilidad de ir al random
-            const channelID = esRandom ? CANALES_RANDOM[0] : PRIORITARIOS[Math.floor(Math.random() * PRIORITARIOS.length)];
+            const target = OBJETIVOS[indexObj];
+            indexObj = (indexObj + 1) % OBJETIVOS.length;
+            const channelID = PRIORITARIOS[Math.floor(Math.random() * PRIORITARIOS.length)];
             const channel = await client.channels.fetch(channelID).catch(() => null);
 
             if (channel) {
-                let msgFinal = esRandom ? MSJ_LARGO : MIS_MENSAJES[Math.floor(Math.random() * MIS_MENSAJES.length)] + ` <@${target}>`;
-                
+                const msg = MIS_MENSAJES[Math.floor(Math.random() * MIS_MENSAJES.length)] + ` <@${target}>`;
                 await channel.sendTyping();
                 await new Promise(r => setTimeout(r, 3000));
-                await channel.send(aplicarBypass(msgFinal));
-                console.log(`🔥 [${nombre}] Ataque en ${channelID} -> Mención a ${target}`);
+                await channel.send(aplicarBypass(msg));
             }
-        } catch (e) { }
-        setTimeout(attack, 35000 + Math.random() * 10000);
+        } catch (e) {}
+        setTimeout(attack, 40000 + Math.random() * 10000);
     }
 
-    // LÓGICA 2: AUTO-RESPUESTA (Si el canal NO está en las listas de spam)
+    // LÓGICA 2: SPAM EN RANDOM (MENSAJE LARGO)
+    async function attackRandom() {
+        try {
+            const channel = await client.channels.fetch(CANALES_RANDOM[0]).catch(() => null);
+            if (channel) {
+                await channel.sendTyping();
+                await new Promise(r => setTimeout(r, 5000));
+                await channel.send(aplicarBypass(MSJ_LARGO));
+            }
+        } catch (e) {}
+        setTimeout(attackRandom, 120000 + Math.random() * 30000); // Cada 2-3 mins el largo
+    }
+
+    // LÓGICA 3: AUTO-RESPUESTA (PARA CANALES NO ASIGNADOS)
     client.on('messageCreate', async (message) => {
         if (message.author.bot) return;
-
-        // Si la que escribe es una de las OBJETIVAS
+        // Si la ID es una de las OBJETIVAS y el canal NO es Prioritario ni Random
         if (OBJETIVOS.includes(message.author.id)) {
-            // Y el canal NO es Prioritario ni Random (donde ya estamos spameando)
             if (!PRIORITARIOS.includes(message.channel.id) && !CANALES_RANDOM.includes(message.channel.id)) {
-                
-                console.log(`🎯 [${nombre}] Cazando a ${message.author.id} en canal externo: ${message.channel.id}`);
-                
-                await new Promise(r => setTimeout(r, 2000));
-                const bardeoRandom = MIS_MENSAJES[Math.floor(Math.random() * MIS_MENSAJES.length)];
-                
                 try {
-                    await message.channel.send(aplicarBypass(`${bardeoRandom} <@${message.author.id}>`));
-                } catch (e) { }
+                    const bardeo = MIS_MENSAJES[Math.floor(Math.random() * MIS_MENSAJES.length)];
+                    await message.channel.send(aplicarBypass(`${bardeo} <@${message.author.id}>`));
+                } catch (e) {}
             }
         }
     });
 
-    client.on('ready', () => { 
-        console.log(`✅ ${nombre} ONLINE - PRIORITARIOS: ${PRIORITARIOS.length} | RANDOM: ${CANALES_RANDOM[0]}`); 
-        setTimeout(attack, delayInicial); 
+    client.on('ready', () => {
+        console.log(`✅ ${nombre} ACTIVO`);
+        setTimeout(attack, delayInicial);
+        setTimeout(attackRandom, delayInicial + 10000);
     });
     client.login(token).catch(() => {});
 }
 
-// Iniciar
 const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5, process.env.TOKEN_6];
-tokens.forEach((t, i) => { if (t) crearBot(t, `BOT_${i+1}`, i * 20000); });
+tokens.forEach((t, i) => { if (t) crearBot(t, `BOT_${i+1}`, i * 30000); });
