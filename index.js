@@ -2,7 +2,7 @@ const { Client } = require('discord.js-selfbot-v13');
 const express = require('express');
 const app = express();
 
-app.get('/', (req, res) => res.send('🛡️ RÁFAGA EXTREMA ACTIVA 🛡️'));
+app.get('/', (req, res) => res.send('🛡️ ASEDIO FANTASMA NIVEL 6 🛡️'));
 app.listen(process.env.PORT || 8080);
 
 const SV_AUTOMOD = "1367693990492635176";
@@ -24,53 +24,72 @@ const msgsCortos = (t) => [
     `.t cjotangaandgamami <@${t}> \nCEJOTORRA Y GAMAMITA SON TAXISTAS Y ENCIMA TIENEN 20-18 AÑOS Y SU CARA ESTA MÁS DESFIGURADA Y CON LA MENSTRUACIÓN DE LA ABUELA DE CEJOTIÑA 🤣🤣🤣🤣`,
     `.t cejuda2 <@${t}> \nPINCHE PERRA CJOTIÑA SOS UN KAGU3 DE RISA SHE NI QUIEN TE TOME ENSERIÓ PENDEJITA SI DESDE Q ESTAS TRAICIONADA TODOS TE HAN VENIDO TOMANDO LA COLA PARA TRAICIONARTE Y OLERTE EL PEDORRO CHE, SI HASTA AJENAS A LA CJ TE QUIEREN OLER EL QLO, HASTA LA MULTICUENTRA TRAVESTI DE HADESA Q ES REDBLACKA TE JODE LAS NALGAS🤣🤣🤣, YA NI HABLAR Q LESBERY TE ARDIÓ EL CULETE POR MICHOACANA 😈😈😈`,
     `.t nito <@${t}> \nPERRA TIENES Q ENTENDER Q SOS MEXINDIA DE MICHOACAN Y ERES CHATARRERA/TAXISTA😈😈😈🫵🫵🫵🤣🤣😂😂😂`,
-    `.t india <@${t}> \nLA MEJINDIA DE MICHOACAN TRAICIONADA POR PABLA VERACRUZANA DE POZA RICA (HUNDIDA) Y POR GAMAMITA OTRA VEZ JDKDJJSJS, PORQUE HASTA EL INDIO DE PABLA FUE A ROMPERTE LA NALGAS ENTRE DICIEMBRE Y FEBRERO Y TE PUSO TODAS LAS NALGAS GORDAS EN RIDÍCULO COMO YA ES COSTUMBRE SHE, ME DA RISA Q ESE INDIO TE DEJO BIEN EYACULADOT4 A HASTA PODRÍA DECIR Q EL INDIO DE PABLA SIENDO HORRIBLE FUE CAPAZ DE ESTRESARTE EL CULITO POR HORAS Y POR MÁS Q ESE INDIO SEA LENTO FUE CAPAZ DE ROMPERTE LAS NALGAS POR CHANGA BISEXUAL, HABLANDO DE BISEXUAL TAMBIÉN HAY Q DECIR Q ERES UNA FRIJOLERA Q SE ARDIÓ CON EL EDUARDO PORQUE EL EDUARDO LE ARDIÓ EL CUL0 CHE, PORQUE TUS NALGAS DE MEJICANOTA TUVIERON Q COMPARTIR CUENTA CON LA BISEXUAL CHILENA DE ZATHORNA PARA CUMPLIR SU DESEO DE SER MUJER ANTE GD, GD Q LAS LLENO DE MECOS A AMBAS PEDORRONAS Q ESTÁN FURIOSAS Y CELOSAS PORQUE SU TÍO EL DESVIRGSDOR DE USTEDAS NO SE ARDE Y NO SE ESTRESADA A DIFEEJCIADE CJOTORRA Q CON EL MÁS MÍNIMO ROSON DE VERG4 YA SE ANDA ARDIENDO Y COMO TUS NLAGA SOS CHANGA PIENSA Q YO ME TOMOE ENSERIÓ SUS TETAS DE 20 AÑOS CUANDO CLARAMENGE SOLO ME BURLO DE USTAD PORWUE ERES FRACASADA Y DAS RISA CHANGA, DAS RISA PUEBLERINA DE SIERRA PUT4 SIN ACCESO AL MAR Y ENCIMA ES MARRÓNA PORQUE ERES MARRÓNA Y ESTAS DOXEADA ASI Y ERES UNA MORENA CHAPARRA🤣🤣🤣💨🇲🇽🇨🇱🍑🇨🇱🍑🇨🇱💨🍑💨 MUCHO FRÍJOL TE SACAS DE LAS NALGAS AMIGA PERO ASÍ JAMÁS SENTONEAS A TU TOR0, A TU TIO JAMÁS LO VAS A SENTONEAR PORQUE ERES CHILANGA SHE BISEXUAL Q LA TRAICIONA GAMAMITA!!!! PERRA JODIDA POR SU M4CH4 G4M4M1T4`,
-    `.t insana <@${t}> \nTE ARDIÓ LAS NALGAS INSANA LA MISMA ARJENCHANGA Q FILTRO A LORDA Y CEJOTIÑA JAJAJA, MIRA CEJOTIÑA Q DECIR DE TI LA VERDAD, SI NADIE SE TOMA ENSERIÓ TUS NALGORRAS ES PORQUE CUALQUIERA TE TIENE DE PERRA CHE, RECUERDO Q HASTA UNA PROSTITUTA TE CALLO LAS NALGAS Y ASI TE QUIERES PONER DELANTE DE TUS MACHOS MAYORES (TIPO WARSZLA) Q CLARAMENTE TE PARAN ABUSANDO, NI Q DECIR Q ERES LA MAMÁ DEL MANJUNTER/JS/SPIDERMAN TE DESPLOMA EL CULO🤣🤣🤣🤣🤣🤣, NO PERRA TU SI ESTAS BIEN JODIDA CHE, TENES 20 AÑOS, ESTAS DESEMPLEADA, SE PUEDE DECIR Q ERES UN PEDON BISEXUAL Y TRAVESTI Q LE ENCANTA FINGIR SER MUJER Y SE ENAMORO DE GD Y FUE LLENADA DE MECOS DE LA WARSZLIZA Y Q LE LLEVA CASI 6 AÑOS A MANHUTER PERRA PEDOFILA!!! MALDIT4 PEDOFILA CHE,  ACABADA CJOTORRONGA 🤣🤣`, 
+    `.t india <@${t}> \nLA MEJINDIA DE MICHOACAN TRAICIONADA POR PABLA VERACRUZANA DE POZA RICA (HUNDIDA) Y POR GAMAMITA OTRA VEZ JDKDJJSJS, PORQUE HASTA EL INDIO DE PABLA FUE A ROMPERTE LA NALGAS ENTRE DICIEMBRE Y FEBRERO Y TE PUSO TODAS LAS NALGAS GORDAS EN RIDÍCULO COMO YA ES COSTUMBRE SHE, ME DA RISA Q ESE INDIO TE DEJO BIEN EYACULADOT4 A HASTA PODRÍA DECIR Q EL INDIO DE PABLA SIENDO HORRIBLE FUE CAPAZ DE ESTRESARTE EL CULITO POR HORAS Y POR MÁS Q ESE INDIO SEA LENTO FUE CAPAZ DE ROMPERTE LAS NALGAS POR CHANGA BISEXUAL, HABLANDO DE BISEXUAL TAMBIÉN HAY Q DECIR Q ERES UNA FRIJOLERA Q SE ARDIÓ CON EL EDUARDO PORQUE EL EDUARDO LE ARDIÓ EL CUL0 CHE, PORQUE TUS NALGAS DE MEJICANOTA TUVIERON Q COMPARTIR CUENTA CON LA BISEXUAL CHILENA DE ZATHORNA PARA CUMPLIR SU DESEO DE SER MUJER ANTE GD, GD Q LAS LLENO DE MECOS A AMBAS PEDORRONAS Q ESTÁN FURIOSAS Y CELOSAS PORQUE SU TÍO EL DESVIRGSDOR DE USTEDAS NO SE ARDE Y NO SE ESTRESADA A DIFEEJCIADE CJOTORRA Q CON EL MÁS MÍNIMO ROSON DE VERG4 YA SE ANDA ARDIENDO Y COMO TUS NLAGA SOS CHANGA PIENSA Q YO ME TOMOE ENSERIÓ SUS TETAS DE 20 AÑOS CUANDO CLARAMENGE SOLO ME BURLO DE USTAD PORWUE ERES FRACASADA Y DAS RISA CHANGA, DAS RISA PUEBLERINA DE SIERRA PUT4 SIN ACCESO AL MAR Y ENCIMA ES MARRÓNA PORQUE ERES MARRÓNA Y ESTAS DOXEADA ASI Y ERES UNA MORENA CHAPARRA🤣🤣🤣💨🇲🇽🇨🇱🍑🇨🇱🍑🇨🇱💨🍑💨 MUCHO FRÍJOL TE SACAS DE LAS NALGAS AMIGA PERRA JODIDA POR SU M4CH4 G4M4M1T4 🍑🇨🇱🇨🇱💨🇲🇽🍑🤣🤣🍑🍑🇲🇽🤣💨🤣🍑🇲🇽🍑🇲🇽🤣🍑🤣🍑🤣🍑🤣🍑🇲🇽🍑🇲🇽🍑🇲🇽🍑🇲🇽🍑🇲🇽🍑🇲🇽🤣🍑`,
+    `.t insana <@${t}> \nTE ARDIÓ LAS NALGAS INSANA LA MISMA ARJENCHANGA Q FILTRO A LORDA Y CEJOTIÑA JAJAJA, MIRA CEJOTIÑA Q DECIR DE TI LA VERDAD, SI NADIE SE TOMA ENSERIÓ TUS NALGORRAS ES PORQUE CUALQUIERA TE TIENE DE PERRA CHE, RECUERDO Q HASTA UNA PROSTITUTA TE CALLO LAS NALGAS Y ASI TE QUIERES PONER DELANTE DE TUS MACHOS MAYORES (TIPO WARSZLA) Q CLARAMENTE TE PARAN ABUSANDO, NI Q DECIR Q ERES LA MAMÁ DEL MANJUNTER/JS/SPIDERMAN TE DESPLOMA EL CULO🤣🤣🤣🤣🤣🤣, NO PERRA TU SI ESTAS BIEN JODIDA CHE, TENES 20 AÑOS, ESTAS DESEMPLEADA, SE PUEDE DECIR Q ERES UN PEDON BISEXUAL Y TRAVESTI Q LE ENCANTA FINGIR SER MUJER Y SE ENAMORO DE GD Y FUE LLENADA DE MECOS DE LA WARSZLIZA Y Q LE LLEVA CASI 6 AÑOS A MANHUTER PERRA PEDOFILA!!! MALDIT4 PEDOFILA CHE, ESTAS BIEN JODID4 Y ACABADA CJOTORRONGA 🤣🤣`,
     `.t cputiña <@${t}> \n chingero de semen en sus anos de fracasadas pe jsjsjs`
 ];
 
 function crearBot(token, nombre, delayInicial) {
     const client = new Client({ checkUpdate: false });
-    
-    // Parche Railway
     client.settings = { _patch: function() { return this; }, patch: function() { return this; } };
-    Object.defineProperty(client, 'settings', { value: client.settings, writable: false });
+    let contador = 0;
 
     async function attack() {
+        if (contador >= 25) {
+            const pausa = Math.floor(Math.random() * (90000 - 60000 + 1)) + 60000;
+            console.log(`💤 [${nombre}] Ciclo OFF. Pausa de ${pausa/1000}s`);
+            contador = 0;
+            return setTimeout(attack, pausa);
+        }
+
         try {
             const target = OBJETIVOS[Math.floor(Math.random() * OBJETIVOS.length)];
             let channelID = Math.random() < 0.60 ? PRIORITARIOS[Math.floor(Math.random() * 2)] : CANALES_RANDOM[Math.floor(Math.random() * CANALES_RANDOM.length)];
             const channel = await client.channels.fetch(channelID).catch(() => null);
             
             if (channel) {
-                // Lógica de seguridad 0% largo en Automod
-                let msg = (channel.guild.id === SV_AUTOMOD) ? msgsCortos(target)[Math.floor(Math.random() * 13)] : MSJ_LARGO;
-                const bypass = `🤣 [${"ΓΔΘΛΞΠΣΦΨΩ"[Math.floor(Math.random()*10)]}-${Math.random().toString(36).substring(5).toUpperCase()}]`;
-
-                // Escritura ultra-rápida (1s) para modo ráfaga
-                await channel.sendTyping();
-                await new Promise(r => setTimeout(r, 1000));
+                const lista = msgsCortos(target);
+                let textBase = (channel.guild.id === SV_AUTOMOD) ? lista[Math.floor(Math.random() * lista.length)] : MSJ_LARGO;
                 
-                await channel.send(`${msg} ${bypass}`);
-                console.log(`🚀 [${nombre}] Disparo!`);
+                // GENERACIÓN DE BYPASS DINÁMICO (Griegos + Números + Posición Aleatoria)
+                const firma = `🤣 [${"ΣΔΦΩΨΠΞΛΓ"[Math.floor(Math.random()*9)]}${Math.floor(Math.random()*9)}-${(Math.random()+1).toString(36).substring(7).toUpperCase()}]`;
+                const invisible = "\u200B".repeat(Math.floor(Math.random() * 5));
+                
+                // Decide dónde meter la firma: 0=inicio, 1=medio, 2=final
+                let msgFinal;
+                const rPos = Math.floor(Math.random() * 3);
+                if (rPos === 0) msgFinal = `${firma} ${textBase}${invisible}`;
+                else if (rPos === 1) msgFinal = `${textBase.substring(0, textBase.length/2)} ${firma} ${textBase.substring(textBase.length/2)}${invisible}`;
+                else msgFinal = `${textBase}${invisible} ${firma}`;
+
+                await new Promise(r => setTimeout(r, 1000 + Math.random() * 2000));
+                await channel.sendTyping();
+                await new Promise(r => setTimeout(r, 1500 + Math.random() * 1000));
+                
+                await channel.send(msgFinal);
+                contador++;
+                console.log(`🚀 [${nombre}] (${contador}/25)`);
             }
-        } catch (e) { console.log(`[${nombre}] Error`); }
-        
-        // CADA BOT DISPARA CADA 8 SEGUNDOS
-        setTimeout(attack, 8000); 
+        } catch (e) { 
+            return setTimeout(attack, 45000);
+        }
+
+        const proximoAtaque = Math.floor(Math.random() * (13000 - 8000 + 1)) + 8000;
+        setTimeout(attack, proximoAtaque); 
     }
 
     client.on('ready', () => {
         console.log(`✨ ${nombre} LISTO`);
-        // Delay inicial para que no disparen todos al mismo milisegundo
         setTimeout(attack, delayInicial);
     });
 
     client.login(token).catch(() => {});
 }
 
-// Escalonamiento de 2 segundos entre cuentas para flujo constante
+// SOPORTE PARA 6 CUENTAS
 if (process.env.TOKEN_1) crearBot(process.env.TOKEN_1, "BOT_1", 0);
-if (process.env.TOKEN_2) crearBot(process.env.TOKEN_2, "BOT_2", 2000);
-if (process.env.TOKEN_3) crearBot(process.env.TOKEN_3, "BOT_3", 4000);
-if (process.env.TOKEN_4) crearBot(process.env.TOKEN_4, "BOT_4", 6000);
+if (process.env.TOKEN_2) crearBot(process.env.TOKEN_2, "BOT_2", 3000);
+if (process.env.TOKEN_3) crearBot(process.env.TOKEN_3, "BOT_3", 6000);
+if (process.env.TOKEN_4) crearBot(process.env.TOKEN_4, "BOT_4", 9000);
+if (process.env.TOKEN_5) crearBot(process.env.TOKEN_5, "BOT_5", 12000);
+if (process.env.TOKEN_6) crearBot(process.env.TOKEN_6, "BOT_6", 15000);
