@@ -1,5 +1,5 @@
 // ==========================================
-// 🛡️ MOTOR DE ASEDIO V35 - OPTIMIZADO
+// 🛡️ MOTOR DE ASEDIO V36 - ANTI-DETECCIÓN FINAL
 // ==========================================
 const { Client } = require('discord.js-selfbot-v13');
 const ClientUserSettingManager = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager.js');
@@ -13,16 +13,16 @@ ClientUserSettingManager.prototype._patch = function (data) {
 
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('⚔️ V35 - BYPASS COMANDOS ACTIVO ⚔️'));
+app.get('/', (req, res) => res.send('⚔️ V36 - MODO FANTASMA ACTIVADO ⚔️'));
 app.listen(process.env.PORT || 8080);
 
-const SERVER_ID = "1367693990492635176";
-const SERVER_ID_2 = "1239701315580592148";
+// IDs DE CONFIGURACIÓN
+const SERVER_ID = "1367693990492635176"; // Server con Automod
+const SERVER_ID_2 = "1239701315580592148"; // Server sin Automod
 const OBJETIVOS = ["1457984414121459856", "1447142638326120458", "1479755930483691610", "1479748142722191514", "1457144912561832182"];
 const PRIORITARIOS = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
 const CANALES_RANDOM = ["1239719951435304960"];
 
-// --- BARDEOS OPTIMIZADOS ---
 const MIS_MENSAJES = [
     ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA VAMOS A SEGUIR MANDANDU MENSAJES Y MÁS EDITS DE FUR Q TE ARDEN EL CULETE FALLECIDU SH",
     ".t v14 HEY CHE TE ARDE ESTA PERR4 FALLECIDA NOPALERA JAJAJA",
@@ -35,32 +35,32 @@ const MIS_MENSAJES = [
     ".t joan MACH4 G4M4MITA DIRÍA LA PUTITA MARRONA Y CONCHUDA DE CEJUDA JAJJAJAA",
     ".t chichuda VENGAN MEJICHANGAS DENLE TET4 A SU MACHETE JSJAJAJA",
     ".t cjotangaandgamami CEJOTORRA Y GAMAMITA SON TAXISTAS Y ENCIMA TIENEN 20-18 AÑOS Y SU CARA ESTA MÁS DESFIGURADA Y CON LA MENSTRUACIÓN DE LA ABUELA DE CEJOTIÑA 🤣🤣🤣🤣",
-    ".t cejuda2 PINCHE PERRA CJOTIÑA SOS UN KAGU3 DE RISA SHE NI QUIEN TE TOME ENSERIÓ PENDEJITA SI DESDE Q ESTAS TRAICIONADA TODOS TE HAN VENIDO TOMANDO LA COLA PARA TRAICIONARTE Y OLERTE EL PEDORRO CHE, SI HASTA AJENAS A LA CJ TE QUIEREN OLER EL QLO, HASTA LA MULTICUENTRA TRAVESTI DE HADESA Q ES REDBLACKA TE JODE LAS NALGAS🤣🤣🤣",
-    ".t nito PERRA TIENES Q ENTENDER Q SOS MEXINDIA DE MICHOACAN Y ERES CHATARRERA/TAXISTA😈😈😈🫵🫵🫵🤣🤣😂😂😂, PORQUE TUS NALGAS DE MEJICANOTA TUVIERON Q COMPARTIR CUENTA CON LA BISEXUAL CHILENA DE ZATHORNA PARA CUMPLIR SU DESEO DE SER MUJER ANTE GD",
+    ".t cejuda2 PINCHE PERRA CJOTIÑA SOS UN KAGU3 DE RISA SHE NI QUIEN TE TOME ENSERIÓ PENDEJITA SI DESDE Q ESTAS TRAICIONADA TODOS TE HAN VENIDO TOMANDO LA COLA PARA TRAICIONARTE Y OLERTE EL PEDORRO CHE",
+    ".t nito PERRA TIENES Q ENTENDER Q SOS MEXINDIA DE MICHOACAN Y ERES CHATARRERA/TAXISTA😈😈😈🫵🫵🫵🤣🤣😂😂😂",
     ".t india LA MEJINDIA DE MICHOACAN TRAICIONADA POR PABLA VERACRUZANA DE POZA RICA (HUNDIDA) Y POR GAMAMITA OTRA VEZ JDKDJJSJS", 
     ".t insana TE ARDIÓ LAS NALGAS INSANA LA MISMA ARJENCHANGA Q FILTRO A LORDA Y CEJOTIÑA JAJAJA",
     ".t cputiña CHINGERO DE SEMEN EN SUS ANOS DE FRACASADAS PE JSJSJS",
     ".t kayada JDKDJDJJSS LORDA PUTITA SE CALLO EN SPAM HACE 1H EN COAHUILA JAJAJDJJSHDW Y ESTO VA A SEGUIR SHE JAKSJDJJDJDJDDK",
     ".t cjotorr4 VAGINA DE CEJOTIÑA SHE JDJSKDJKSJSKSJD",
-    ".t nalgotanga APURATE NALGOTANGA SALVA A GAMAMITA Q SE MURIÓ JAJAJAJA, TODAS SE RÍEN DE TI, TE TRAICIONA GAMAMITA Y TE USA💀💀💀💀",
+    ".t nalgotanga APURATE NALGOTANGA SALVA A GAMAMITA Q SE MURIÓ JAJAJAJA, TODAS SE RÍEN DE TI",
     ".t cejud4 SE LE DESCONFIGURO LA NALGA A CHATARRERA GAMAMITA JAJAJAJAJAJAJAJAJAJAJA"
 ];
 
-const MSJ_LARGO = `.T CEJOTIÑAANDGAMAMI \n<@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195> \nhttps://files.catbox.moe/d0wcx2.mp4`;
+const MSJ_LARGO = `.T CEJOTIÑAANDGAMAMI \n<@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS \nhttps://files.catbox.moe/d0wcx2.mp4`;
 
-// --- BYPASS ---
+// --- BYPASS DE ALTA SEGURIDAD ---
 function aplicarBypass(msg) {
-    const griegas = ["Σ", "Δ", "Φ", "Ω", "Ψ", "Π", "Ξ", "Λ", "Γ", "Θ", "Ϡ", "Ѧ", "Ѫ"];
+    const griegas = ["Σ", "Δ", "Φ", "Ω", "Ψ", "Π", "Ξ", "Λ", "Γ", "Θ"];
     const g = griegas[Math.floor(Math.random() * griegas.length)];
     const num = Math.floor(Math.random() * 999999);
-    const hex = Math.random().toString(16).substring(2, 8).toUpperCase();
-    
-    const lowerMsg = msg.toLowerCase();
-    if (lowerMsg.startsWith(".t ")) {
+    const invis = "\u200b".repeat(Math.floor(Math.random() * 5) + 1);
+
+    if (msg.toLowerCase().startsWith(".t ")) {
         const resto = msg.slice(3);
-        return `.t **[${g}${num}-${hex}]** ${resto}`;
+        // Formato: .t [COD] invisibles resto (Limpio para Notsotbot)
+        return `.t [${g}${num}] ${invis}${resto}`;
     }
-    return `**[${g}${num}-${hex}]** ${msg}`;
+    return `[${g}${num}] ${invis}${msg}`;
 }
 
 let botIndex = 0;
@@ -76,6 +76,7 @@ function crearBot(token, nombre) {
         botsReady.push({ client, nombre });
         if (botsReady.length === 1) scheduleNextAttack();
 
+        // Spam en canal random (Server 2)
         setInterval(async () => {
             if (client.isResting) return;
             try {
@@ -84,15 +85,16 @@ function crearBot(token, nombre) {
                     await chan.sendTyping();
                     setTimeout(async () => {
                         await chan.send(aplicarBypass(MSJ_LARGO)).catch(() => null);
-                    }, 1500);
+                    }, 2000);
                 }
             } catch(e){}
-        }, 120000);
+        }, 150000); // Cada 2.5 min
     });
 
     client.on('messageCreate', async (msg) => {
         if (msg.author.bot || client.isResting) return;
         const esServerValido = msg.guild?.id === SERVER_ID || msg.guild?.id === SERVER_ID_2;
+
         if (esServerValido && OBJETIVOS.includes(msg.author.id)) {
             if (!PRIORITARIOS.includes(msg.channel.id) && !CANALES_RANDOM.includes(msg.channel.id)) {
                 try {
@@ -101,11 +103,12 @@ function crearBot(token, nombre) {
                         const bardeo = MIS_MENSAJES[Math.floor(Math.random() * MIS_MENSAJES.length)];
                         await msg.channel.send(aplicarBypass(`${bardeo} <@${msg.author.id}>`));
                         client.msgCount++;
-                    }, 1500);
+                    }, 2000);
                 } catch (e) {}
             }
         }
     });
+
     client.login(token).catch(() => {});
 }
 
@@ -115,13 +118,13 @@ async function scheduleNextAttack() {
     const bot = currentBotObj.client;
     botIndex = (botIndex + 1) % botsReady.length;
 
-    if (bot.msgCount >= 30 && !bot.isResting) {
+    if (bot.msgCount >= 20 && !bot.isResting) {
         bot.isResting = true;
-        const restTime = Math.floor(Math.random() * 30000) + 60000;
+        console.log(`🛡️ ${currentBotObj.nombre} ENFRIANDO...`);
         setTimeout(() => {
             bot.isResting = false;
             bot.msgCount = 0;
-        }, restTime);
+        }, 120000); // 2 min de descanso
         return scheduleNextAttack();
     }
 
@@ -136,11 +139,14 @@ async function scheduleNextAttack() {
                     const bardeo = MIS_MENSAJES[Math.floor(Math.random() * MIS_MENSAJES.length)];
                     await channel.send(aplicarBypass(`${bardeo} <@${target}>`)).catch(() => null);
                     bot.msgCount++;
-                }, 2000);
+                }, 4000);
             }
         } catch (e) {}
     }
-    setTimeout(scheduleNextAttack, Math.floor(Math.random() * 7000) + 8000);
+
+    // Delay humano entre ataques del sistema (15-25 seg)
+    const nextDelay = Math.floor(Math.random() * 10000) + 15000;
+    setTimeout(scheduleNextAttack, nextDelay);
 }
 
 const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5, process.env.TOKEN_6];
