@@ -1,8 +1,7 @@
-// ==========================================
-// 🛡️ MOTOR DE ASEDIO V36 - ANTI-DETECCIÓN FINAL
-// ==========================================
 const { Client } = require('discord.js-selfbot-v13');
 const ClientUserSettingManager = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager.js');
+
+// --- PARCHE DE PRIVACIDAD ---
 const originalPatch = ClientUserSettingManager.prototype._patch;
 ClientUserSettingManager.prototype._patch = function (data) {
     if (data && !data.friend_source_flags) {
@@ -13,99 +12,115 @@ ClientUserSettingManager.prototype._patch = function (data) {
 
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('⚔️ V36 - MODO FANTASMA ACTIVADO ⚔️'));
+app.get('/', (req, res) => res.send('⚔️ V60 - ESTRUCTURA FINAL ⚔️'));
 app.listen(process.env.PORT || 8080);
 
-// IDs DE CONFIGURACIÓN
-const SERVER_ID = "1367693990492635176"; // Server con Automod
-const SERVER_ID_2 = "1239701315580592148"; // Server sin Automod
-const OBJETIVOS = ["1457984414121459856", "1447142638326120458", "1479755930483691610", "1479748142722191514", "1457144912561832182"];
+// --- CONFIGURACIÓN DE IDS ---
+const SERVER_CON_AUTOMOD = "1367693990492635176"; 
+const SERVER_SIN_AUTOMOD = "1239701315580592148"; 
+const ID_CANAL_FORZADO = "1239719951435304960"; 
+
+// Se quitó ID_CANAL_FORZADO de aquí para que no sea un objetivo aleatorio
 const PRIORITARIOS = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
-const CANALES_RANDOM = ["1239719951435304960"];
+const OBJETIVOS_IDS = ["1447142638326120458", "1457144912561832182", "1479748142722191514", "1479755930483691610", "1457984414121459856"];
 
-const MIS_MENSAJES = [
-    ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA VAMOS A SEGUIR MANDANDU MENSAJES Y MÁS EDITS DE FUR Q TE ARDEN EL CULETE FALLECIDU SH",
-    ".t v14 HEY CHE TE ARDE ESTA PERR4 FALLECIDA NOPALERA JAJAJA",
-    ".t cputiñagachatuber MAMITA CEJOTORRA QUIERES PENE SHAM4? NALGARERA GAMAMITA PUTA DE FRANKITA Y DE NEG4 SHE",
-    ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS MEJICHANGA NALGA MONCLOVEÑA SOY TU MASHO/TÍO DE 40 AÑOS",
-    ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR SUS NALG4S DESDE GROK CUANDO SU BRAZO LONJUDO ANDA FILTRADO POR LA MALDITA DE ERRE ELA EN IG Y HAY CAPS Q TENGO YO Q SON IRREFUTABLES DE ESTO🤣🤣🤣",
-    ".t cejotorra MAMELE MÁS MEJICHANGA Q A SIMIAS COMO A TU LAS DEBEN DE LLEVAR AL MATADERO POR MEJICANAS GÜEY",
-    ".t lorda Y MIENTRAS TANTO CJOTORRA VIENDO TODO CON SU CARA DE INDIA MEJICANA TENIENDO Q MANTENER A SU MAMITA Y COMO JOTIÑA ES PUTA PUES ES UNA FRIJOPERRA JAJAJA, ",
-    ".t frijolera FRIJOLERA DILE DOMADORA A TU M4CH4 Q TE TIENE DE PUTITA Q SOLO GENERAS Q SE BURLEN DE TU NALGA ALABANDO A UNA Q TE TRAICIONA LA NALGA🤣🤣🤣",
-    ".t joan MACH4 G4M4MITA DIRÍA LA PUTITA MARRONA Y CONCHUDA DE CEJUDA JAJJAJAA",
-    ".t chichuda VENGAN MEJICHANGAS DENLE TET4 A SU MACHETE JSJAJAJA",
-    ".t cjotangaandgamami CEJOTORRA Y GAMAMITA SON TAXISTAS Y ENCIMA TIENEN 20-18 AÑOS Y SU CARA ESTA MÁS DESFIGURADA Y CON LA MENSTRUACIÓN DE LA ABUELA DE CEJOTIÑA 🤣🤣🤣🤣",
-    ".t cejuda2 PINCHE PERRA CJOTIÑA SOS UN KAGU3 DE RISA SHE NI QUIEN TE TOME ENSERIÓ PENDEJITA SI DESDE Q ESTAS TRAICIONADA TODOS TE HAN VENIDO TOMANDO LA COLA PARA TRAICIONARTE Y OLERTE EL PEDORRO CHE",
-    ".t nito PERRA TIENES Q ENTENDER Q SOS MEXINDIA DE MICHOACAN Y ERES CHATARRERA/TAXISTA😈😈😈🫵🫵🫵🤣🤣😂😂😂",
-    ".t india LA MEJINDIA DE MICHOACAN TRAICIONADA POR PABLA VERACRUZANA DE POZA RICA (HUNDIDA) Y POR GAMAMITA OTRA VEZ JDKDJJSJS", 
-    ".t insana TE ARDIÓ LAS NALGAS INSANA LA MISMA ARJENCHANGA Q FILTRO A LORDA Y CEJOTIÑA JAJAJA",
-    ".t cputiña CHINGERO DE SEMEN EN SUS ANOS DE FRACASADAS PE JSJSJS",
-    ".t kayada JDKDJDJJSS LORDA PUTITA SE CALLO EN SPAM HACE 1H EN COAHUILA JAJAJDJJSHDW Y ESTO VA A SEGUIR SHE JAKSJDJJDJDJDDK",
-    ".t cjotorr4 VAGINA DE CEJOTIÑA SHE JDJSKDJKSJSKSJD",
-    ".t nalgotanga APURATE NALGOTANGA SALVA A GAMAMITA Q SE MURIÓ JAJAJAJA, TODAS SE RÍEN DE TI",
-    ".t cejud4 SE LE DESCONFIGURO LA NALGA A CHATARRERA GAMAMITA JAJAJAJAJAJAJAJAJAJAJA"
+// --- MENSAJES ---
+const MI_MENSAJE_LARGO = `.t cputiñagachatuber <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195> \n\nhttps://files.catbox.moe/d0wcx2.mp4`;
+
+const MIS_BARDEOS = [
+    ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA",
+    ".t v14 HEY CHE TE ARDE ESTA PERR4",
+    ".t cputiñagachatuber MAMITA CEJOTORRA",
+    ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS",
+    ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR",
+    ".t cejotorra MAMELE MÁS MEJICHANGA",
+    ".t lorda CJOTORRA VIENDO TODO con su cara",
+    ".t frijolera FRIJOLERA DILE DOMADORA",
+    ".t joan MACH4 G4M4MITA DIRÍA LA PUTITA",
+    ".t chichuda VENGAN MEJICHANGAS DENLE TET4",
+    ".t cjotangaandgamami CEJOTORRA Y GAMAMITA",
+    ".t cejuda2 PINCHE PERRA CJOTIÑA",
+    ".t nito PERRA TIENES Q ENTENDER Q SOS",
+    ".t india LA MEJINDIA DE MICHOACAN",
+    ".t insana TE ARDIÓ LAS NALGAS INSANA",
+    ".t cputiña CHINGERO DE SEMEN EN SUS ANOS",
+    ".t kayada JDKDJDJJSS LORDA PUTITA SE CALLO",
+    ".t cjotorr4 VAGINA DE CEJOTIÑA SHE",
+    ".t nalgotanga APURATE NALGOTANGA SALVA",
+    ".t cejud4 SE LE DESCONFIGURO LA NALGA"
 ];
-
-const MSJ_LARGO = `.T CEJOTIÑAANDGAMAMI \n<@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS \nhttps://files.catbox.moe/d0wcx2.mp4`;
-
-// --- BYPASS DE ALTA SEGURIDAD ---
-function aplicarBypass(msg) {
-    const griegas = ["Σ", "Δ", "Φ", "Ω", "Ψ", "Π", "Ξ", "Λ", "Γ", "Θ"];
-    const g = griegas[Math.floor(Math.random() * griegas.length)];
-    const num = Math.floor(Math.random() * 999999);
-    const invis = "\u200b".repeat(Math.floor(Math.random() * 5) + 1);
-
-    if (msg.toLowerCase().startsWith(".t ")) {
-        const resto = msg.slice(3);
-        // Formato: .t [COD] invisibles resto (Limpio para Notsotbot)
-        return `.t [${g}${num}] ${invis}${resto}`;
-    }
-    return `[${g}${num}] ${invis}${msg}`;
-}
 
 let botIndex = 0;
 const botsReady = [];
 
 function crearBot(token, nombre) {
     const client = new Client({ checkUpdate: false });
-    client.msgCount = 0;
-    client.isResting = false;
+    client.contador = 0;
+    client.limite = Math.floor(Math.random() * 14) + 18; 
+    client.enReposo = false;
 
     client.on('ready', () => {
-        console.log(`⚔️ ${nombre} ONLINE`);
+        console.log(`⚔️ ${nombre} ONLINE | Meta: ${client.limite}`);
         botsReady.push({ client, nombre });
         if (botsReady.length === 1) scheduleNextAttack();
-
-        // Spam en canal random (Server 2)
-        setInterval(async () => {
-            if (client.isResting) return;
-            try {
-                const chan = await client.channels.fetch(CANALES_RANDOM[0]).catch(() => null);
-                if (chan) {
-                    await chan.sendTyping();
-                    setTimeout(async () => {
-                        await chan.send(aplicarBypass(MSJ_LARGO)).catch(() => null);
-                    }, 2000);
-                }
-            } catch(e){}
-        }, 150000); // Cada 2.5 min
     });
+    client.login(token).catch(() => {});
+}
 
-    client.on('messageCreate', async (msg) => {
-        if (msg.author.bot || client.isResting) return;
-        const esServerValido = msg.guild?.id === SERVER_ID || msg.guild?.id === SERVER_ID_2;
+async function scheduleNextAttack() {
+    if (botsReady.length === 0) return;
+    const currentBotObj = botsReady[botIndex];
+    const bot = currentBotObj.client;
+    botIndex = (botIndex + 1) % botsReady.length;
 
-        if (esServerValido && OBJETIVOS.includes(msg.author.id)) {
-            if (!PRIORITARIOS.includes(msg.channel.id) && !CANALES_RANDOM.includes(msg.channel.id)) {
-                try {
-                    await msg.channel.sendTyping();
-                    setTimeout(async () => {
-                        const bardeo = MIS_MENSAJES[Math.floor(Math.random() * MIS_MENSAJES.length)];
-                        await msg.channel.send(aplicarBypass(`${bardeo} <@${msg.author.id}>`));
-                        client.msgCount++;
-                    }, 2000);
-                } catch (e) {}
+    if (bot.contador >= bot.limite && !bot.enReposo) {
+        bot.enReposo = true;
+        const tiempoReposo = Math.floor(Math.random() * 50000) + 40000;
+        setTimeout(() => {
+            bot.contador = 0;
+            bot.limite = Math.floor(Math.random() * 14) + 18;
+            bot.enReposo = false;
+        }, tiempoReposo); 
+        return scheduleNextAttack(); 
+    }
+
+    if (!bot.enReposo) {
+        try {
+            const chanID = PRIORITARIOS[Math.floor(Math.random() * PRIORITARIOS.length)];
+            const channel = await bot.channels.fetch(chanID).catch(() => null);
+            
+            if (channel) {
+                await channel.sendTyping();
+                
+                setTimeout(async () => {
+                    let finalMsg;
+                    const invis = "\u200b";
+                    const randomSuffix = (Math.random() + 1).toString(36).substring(7);
+                    
+                    // Lógica corregida: Solo usa mensaje largo si el canal es el específico o el servidor es el de sin automod
+                    if (channel.id === ID_CANAL_FORZADO || channel.guildId === SERVER_SIN_AUTOMOD) {
+                        finalMsg = `${invis}${MI_MENSAJE_LARGO} \n#${randomSuffix}`;
+                    } else {
+                        const bardeo = MIS_BARDEOS[Math.floor(Math.random() * MIS_BARDEOS.length)];
+                        const target = OBJETIVOS_IDS[Math.floor(Math.random() * OBJETIVOS_IDS.length)];
+                        const delta = Math.floor(Math.random() * 99999);
+                        finalMsg = `${invis}**[Δ${delta}]** ${bardeo} <@${target}> \`[${randomSuffix}]\``;
+                    }
+                    
+                    await channel.send(finalMsg).then(() => {
+                        bot.contador++;
+                    }).catch(() => {});
+                }, 4000);
             }
+        } catch (e) {}
+    }
+
+    const nextAttackDelay = Math.floor(Math.random() * 20000) + 40000;
+    setTimeout(scheduleNextAttack, nextAttackDelay);
+}
+
+const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5, process.env.TOKEN_6];
+tokens.forEach((t, i) => { if (t) crearBot(t, `BOT_${i+1}`); });
         }
     });
 
