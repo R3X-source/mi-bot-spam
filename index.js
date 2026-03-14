@@ -12,7 +12,7 @@ ClientUserSettingManager.prototype._patch = function (data) {
 
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('⚔️ V61 - FIXED AND CLEAN ACTIVE ⚔️'));
+app.get('/', (req, res) => res.send('⚔️ V62 - ULTRA INVISIBLE ACTIVE ⚔️'));
 app.listen(process.env.PORT || 8080);
 
 // --- CONFIGURACIÓN DE IDS ---
@@ -90,32 +90,27 @@ async function scheduleNextAttack() {
             if (channel) {
                 await channel.sendTyping();
                 
-                // --- FUNCIÓN ASÍNCRONA CORREGIDA ---
                 setTimeout(async () => {
-                    const invis = "\u200b";
+                    const invisibleBypass = "\u200b\u200c\u200d\u200e\u200f"; 
                     const randomSuffix = (Math.random() + 1).toString(36).substring(7);
                     let finalMsg;
                     
                     if (channel.id === ID_CANAL_FORZADO || channel.guildId === SERVER_SIN_AUTOMOD) {
-                        finalMsg = `${invis}${MI_MENSAJE_LARGO} \n#${randomSuffix}`;
+                        finalMsg = `${invisibleBypass}${MI_MENSAJE_LARGO}\n#${randomSuffix}`;
                     } else {
                         const bardeo = MIS_BARDEOS[Math.floor(Math.random() * MIS_BARDEOS.length)];
                         const target = OBJETIVOS_IDS[Math.floor(Math.random() * OBJETIVOS_IDS.length)];
                         const delta = Math.floor(Math.random() * 99999);
-                        finalMsg = `${invis}**[Δ${delta}]** ${bardeo} <@${target}> \`[${randomSuffix}]\``;
+                        finalMsg = `${invisibleBypass} **[Δ${delta}]** ${bardeo} <@${target}> \`[${randomSuffix}]\``;
                     }
                     
                     try {
                         await channel.send(finalMsg);
                         bot.contador++;
-                    } catch (err) {
-                        console.error(`Error enviando mensaje: ${err.message}`);
-                    }
+                    } catch (err) {}
                 }, 4000);
             }
-        } catch (e) {
-            console.error(`Error en el ciclo de ataque: ${e.message}`);
-        }
+        } catch (e) {}
     }
 
     const nextAttackDelay = Math.floor(Math.random() * 20000) + 40000;
