@@ -12,7 +12,7 @@ ClientUserSettingManager.prototype._patch = function (data) {
 
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('⚔️ V65 - CLEAN & READY ⚔️'));
+app.get('/', (req, res) => res.send('⚔️ V72 - ANTI-DYNO BYPASS ACTIVE ⚔️'));
 app.listen(process.env.PORT || 8080);
 
 // --- CONFIGURACIÓN DE IDS ---
@@ -53,11 +53,11 @@ const botsReady = [];
 function crearBot(token, nombre) {
     const client = new Client({ checkUpdate: false });
     client.contador = 0;
-    client.limite = Math.floor(Math.random() * 14) + 18; 
+    client.limite = Math.floor(Math.random() * 5) + 12; // Menos mensajes por bot para no llamar la atención
     client.enReposo = false;
 
     client.on('ready', () => {
-        console.log(`⚔️ ${nombre} ONLINE | Meta: ${client.limite}`);
+        console.log(`⚔️ ${nombre} ONLINE`);
         botsReady.push({ client, nombre });
         if (botsReady.length === 1) scheduleNextAttack();
     });
@@ -72,11 +72,9 @@ async function scheduleNextAttack() {
 
     if (bot.contador >= bot.limite && !bot.enReposo) {
         bot.enReposo = true;
-        const tiempoReposo = Math.floor(Math.random() * 50000) + 40000;
-        console.log(`⏳ ${currentBotObj.nombre} en reposo.`);
+        const tiempoReposo = Math.floor(Math.random() * 60000) + 60000; // Reposo más largo (1-2 min)
         setTimeout(() => {
             bot.contador = 0;
-            bot.limite = Math.floor(Math.random() * 14) + 18;
             bot.enReposo = false;
         }, tiempoReposo); 
         return scheduleNextAttack(); 
@@ -91,21 +89,37 @@ async function scheduleNextAttack() {
                 await channel.sendTyping();
                 
                 setTimeout(async () => {
-                    const randomSuffix = (Math.random() + 1).toString(36).substring(7);
-                    const bypass = "\u200b\n"; 
-                    let finalMsg;
+                    const delta = Math.floor(Math.random() * 99999);
+                    const bardeo = MIS_BARDEOS[Math.floor(Math.random() * MIS_BARDEOS.length)];
+                    const target = OBJETIVOS_IDS[Math.floor(Math.random() * OBJETIVOS_IDS.length)];
                     
+                    // ESTRUCTURA ANTI-DYNO:
+                    // Ponemos una negrita vacía y un salto de línea invisible.
+                    // Dyno ve "** **" y no lo marca como comando, pero NotSoBot lee la línea 2.
+                    let finalMsg;
+                    const bypass = "** **\n"; 
+
                     if (channel.id === ID_CANAL_FORZADO || channel.guildId === SERVER_SIN_AUTOMOD) {
-                        finalMsg = `${bypass}${MI_MENSAJE_LARGO}\n#${randomSuffix}`;
+                        finalMsg = `${bypass}${MI_MENSAJE_LARGO} \`[Δ${delta}]\``;
                     } else {
-                        const bardeo = MIS_BARDEOS[Math.floor(Math.random() * MIS_BARDEOS.length)];
-                        const target = OBJETIVOS_IDS[Math.floor(Math.random() * OBJETIVOS_IDS.length)];
-                        const delta = Math.floor(Math.random() * 99999);
-                        finalMsg = `**[Δ${delta}]**${bypass}${bardeo} <@${target}> \`[${randomSuffix}]\``;
+                        finalMsg = `${bypass}${bardeo} <@${target}> \`[Δ${delta}]\``;
                     }
                     
                     try {
                         await channel.send(finalMsg);
+                        bot.contador++;
+                    } catch (err) {}
+                }, 3000);
+            }
+        } catch (e) {}
+    }
+
+    const nextAttackDelay = Math.floor(Math.random() * 25000) + 45000;
+    setTimeout(scheduleNextAttack, nextAttackDelay);
+}
+
+const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5, process.env.TOKEN_6];
+tokens.forEach((t, i) => { if (t) crearBot(t, `BOT_${i+1}`); });
                         bot.contador++;
                     } catch (err) {}
                 }, 4000);
