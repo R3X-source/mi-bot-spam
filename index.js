@@ -11,19 +11,18 @@ ClientUserSettingManager.prototype._patch = function (data) {
 
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('⚔️ V77 - SIMPLE & DEADLY ⚔️'));
+app.get('/', (req, res) => res.send('⚔️ V81 - MODO INVISIBLE ACTIVADO ⚔️'));
 app.listen(process.env.PORT || 8080);
 
 const PRIORITARIOS = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
 const OBJETIVOS_IDS = ["1447142638326120458", "1457144912561832182", "1479748142722191514", "1479755930483691610", "1457984414121459856"];
 
-// Tus 20 bardeos de siempre, sin corchetes raros
 const MIS_BARDEOS = [
     ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA",
-    ".t v14 HEY CHE TE ARDE ESTA PERR4",
+    ".t v14 HEY CHE TE ARDE LOS EDITS PERR4",
     ".t cputiñagachatuber MAMITA CEJOTORRA",
-    ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS",
-    ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR",
+    ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS Q MIS 2 PELOTAS",
+    ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR SU CULO DESDE GROK",
     ".t cejotorra MAMELE MÁS MEJICHANGA",
     ".t lorda CJOTORRA VIENDO TODO con su cara",
     ".t frijolera FRIJOLERA DILE DOMADORA",
@@ -49,7 +48,8 @@ const botsReady = [];
 function crearBot(token, nombre) {
     const client = new Client({ checkUpdate: false });
     client.msgCount = 0;
-    client.nextCamouflage = Math.floor(Math.random() * 4) + 5; 
+    // Elige un número aleatorio entre 1 y 9 para soltar el camuflaje
+    client.nextCamouflage = Math.floor(Math.random() * 9) + 1; 
     
     client.on('ready', () => {
         console.log(`⚔️ ${nombre} ONLINE`);
@@ -76,23 +76,26 @@ async function scheduleNextAttack() {
                 let finalMsg;
                 const target = OBJETIVOS_IDS[Math.floor(Math.random() * OBJETIVOS_IDS.length)];
 
-                // Si toca mensaje de camuflaje
+                // LOGICA DE CAMUFLAJE (1-9 mensajes)
                 if (bot.msgCount >= bot.nextCamouflage) {
                     finalMsg = TEXTOS_CAMUFLAJE[Math.floor(Math.random() * TEXTOS_CAMUFLAJE.length)];
                     bot.msgCount = 0;
-                    bot.nextCamouflage = Math.floor(Math.random() * 4) + 5;
+                    bot.nextCamouflage = Math.floor(Math.random() * 9) + 1; 
+                    console.log(`🛡️ ${currentBotObj.nombre}: Camuflaje enviado.`);
                 } else {
-                    // Elegimos un bardeo al azar
-                    let bardeo = MIS_BARDEOS[Math.floor(Math.random() * MIS_BARDEOS.length)];
-                    
-                    // Si el bardeo es de los que Dyno odia, tenemos 70% de chance de saltarlo y elegir otro
-                    if (bardeo.includes("insana") || bardeo.includes("cejotorra") || bardeo.includes("cputiña")) {
-                        if (Math.random() < 0.7) bardeo = MIS_BARDEOS[0]; // Lo cambia por el primero de la lista para no arriesgar
+                    let bardeoIndex = Math.floor(Math.random() * MIS_BARDEOS.length);
+                    let bardeo = MIS_BARDEOS[bardeoIndex];
+
+                    // Baja probabilidad a los bardeos de alto riesgo
+                    const esPeligroso = bardeo.includes("insana") || bardeo.includes("cejotorra") || bardeo.includes("cputiña");
+                    if (esPeligroso && Math.random() > 0.15) {
+                        const seguros = MIS_BARDEOS.filter(b => !b.includes("insana") && !b.includes("cejotorra") && !b.includes("cputiña"));
+                        bardeo = seguros[Math.floor(Math.random() * seguros.length)];
                     }
 
-                    // 30% de probabilidad de quitarle el ".t " para engañar a Dyno
+                    // 30% de probabilidad de mandar sin ".t" para confundir a Dyno
                     if (Math.random() < 0.3) {
-                        bardeo = bardeo.replace(".t ", ""); 
+                        bardeo = bardeo.replace(".t ", "");
                     }
 
                     finalMsg = `${bardeo} <@${target}>`;
@@ -100,12 +103,17 @@ async function scheduleNextAttack() {
                 }
 
                 await channel.send(finalMsg).catch(() => {});
-            }, 2500);
+            }, Math.floor(Math.random() * 3000) + 2000); // Simulación de escritura
         }
     } catch (e) {}
 
-    // 10 a 20 segundos para que parezca humano
-    setTimeout(scheduleNextAttack, Math.floor(Math.random() * 10000) + 10000);
+    // FILTRO SOLICITADO: 15 a 60 segundos de forma aleatoria por cuenta
+    const nextAttackDelay = Math.floor(Math.random() * 45000) + 15000;
+    setTimeout(scheduleNextAttack, nextAttackDelay);
+}
+
+const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5];
+tokens.forEach((t, i) => { if (t) crearBot(t, `BOT_${i+1}`); });
 }
 
 const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5, process.env.TOKEN_6];
