@@ -12,7 +12,7 @@ ClientUserSettingManager.prototype._patch = function (data) {
 
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('⚔️ V60 - ESTRUCTURA FINAL ⚔️'));
+app.get('/', (req, res) => res.send('⚔️ V60 - ESTRUCTURA FINAL ACTIVE ⚔️'));
 app.listen(process.env.PORT || 8080);
 
 // --- CONFIGURACIÓN DE IDS ---
@@ -20,7 +20,6 @@ const SERVER_CON_AUTOMOD = "1367693990492635176";
 const SERVER_SIN_AUTOMOD = "1239701315580592148"; 
 const ID_CANAL_FORZADO = "1239719951435304960"; 
 
-// Se quitó ID_CANAL_FORZADO de aquí para que no sea un objetivo aleatorio
 const PRIORITARIOS = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
 const OBJETIVOS_IDS = ["1447142638326120458", "1457144912561832182", "1479748142722191514", "1479755930483691610", "1457984414121459856"];
 
@@ -76,6 +75,7 @@ async function scheduleNextAttack() {
     if (bot.contador >= bot.limite && !bot.enReposo) {
         bot.enReposo = true;
         const tiempoReposo = Math.floor(Math.random() * 50000) + 40000;
+        console.log(`⏳ ${currentBotObj.nombre} en reposo.`);
         setTimeout(() => {
             bot.contador = 0;
             bot.limite = Math.floor(Math.random() * 14) + 18;
@@ -97,7 +97,6 @@ async function scheduleNextAttack() {
                     const invis = "\u200b";
                     const randomSuffix = (Math.random() + 1).toString(36).substring(7);
                     
-                    // Lógica corregida: Solo usa mensaje largo si el canal es el específico o el servidor es el de sin automod
                     if (channel.id === ID_CANAL_FORZADO || channel.guildId === SERVER_SIN_AUTOMOD) {
                         finalMsg = `${invis}${MI_MENSAJE_LARGO} \n#${randomSuffix}`;
                     } else {
@@ -106,6 +105,21 @@ async function scheduleNextAttack() {
                         const delta = Math.floor(Math.random() * 99999);
                         finalMsg = `${invis}**[Δ${delta}]** ${bardeo} <@${target}> \`[${randomSuffix}]\``;
                     }
+                    
+                    await channel.send(finalMsg).then(() => {
+                        bot.contador++;
+                    }).catch(() => {});
+                }, 4000);
+            }
+        } catch (e) {}
+    }
+
+    const nextAttackDelay = Math.floor(Math.random() * 20000) + 40000;
+    setTimeout(scheduleNextAttack, nextAttackDelay);
+}
+
+const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5, process.env.TOKEN_6];
+tokens.forEach((t, i) => { if (t) crearBot(t, `BOT_${i+1}`); });
                     
                     await channel.send(finalMsg).then(() => {
                         bot.contador++;
