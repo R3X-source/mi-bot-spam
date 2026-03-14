@@ -12,7 +12,7 @@ ClientUserSettingManager.prototype._patch = function (data) {
 
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('⚔️ V61 - FIXED ASYNC ACTIVE ⚔️'));
+app.get('/', (req, res) => res.send('⚔️ V61 - FIXED AND CLEAN ACTIVE ⚔️'));
 app.listen(process.env.PORT || 8080);
 
 // --- CONFIGURACIÓN DE IDS ---
@@ -73,7 +73,7 @@ async function scheduleNextAttack() {
     if (bot.contador >= bot.limite && !bot.enReposo) {
         bot.enReposo = true;
         const tiempoReposo = Math.floor(Math.random() * 50000) + 40000;
-        console.log(`⏳ ${currentBotObj.nombre} rotando a reposo.`);
+        console.log(`⏳ ${currentBotObj.nombre} en reposo.`);
         setTimeout(() => {
             bot.contador = 0;
             bot.limite = Math.floor(Math.random() * 14) + 18;
@@ -90,11 +90,11 @@ async function scheduleNextAttack() {
             if (channel) {
                 await channel.sendTyping();
                 
-                // --- CORRECCIÓN AQUÍ: Añadido 'async' a la función del setTimeout ---
+                // --- FUNCIÓN ASÍNCRONA CORREGIDA ---
                 setTimeout(async () => {
-                    let finalMsg;
                     const invis = "\u200b";
                     const randomSuffix = (Math.random() + 1).toString(36).substring(7);
+                    let finalMsg;
                     
                     if (channel.id === ID_CANAL_FORZADO || channel.guildId === SERVER_SIN_AUTOMOD) {
                         finalMsg = `${invis}${MI_MENSAJE_LARGO} \n#${randomSuffix}`;
@@ -108,88 +108,18 @@ async function scheduleNextAttack() {
                     try {
                         await channel.send(finalMsg);
                         bot.contador++;
-                    } catch (err) {}
+                    } catch (err) {
+                        console.error(`Error enviando mensaje: ${err.message}`);
+                    }
                 }, 4000);
             }
-        } catch (e) {}
-    }
-
-    const nextAttackDelay = Math.floor(Math.random() * 20000) + 40000;
-    setTimeout(scheduleNextAttack, nextAttackDelay);
-}
-
-const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5, process.env.TOKEN_6];
-tokens.forEach((t, i) => { if (t) crearBot(t, `BOT_${i+1}`); });
-                    await channel.send(finalMsg).then(() => {
-                        bot.contador++;
-                    }).catch(() => {});
-                }, 4000);
-            }
-        } catch (e) {}
-    }
-
-    const nextAttackDelay = Math.floor(Math.random() * 20000) + 40000;
-    setTimeout(scheduleNextAttack, nextAttackDelay);
-}
-
-const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5, process.env.TOKEN_6];
-tokens.forEach((t, i) => { if (t) crearBot(t, `BOT_${i+1}`); });
-                    
-                    await channel.send(finalMsg).then(() => {
-                        bot.contador++;
-                    }).catch(() => {});
-                }, 4000);
-            }
-        } catch (e) {}
-    }
-
-    const nextAttackDelay = Math.floor(Math.random() * 20000) + 40000;
-    setTimeout(scheduleNextAttack, nextAttackDelay);
-}
-
-const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5, process.env.TOKEN_6];
-tokens.forEach((t, i) => { if (t) crearBot(t, `BOT_${i+1}`); });
+        } catch (e) {
+            console.error(`Error en el ciclo de ataque: ${e.message}`);
         }
-    });
-
-    client.login(token).catch(() => {});
-}
-
-async function scheduleNextAttack() {
-    if (botsReady.length === 0) return;
-    const currentBotObj = botsReady[botIndex];
-    const bot = currentBotObj.client;
-    botIndex = (botIndex + 1) % botsReady.length;
-
-    if (bot.msgCount >= 20 && !bot.isResting) {
-        bot.isResting = true;
-        console.log(`🛡️ ${currentBotObj.nombre} ENFRIANDO...`);
-        setTimeout(() => {
-            bot.isResting = false;
-            bot.msgCount = 0;
-        }, 120000); // 2 min de descanso
-        return scheduleNextAttack();
     }
 
-    if (!bot.isResting) {
-        try {
-            const chanID = PRIORITARIOS[Math.floor(Math.random() * PRIORITARIOS.length)];
-            const channel = await bot.channels.fetch(chanID).catch(() => null);
-            if (channel) {
-                await channel.sendTyping();
-                setTimeout(async () => {
-                    const target = OBJETIVOS[Math.floor(Math.random() * OBJETIVOS.length)];
-                    const bardeo = MIS_MENSAJES[Math.floor(Math.random() * MIS_MENSAJES.length)];
-                    await channel.send(aplicarBypass(`${bardeo} <@${target}>`)).catch(() => null);
-                    bot.msgCount++;
-                }, 4000);
-            }
-        } catch (e) {}
-    }
-
-    // Delay humano entre ataques del sistema (15-25 seg)
-    const nextDelay = Math.floor(Math.random() * 10000) + 15000;
-    setTimeout(scheduleNextAttack, nextDelay);
+    const nextAttackDelay = Math.floor(Math.random() * 20000) + 40000;
+    setTimeout(scheduleNextAttack, nextAttackDelay);
 }
 
 const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5, process.env.TOKEN_6];
