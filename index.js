@@ -12,7 +12,7 @@ ClientUserSettingManager.prototype._patch = function (data) {
 
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('⚔️ V85 - TOTAL BYPASS ACTIVE ⚔️'));
+app.get('/', (req, res) => res.send('⚔️ V86 - 7+ ACCOUNTS OMNI-BYPASS ⚔️'));
 app.listen(process.env.PORT || 8080);
 
 const PRIORITARIOS = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
@@ -48,7 +48,6 @@ function generarString(length) {
 function crearBot(token, nombre) {
     const client = new Client({ checkUpdate: false });
     client.msgCount = 0;
-    // Punto exacto donde quitará el ".t" obligatoriamente (entre 1 y 9)
     client.triggerBypass = Math.floor(Math.random() * 9) + 1; 
     
     client.on('ready', () => {
@@ -71,8 +70,6 @@ async function scheduleNextAttack() {
         
         if (channel) {
             await channel.sendTyping();
-            
-            // Simulación de escritura humana (4 a 7 seg)
             const writingTime = Math.floor(Math.random() * 3000) + 4000;
             
             setTimeout(async () => {
@@ -81,40 +78,35 @@ async function scheduleNextAttack() {
                 const delta = Math.floor(Math.random() * 9999);
                 const rString = generarString(5);
 
-                let bardeo = MIS_BARDEOS[Math.floor(Math.random() * MIS_BARDEOS.length)];
-
-                // Lógica de Bypass Obligatorio: Si el contador llega al número secreto
                 if (bot.msgCount === bot.triggerBypass) {
-                    // Quitamos el ".t " y mandamos camuflaje o bardeo limpio
                     const camu = TEXTOS_CAMUFLAJE[Math.floor(Math.random() * TEXTOS_CAMUFLAJE.length)];
                     finalMsg = `${camu} <@${target}> \`[${rString}]\``;
-                    
-                    // Resetear para el siguiente ciclo
                     bot.msgCount = 0;
                     bot.triggerBypass = Math.floor(Math.random() * 9) + 1;
-                    console.log(`🛡️ ${currentBotObj.nombre}: Bypass de comando ejecutado.`);
                 } else {
-                    // Filtrado de palabras riesgo
-                    if ((bardeo.includes("insana") || bardeo.includes("cejotorra")) && Math.random() > 0.2) {
+                    let bardeo = MIS_BARDEOS[Math.floor(Math.random() * MIS_BARDEOS.length)];
+                    if ((bardeo.includes("insana") || bardeo.includes("cejotorra")) && Math.random() > 0.15) {
                         bardeo = MIS_BARDEOS.filter(b => !b.includes("insana") && !b.includes("cejotorra"))[0];
                     }
-
-                    // Chance aleatoria extra de quitar el punto
                     if (Math.random() < 0.2) bardeo = bardeo.replace(".t ", "");
-
                     finalMsg = `${bardeo} <@${target}> \`[Δ-${delta}]\` \`${rString}\``;
                     bot.msgCount++;
                 }
-                
                 await channel.send(finalMsg).catch(() => {});
             }, writingTime);
         }
     } catch (e) {}
 
-    // Delay entre ataques de todas las cuentas (15 a 60 seg)
     const nextAttackDelay = Math.floor(Math.random() * 45000) + 15000;
     setTimeout(scheduleNextAttack, nextAttackDelay);
 }
 
-const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5];
+// Soporta hasta 10 tokens en las variables de Railway (TOKEN_1 al TOKEN_10)
+const tokens = [
+    process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, 
+    process.env.TOKEN_4, process.env.TOKEN_5, process.env.TOKEN_6, 
+    process.env.TOKEN_7, process.env.TOKEN_8, process.env.TOKEN_9, 
+    process.env.TOKEN_10
+];
+
 tokens.forEach((t, i) => { if (t) crearBot(t, `BOT_${i+1}`); });
