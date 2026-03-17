@@ -11,17 +11,16 @@ ClientUserSettingManager.prototype._patch = function (data) {
 
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('⚔️ V99 - ULTRA SECTORIZADO ⚔️'));
+app.get('/', (req, res) => res.send('⚔️ V100 - MD EXCLUSIVO & ANTI-ERRORES ⚔️'));
 app.listen(process.env.PORT || 8080);
 
 // --- CONFIGURACIÓN DE IDS ---
-// Aquí SOLO mensajes cortos, tags y camuflaje
 const CANALES_SPAM_CORTO = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
 
-// Aquí SOLO mensajes largos (GRAN_BARDEO). Puedes agregar más IDs separadas por coma.
-const CANALES_ARTILLERIA_Y_MDS = [
+// IDs donde SOLO se permite el GRAN_BARDEO (Mensaje largo)
+const CANALES_PESADOS = [
     "1239719951435304960", 
-    "1479927526833914059"
+    "1479927526833914059" // Tu nueva ID de MD
 ];
 
 const OBJETIVOS_MENCION = ["1447142638326120458", "1457144912561832182", "1479748142722191514", "1479755930483691610", "1457984414121459856"];
@@ -55,7 +54,9 @@ function crearBot(token, nombre) {
     });
 
     client.on('messageCreate', async (msg) => {
-        // Autorespondedor: Funciona en todos lados pero NO detiene el flujo del spam
+        // FILTRO DE MD: El autoresponder ignora por completo la ID de MD nueva
+        if (CANALES_PESADOS.includes(msg.channel.id)) return; 
+
         if (OBJETIVOS_MENCION.includes(msg.author.id) && !msg.author.bot) {
             await msg.channel.sendTyping();
             setTimeout(async () => {
@@ -77,9 +78,9 @@ async function atacar(bot, nombre) {
         let targetID;
         let esCanalPesado = false;
 
-        // --- LÓGICA DE SELECCIÓN DE CANAL (33% Probabilidad MD/Pesado) ---
+        // Probabilidad del 33% para canales pesados/MDs
         if (rand < 0.33) {
-            targetID = CANALES_ARTILLERIA_Y_MDS[Math.floor(Math.random() * CANALES_ARTILLERIA_Y_MDS.length)];
+            targetID = CANALES_PESADOS[Math.floor(Math.random() * CANALES_PESADOS.length)];
             esCanalPesado = true;
         } else {
             targetID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)];
@@ -97,10 +98,9 @@ async function atacar(bot, nombre) {
                 const rStr = Math.random().toString(36).substring(7);
 
                 if (esCanalPesado) {
-                    // FILTRO CRÍTICO: En MDs y Artillería SOLO se manda el mensaje largo.
-                    finalMsg = `${GRAN_BARDEO} \`[V99-${rStr}]\``;
+                    // BLOQUEO DE SEGURIDAD: En estos canales NUNCA se enviará mensaje corto
+                    finalMsg = `${GRAN_BARDEO} \`[V100-${rStr}]\``;
                 } else {
-                    // Lógica para canales de Spam Corto
                     if (bot.msgCount >= bot.triggerBypass) {
                         finalMsg = `cjotiña <@${ID_OBLIGATORIA}> \`[${rStr}]\``; 
                         bot.msgCount = 0;
@@ -130,13 +130,11 @@ async function atacar(bot, nombre) {
     }
 }
 
-// Descanso preventivo
 setInterval(() => {
     estaEnDescanso = true;
     setTimeout(() => { estaEnDescanso = false; }, 60000);
 }, 3600000);
 
-// CARGA DE 10 TOKENS
 const tokens = [
     process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, 
     process.env.TOKEN_5, process.env.TOKEN_6, process.env.TOKEN_7, process.env.TOKEN_8,
