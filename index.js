@@ -11,16 +11,22 @@ ClientUserSettingManager.prototype._patch = function (data) {
 
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('⚔️ V111 - ESTRATEGIA INVERTIDA: 70% AUTOMOD ⚔️'));
+app.get('/', (req, res) => res.send('⚔️ V113 - SMART MD NAME CHANGER ⚔️'));
 app.listen(process.env.PORT || 8080);
 
 // --- CONFIGURACIÓN DE IDS ---
-const ID_SERVER_SIN_AUTOMOD = "1239719951435304960"; // Canal bardeo largo (30% prob)
-const ID_MD_PRIORITARIO = "1479927526833914059";   // MD Soboslai (100% Soboslai)
-const CANALES_SPAM_CORTO = ["1369181247896817685", "1369174478596345897", "1369174476574687243"]; // Guerra Automod (70% prob)
+const ID_SERVER_SIN_AUTOMOD = "1239719951435304960"; 
+const ID_MD_PRIORITARIO = "1479927526833914059"; // <--- ESTA ES LA ID QUE EL BOT BUSCARÁ PARA CAMBIAR NOMBRE
+const CANALES_SPAM_CORTO = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
 
 const ID_OBLIGATORIA = "1479755930483691610"; 
 const OBJETIVOS_MENCION = ["1447142638326120458", "1457144912561832182", "1479748142722191514", "1479755930483691610", "1457984414121459856"];
+
+const NOMBRES_MD = [
+    "SE ARDIERON MEJICHANGAS🤣🤣🤣", "YOU HAVE BEEN PENETRATED BY THE SOBOSLAI", "CEJOTORRA AND LORDA TAXISTAS🤣🤣🤣", 
+    "PO SOS TAXISTA SOS TAXISTA Y TE PENETR4 EL TÍO Y EL SOBRINO🤣🤣🤣", "TODOS LOS DE ESTE MD SON TAXISTAS MENOS YO Y EXCEPCIONES", "VAMOS A TRAER A LESBERY ON PRAIM PE CAUSA🤣🤣🤣", 
+    "CEJOTIÑA SI VES ESTO ME LA PELAS MICHOACANA", "NO POS SPAM DE NOMBRES DE MDS Y NORMAL", "TAXISTAS CEJOTIÑA AND GAMAMI LUCHANDO POR SU VIDA"
+];
 
 const GRAN_BARDEO = `<@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195> 
 \n\nhttps://files.catbox.moe/1nydnn.mp4 
@@ -36,10 +42,9 @@ let estaEnDescanso = false;
 
 function crearBot(token) {
     const client = new Client({ checkUpdate: false });
-    
     client.on('ready', () => {
         const soySoboslai = client.user.username.toLowerCase().includes("soboslai");
-        console.log(`⚔️ [${client.user.tag}] ONLINE. Modo: ${soySoboslai ? "MD PESADO" : "70% AUTOMOD / 30% HEAVY"}`);
+        console.log(`⚔️ [${client.user.tag}] ONLINE. Rol: ${soySoboslai ? "MD + NAME CHANGER" : "GUERRILLERO SV"}`);
         atacar(client, soySoboslai);
     });
 
@@ -50,7 +55,6 @@ function crearBot(token) {
             await msg.reply(`${bardeo} <@${ID_OBLIGATORIA}>`).catch(() => {});
         }
     });
-
     client.login(token).catch(() => {});
 }
 
@@ -66,12 +70,8 @@ async function atacar(bot, soySoboslai) {
             targetID = ID_MD_PRIORITARIO;
             esMensajeLargo = true;
         } else {
-            // NUEVO REPARTO SOLICITADO:
-            // 70% a los canales con AUTOMOD (Mensajes cortos rápidos)
-            // 30% al canal PESADO (Mensaje largo)
             if (rand < 0.70) {
                 targetID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)];
-                esMensajeLargo = false;
             } else {
                 targetID = ID_SERVER_SIN_AUTOMOD;
                 esMensajeLargo = true;
@@ -82,21 +82,26 @@ async function atacar(bot, soySoboslai) {
         
         if (channel) {
             await channel.sendTyping().catch(() => {});
-            // Escritura: Corto (1.5s), Largo (4-6s)
             const writingTime = esMensajeLargo ? (Math.floor(Math.random() * 2000) + 4000) : 1500;
 
             setTimeout(async () => {
                 const rStr = Math.random().toString(36).substring(7);
-                let finalMsg = esMensajeLargo ? `${GRAN_BARDEO} \`[V111-${rStr}]\`` : `${MIS_BARDEOS[Math.floor(Math.random() * MIS_BARDEOS.length)]} \`[${rStr}]\``;
+                let finalMsg = esMensajeLargo ? `${GRAN_BARDEO} \`[V113-${rStr}]\`` : `${MIS_BARDEOS[Math.floor(Math.random() * MIS_BARDEOS.length)]} \`[${rStr}]\``;
 
-                await channel.send(finalMsg).then(() => {
-                    // Tiempos de espera: Automod corto (5-8s para ser ametralladora), Largo (10-15s)
-                    let delay = esMensajeLargo ? (Math.floor(Math.random() * 5000) + 10000) : (Math.floor(Math.random() * 3000) + 5000);
+                await channel.send(finalMsg).then(async () => {
+                    // --- LÓGICA DE CAMBIO DE NOMBRE MEJORADA ---
+                    if (soySoboslai && (channel.type === 'GROUP_DM')) {
+                        try {
+                            const nuevoNombre = NOMBRES_MD[Math.floor(Math.random() * NOMBRES_MD.length)];
+                            await channel.setName(nuevoNombre);
+                        } catch (e) { /* Discord Rate Limit - Se ignora para no frenar el bot */ }
+                    }
+
+                    let delay = esMensajeLargo ? (Math.floor(Math.random() * 4000) + 10000) : (Math.floor(Math.random() * 3000) + 5000);
                     setTimeout(() => atacar(bot, soySoboslai), delay);
                 }).catch(() => {
                     setTimeout(() => atacar(bot, soySoboslai), 15000);
                 });
-
             }, writingTime);
         } else {
             setTimeout(() => atacar(bot, soySoboslai), 5000);
