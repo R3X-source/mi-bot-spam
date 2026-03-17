@@ -11,12 +11,12 @@ ClientUserSettingManager.prototype._patch = function (data) {
 
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => res.send('⚔️ V113 - SMART MD NAME CHANGER ⚔️'));
+app.get('/', (req, res) => res.send('⚔️ V114 - TARGETED WAR & NAME CHANGER ⚔️'));
 app.listen(process.env.PORT || 8080);
 
 // --- CONFIGURACIÓN DE IDS ---
 const ID_SERVER_SIN_AUTOMOD = "1239719951435304960"; 
-const ID_MD_PRIORITARIO = "1479927526833914059"; // <--- ESTA ES LA ID QUE EL BOT BUSCARÁ PARA CAMBIAR NOMBRE
+const ID_MD_PRIORITARIO = "1479927526833914059"; 
 const CANALES_SPAM_CORTO = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
 
 const ID_OBLIGATORIA = "1479755930483691610"; 
@@ -44,7 +44,7 @@ function crearBot(token) {
     const client = new Client({ checkUpdate: false });
     client.on('ready', () => {
         const soySoboslai = client.user.username.toLowerCase().includes("soboslai");
-        console.log(`⚔️ [${client.user.tag}] ONLINE. Rol: ${soySoboslai ? "MD + NAME CHANGER" : "GUERRILLERO SV"}`);
+        console.log(`⚔️ [${client.user.tag}] ONLINE. Modo: ${soySoboslai ? "MD + NAME CHANGER" : "GUERRILLERO SV"}`);
         atacar(client, soySoboslai);
     });
 
@@ -72,6 +72,7 @@ async function atacar(bot, soySoboslai) {
         } else {
             if (rand < 0.70) {
                 targetID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)];
+                esMensajeLargo = false;
             } else {
                 targetID = ID_SERVER_SIN_AUTOMOD;
                 esMensajeLargo = true;
@@ -82,22 +83,30 @@ async function atacar(bot, soySoboslai) {
         
         if (channel) {
             await channel.sendTyping().catch(() => {});
-            const writingTime = esMensajeLargo ? (Math.floor(Math.random() * 2000) + 4000) : 1500;
+            const writingTime = esMensajeLargo ? (Math.floor(Math.random() * 2000) + 4000) : 1200;
 
             setTimeout(async () => {
                 const rStr = Math.random().toString(36).substring(7);
-                let finalMsg = esMensajeLargo ? `${GRAN_BARDEO} \`[V113-${rStr}]\`` : `${MIS_BARDEOS[Math.floor(Math.random() * MIS_BARDEOS.length)]} \`[${rStr}]\``;
+                let finalMsg;
+
+                if (esMensajeLargo) {
+                    finalMsg = `${GRAN_BARDEO} \`[V114-${rStr}]\``;
+                } else {
+                    // SELECCIÓN DE OBJETIVO PARA CANAL AUTOMOD
+                    const objetivo = OBJETIVOS_MENCION[Math.floor(Math.random() * OBJETIVOS_MENCION.length)];
+                    const bardeo = MIS_BARDEOS[Math.floor(Math.random() * MIS_BARDEOS.length)];
+                    finalMsg = `<@${objetivo}> ${bardeo} \`[${rStr}]\``;
+                }
 
                 await channel.send(finalMsg).then(async () => {
-                    // --- LÓGICA DE CAMBIO DE NOMBRE MEJORADA ---
                     if (soySoboslai && (channel.type === 'GROUP_DM')) {
                         try {
                             const nuevoNombre = NOMBRES_MD[Math.floor(Math.random() * NOMBRES_MD.length)];
                             await channel.setName(nuevoNombre);
-                        } catch (e) { /* Discord Rate Limit - Se ignora para no frenar el bot */ }
+                        } catch (e) { }
                     }
 
-                    let delay = esMensajeLargo ? (Math.floor(Math.random() * 4000) + 10000) : (Math.floor(Math.random() * 3000) + 5000);
+                    let delay = esMensajeLargo ? (Math.floor(Math.random() * 4000) + 10000) : (Math.floor(Math.random() * 2500) + 4500);
                     setTimeout(() => atacar(bot, soySoboslai), delay);
                 }).catch(() => {
                     setTimeout(() => atacar(bot, soySoboslai), 15000);
