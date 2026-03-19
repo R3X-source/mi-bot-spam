@@ -3,11 +3,11 @@ const ClientUserSettingManager = require('discord.js-selfbot-v13/src/managers/Cl
 
 // --- ⚡ CONTROLES DE VELOCIDAD ⚡ ---
 const VELOCIDAD = {
-    SPAM_CORTO_MIN: 15000, 
-    SPAM_CORTO_MAX: 25000, 
-    SPAM_LARGO_MIN: 20000, 
-    SPAM_LARGO_MAX: 35000, 
-    WRITING_TIME: 2000     
+    SPAM_CORTO_MIN: 7000, 
+    SPAM_CORTO_MAX: 15000, 
+    SPAM_LARGO_MIN: 10000, 
+    SPAM_LARGO_MAX: 20000, 
+    WRITING_TIME: 3000     
 };
 
 // --- 🎯 CONFIGURACIÓN DE IDS ---
