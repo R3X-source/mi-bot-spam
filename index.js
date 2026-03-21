@@ -1,7 +1,7 @@
 const { Client } = require('discord.js-selfbot-v13');
 const ClientUserSettingManager = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager.js');
 
-// --- ⚡ CONTROLES DE VELOCIDAD ⚡ ---
+// --- ⚡ CONTROLES DE VELOCIDAD ---
 const VELOCIDAD = {
     SPAM_CORTO_MIN: 7000, 
     SPAM_CORTO_MAX: 15000, 
@@ -19,13 +19,10 @@ const CANALES_SPAM_CORTO = ["1369181247896817685", "1369174478596345897", "13691
 const ID_VÍCTIMA_80 = "1479755930483691610"; 
 const OBJETIVOS_RESTO = ["1447142638326120458", "1457144912561832182", "1479748142722191514", "1457984414121459856"];
 
-// --- 📝 BARDEO LARGO ACTUALIZADO (EL QUE ME PASASTE) ---
+// --- 📝 BARDEOS ---
 const GRAN_BARDEO_PRINCIPAL = `<@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195> \n\nhttps://files.catbox.moe/1nydnn.mp4 \nhttps://media.discordapp.net/attachments/1479303319997644832/1483288563721306222/TikVid.io_7513075642175327496.mp4 \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287824055799870/descarga_6.mp4 \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287857899638928/YouCut_20260310_080237410.mp4 \n\nhttps://files.catbox.moe/d0wcx2.mp4 @everyone CEJOTIÑA AND GAMAMITA IN PREIM DE SER RETIRADA POR NEG4🤣🤣🤣`;
 
-const GRAN_BARDEO_MEDIANO = `JDKDJLSJFKDJDKS HIJA DE PERR4 NOS VAMOS A SPAM CON TU MAMÁ HASTA SACARTE LA KAGADA DEL ANO CHE, YA KATHYS TE DELATÓ MALDITA Q QUIERE ESCAPARSE DEL SPAM
-LORDA ZORRA AND CEJUDA EN TEMÁS DE DAR EL ANO EN PREIM PEEEE CEJOTIÑA AND GAMAMI APOYAN A CR7 Y ESTE MISMO NO QUIERE PIAAR SU PAÍS DE INDIOS EL DONDE TODOS ESTÁN EN PARTES JAJAJAJAJAJ
-\nhttps://media.discordapp.net/attachments/1479303319997644832/1484181067211735161/IMG_20260319_082519_140.jpg \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1484186305587052595/thegamerlord_es_como_720P_HD_1.mp4 \nmejinalgas fueron delatadas por el spem dem soboslai1✅✅✅ @everyone
-https://files.catbox.moe/pzxi3d.mp4 https://files.catbox.moe/j98zth.mp4 https://files.catbox.moe/nlvkg4.mp4 UFF TU CULO ZPRRA CEJUDALORDIANA🤑🤞 PUES ISI WEY PURA ESCENESIA WARSZLEANA EN SUS CONCHAD PEEE`;
+const GRAN_BARDEO_MEDIANO = `JDKDJLSJFKDJDKS HIJA DE PERR4 NOS VAMOS A SPAM CON TU MAMÁ HASTA SACARTE LA KAGADA DEL ANO CHE, YA KATHYS TE DELATÓ MALDITA Q QUIERE ESCAPARSE DEL SPAM\nLORDA ZORRA AND CEJUDA EN TEMÁS DE DAR EL ANO EN PREIM PEEEE CEJOTIÑA AND GAMAMI APOYAN A CR7 Y ESTE MISMO NO QUIERE PIAAR SU PAÍS DE INDIOS EL DONDE TODOS ESTÁN EN PARTES JAJAJAJAJAJ\n\nhttps://media.discordapp.net/attachments/1479303319997644832/1484181067211735161/IMG_20260319_082519_140.jpg \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1484186305587052595/thegamerlord_es_como_720P_HD_1.mp4 \nmejinalgas fueron delatadas por el spem dem soboslai1✅✅✅ @everyone\nhttps://files.catbox.moe/pzxi3d.mp4 \nhttps://files.catbox.moe/j98zth.mp4 \nhttps://files.catbox.moe/nlvkg4.mp4 \nUFF TU CULO ZPRRA CEJUDALORDIANA🤑🤞 PUES ISI WEY PURA ESCENESIA WARSZLEANA EN SUS CONCHAD PEEE`;
 
 const MIS_BARDEOS = [
     ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA", ".t v14 HEY CHE TE ARDE ESTA PERR4", ".t cputiñagachatuber MAMITA CEJOTORRA", 
@@ -49,19 +46,28 @@ function genAntiBan() {
     return ` \`[${Math.random().toString(36).substring(7)}-${griegas[Math.floor(Math.random() * griegas.length)]}]\``;
 }
 
-function crearBot(token) {
+function crearBot(token, num) {
+    if (!token) {
+        console.log(`⚠️ [TOKEN_${num}] No configurado en las variables.`);
+        return;
+    }
     const client = new Client({ checkUpdate: false });
     client.contadorSpam = 0;
     client.limiteSinPrefijo = Math.floor(Math.random() * 5) + 5; 
 
     client.on('ready', () => {
+        console.log(`✅ [TOKEN_${num}] Online como: ${client.user.tag}`);
         const soySoboslai = client.user.username.toLowerCase().includes("soboslai");
         const soySecundaria = client.user.id === ID_CUENTA_SECUNDARIA;
         atacar(client, soySoboslai, soySecundaria);
     });
-    client.login(token).catch(() => {});
+    
+    client.login(token).catch(() => {
+        console.log(`❌ [TOKEN_${num}] ERROR CRÍTICO: El token es inválido o la cuenta fue baneada.`);
+    });
 }
 
+// (Función atacar omitida por brevedad, es la misma que la V127)
 async function atacar(bot, soySoboslai, soySecundaria) {
     try {
         let targetID;
@@ -99,14 +105,13 @@ async function atacar(bot, soySoboslai, soySecundaria) {
                     if (bot.contadorSpam >= bot.limiteSinPrefijo) {
                         let limpio = bardeoOriginal.split(" ").slice(2).join(" "); 
                         finalMsg = `<@${objetivo}> ${limpio}${genAntiBan()}`;
-                        
                         if (bot.contadorSpam >= bot.limiteSinPrefijo + 3) {
                             bot.contadorSpam = 0;
                             bot.limiteSinPrefijo = Math.floor(Math.random() * 5) + 5;
                         }
                     } else {
                         let partes = bardeoOriginal.split(" ");
-                        let prefijoYTag = partes[0] + " " + partes[1]; // ".t warszla"
+                        let prefijoYTag = partes[0] + " " + partes[1];
                         let insulto = partes.slice(2).join(" "); 
                         finalMsg = `${prefijoYTag} <@${objetivo}> ${insulto}${genAntiBan()}`;
                     }
@@ -123,5 +128,7 @@ async function atacar(bot, soySoboslai, soySecundaria) {
     } catch (e) { setTimeout(() => atacar(bot, soySoboslai, soySecundaria), 10000); }
 }
 
-const tokens = [process.env.TOKEN_1, process.env.TOKEN_2, process.env.TOKEN_3, process.env.TOKEN_4, process.env.TOKEN_5, process.env.TOKEN_6, process.env.TOKEN_7, process.env.TOKEN_8, process.env.TOKEN_9];
-tokens.forEach(t => { if (t) crearBot(t); });
+// --- 🚀 CARGA DE TOKENS ---
+for (let i = 1; i <= 10; i++) {
+    crearBot(process.env[`TOKEN_${i}`], i);
+}
