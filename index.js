@@ -1,20 +1,21 @@
 const { Client } = require('discord.js-selfbot-v13');
 const ClientUserSettingManager = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager.js');
 
-// --- ⚡ CONTROLES DE VELOCIDAD (TUS ORIGINALES) ---
+// --- ⚡ TUS TIEMPOS ---
 const VELOCIDAD = {
-    SPAM_CORTO_MIN: 7000, 
-    SPAM_CORTO_MAX: 15000, 
+    SPAM_CORTO_MIN: 9000, 
+    SPAM_CORTO_MAX: 18000, 
     SPAM_LARGO_MIN: 10000, 
     SPAM_LARGO_MAX: 20000, 
     WRITING_TIME: 3000     
 };
 
 // --- 🎯 CONFIGURACIÓN DE IDS ---
+const ID_VICTIMA_VIGILADA = "1469231575311843328"; // ID DEL DUEÑO DEL MD A ATACAR
 const ID_MD_PRIORITARIO = "1485378554991476786"; 
 const ID_SERVER_SIN_AUTOMOD = "1239719951435304960"; 
-
 const CANALES_SPAM_CORTO = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
+
 const ID_VÍCTIMA_80 = "1479755930483691610"; 
 const OBJETIVOS_RESTO = ["1447142638326120458", "1457144912561832182", "1479748142722191514", "1457984414121459856"];
 
@@ -25,7 +26,6 @@ const B_LARGO_2 = `JDKDJLSJFKDJDKS HIJA DE PERR4 NOS VAMOS A SPAM CON TU MAMÁ H
 
 const B_CORTOS = [ ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA", ".t v14 HEY CHE TE ARDE ESTA PERR4", ".t cputiñagachatuber MAMITA CEJOTORRA", ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS Q MIS HUEBOS", ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR SU QLO DESDE GROK", ".t cejotorra MAMELE MÁS MEJICHANGA", ".t lorda CJOTORRA VIENDO TODO con su CARA DE INDIS", ".t some_frijolera FRIJOLERA DILE DOMADORA", ".t joan MACH4 G4M4MITA DIRÍA LA PUTITA DE CEJORRA", ".t chichuda VENGAN MEJICHANGAS DENLE TET4 A SU TIO", ".t cjotangaandgamami CEJOTORRA Y GAMAMITA", ".t ceuda2 PINCHE PERRA CJOTIÑA", ".t nito PERRA TIENES Q ENTENDER Q SOS UNA MAMITA", ".t india LA MEJINDIA DE MICHOACAN", ".t insana TE ARDIÓ LAS NALGAS INSANA", ".t cputiña CHINGERO DE SEMEN EN SUS ANOS", ".t kayada JDKDJDJJSS LORDA PUTITA SE CALLO", ".t cjotorr4 VAGINA DE CEJOTIÑA SHE", ".t nalgotanga APURATE NALGOTANGA SALVA A LORDA", ".t cejud4 SE LE DESCONFIGURO LA NALGA A LORDA", ".t cejot4 tu mejinalga lorda", ".t mallorca abjsodemamiericka", ".t tuqlo MAMITA ARACELY QUE PUTIRA DE 20 AÑOS DESEMPLEADA Y CORNEADA ERES JAJAJAJA YA SUPE QUE LILIZ ERA TU PADRE INQUISIDOR QUE TE TENÍA DE PERRA Y TÚ TODA ENAMORADA HACIÉNDOTE LA ROMÁNTICA MIENTRAS TE REVENTABA EL CULO SIN PIEDAD Y TE LLENABA DE MECOS HASTA QUE TE CHORREARAN POR LAS NALGAS GORDAS QUE REBOTAN COMO GELATINA RANCIA" ];
 
-// --- 🛠️ SISTEMA ---
 const originalPatch = ClientUserSettingManager.prototype._patch;
 ClientUserSettingManager.prototype._patch = function (data) {
     if (data && !data.friend_source_flags) data.friend_source_flags = { all: false, mutual_friends: false, mutual_guilds: false };
@@ -39,54 +39,50 @@ function crearBot(token, num) {
     const client = new Client({ checkUpdate: false });
     client.on('ready', () => {
         console.log(`✅ [${num}] ${client.user.tag} ONLINE.`);
-        atacar(client, true); 
+        atacar(client); 
     });
     client.login(token).catch(() => {});
 }
 
-async function atacar(bot, esInicio = false) {
+async function atacar(bot) {
     try {
         let channelID;
         let esLargo = false;
         const r = Math.random();
 
-        // Verificamos si la cuenta actual tiene acceso al MD Prioritario
-        const tieneAccesoMD = await bot.channels.fetch(ID_MD_PRIORITARIO).then(() => true).catch(() => false);
+        // 1. Verificar si el MD Prioritario sigue existiendo/tenemos acceso
+        const chPrioritario = await bot.channels.fetch(ID_MD_PRIORITARIO).catch(() => null);
+        
+        // 2. Buscar si hay algún MD donde la Víctima sea Owner
+        const mdVictima = bot.channels.cache.find(c => c.type === 'GROUP_DM' && c.ownerId === ID_VICTIMA_VIGILADA);
 
-        if (esInicio && tieneAccesoMD) {
-            channelID = ID_MD_PRIORITARIO;
-            esLargo = true;
+        if (chPrioritario) {
+            // Sigue en el MD Prioritario: 90% chance
+            if (r < 0.90) { channelID = ID_MD_PRIORITARIO; esLargo = true; }
+            else { channelID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)]; esLargo = false; }
+        } else if (mdVictima) {
+            // Si nos sacaron del prioritario pero estamos en el de la Víctima: 25% chance
+            if (r < 0.25) { channelID = mdVictima.id; esLargo = true; }
+            else { channelID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)]; esLargo = false; }
         } else {
-            if (tieneAccesoMD) {
-                // Si tiene acceso al MD: 70% MD, 30% Canales Cortos
-                if (r < 0.70) { channelID = ID_MD_PRIORITARIO; esLargo = true; }
-                else { channelID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)]; esLargo = false; }
-            } else {
-                // Si no tiene acceso al MD: 70% Canales Cortos, 30% Server Sin Automod
-                if (r < 0.70) { channelID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)]; esLargo = false; }
-                else { channelID = ID_SERVER_SIN_AUTOMOD; esLargo = true; }
-            }
+            // Modo acompañante normal (Si no hay MDs disponibles)
+            if (r < 0.70) { channelID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)]; esLargo = false; }
+            else { channelID = ID_SERVER_SIN_AUTOMOD; esLargo = true; }
         }
 
-        const channel = await bot.channels.fetch(channelID).catch(() => null);
-        if (channel) {
-            if (esLargo) await channel.sendTyping().catch(() => {});
-            
+        const target = await bot.channels.fetch(channelID).catch(() => null);
+        if (target) {
+            if (esLargo) await target.sendTyping().catch(() => {});
             setTimeout(async () => {
-                let msg;
-                if (esLargo) {
-                    // 🔥 ROTACIÓN ENTRE 1 Y 2 PARA TODOS
-                    msg = (Math.random() < 0.5) ? B_LARGO_1 : B_LARGO_2;
-                } else {
+                let msg = esLargo ? ((Math.random() < 0.5) ? B_LARGO_1 : B_LARGO_2) : "";
+                if (!esLargo) {
                     let victimID = (Math.random() < 0.80) ? ID_VÍCTIMA_80 : OBJETIVOS_RESTO[Math.floor(Math.random() * OBJETIVOS_RESTO.length)];
                     let raw = B_CORTOS[Math.floor(Math.random() * B_CORTOS.length)];
                     let p = raw.split(" ");
                     msg = `${p[0]} ${p[1]} <@${victimID}> ${p.slice(2).join(" ")}`;
                 }
-
-                await channel.send(msg + genAntiBan()).then(() => {
-                    let d = esLargo ? VELOCIDAD.SPAM_LARGO_MIN : VELOCIDAD.SPAM_CORTO_MIN;
-                    setTimeout(() => atacar(bot), d);
+                await target.send(msg + genAntiBan()).then(() => {
+                    setTimeout(() => atacar(bot), esLargo ? VELOCIDAD.SPAM_LARGO_MIN : VELOCIDAD.SPAM_CORTO_MIN);
                 }).catch(() => setTimeout(() => atacar(bot), 10000));
             }, VELOCIDAD.WRITING_TIME);
         } else {
