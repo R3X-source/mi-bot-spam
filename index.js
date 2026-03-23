@@ -1,7 +1,7 @@
 const { Client } = require('discord.js-selfbot-v13');
 const ClientUserSettingManager = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager.js');
 
-// --- ⚡ CONTROLES DE VELOCIDAD ---
+// --- ⚡ VELOCIDADES ---
 const VELOCIDAD = {
     SPAM_CORTO_MIN: 7000, 
     SPAM_CORTO_MAX: 15000, 
@@ -10,24 +10,22 @@ const VELOCIDAD = {
     WRITING_TIME: 3000     
 };
 
-// --- 🎯 CONFIGURACIÓN DE IDS ---
+// --- 🎯 CONFIGURACIÓN ---
 const IDS_CONFIG = {
     MDS_PRIORITARIOS: ["1485378554991476786"], 
-    OWNERS_GRUPOS_OBJETIVO: ["1469231575311843328"], 
-    SERVER_AUTOMOD: "1367693990492635176", // Solo mensajes cortos aquí
-    SERVERS_SIN_AUTOMOD: ["1239719951435304960"], // Solo bardeo principal (múltiples menciones)
-    CUENTAS_SECUNDARIAS_MANUALES: ["1481837336080679045"], 
+    OWNERS_GRUPOS: ["1469231575311843328"], 
+    SERVER_AUTOMOD: "1367693990492635176",
+    SERVERS_SIN_AUTOMOD: ["1239719951435304960"],
     CANALES_SPAM_CORTO: ["1369181247896817685", "1369174478596345897", "1369174476574687243"],
-    VICTIMAS_PRIORITARIAS: ["1479755930483691610"],
-    OBJETIVOS_RESTO: ["1447142638326120458", "1457144912561832182", "1479748142722191514", "1457984414121459856"]
+    VICTIMAS: ["1479755930483691610", "1447142638326120458", "1457144912561832182", "1479748142722191514", "1457984414121459856"]
 };
 
-// --- 📝 BARDEOS ---
+// --- 📝 MENSAJES ---
 const B_LARGO_1 = `.t penaldo <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195> \n\nhttps://files.catbox.moe/1nydnn.mp4 \nhttps://media.discordapp.net/attachments/1479303319997644832/1483288563721306222/TikVid.io_7513075642175327496.mp4 \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287824055799870/descarga_6.mp4 \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287857899638928/YouCut_20260310_080237410.mp4 \n\nhttps://files.catbox.moe/d0wcx2.mp4 @everyone CEJOTIÑA AND GAMAMITA IN PREIM DE SER RETIRADA POR NEG4🤣🤣🤣`;
 
 const B_LARGO_2 = `JDKDJLSJFKDJDKS HIJA DE PERR4 NOS VAMOS A SPAM con tu MAMÁ hasta sacar la caca de tu ano, ya Kathys te delató maldita que quiere escaparse del spam\nLORDA ZORRA AND CEJUDA EN TEMÁS DE DAR EL ANO EN PREIM PEEEE CEJOTIÑA AND GAMAMI APOYAN A CR7 Y ESTE MISMO NO QUIERE Pisar SU PAÍS DE INDIOS DONDE TODOS ESTÁN EN PARTES JAJAJAJAJAJ\n\nhttps://media.discordapp.net/attachments/1479303319997644832/1484181067211735161/IMG_20260319_082519_140.jpg \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1484186305587052595/thegamerlord_es_como_720P_HD_1.mp4 \nmejinalgas fueron delatadas por el spem dem soboslai1✅✅✅ @everyone\nhttps://files.catbox.moe/pzxi3d.mp4 \nhttps://files.catbox.moe/j98zth.mp4 \nhttps://files.catbox.moe/nlvkg4.mp4 \nUFF TU CULO ZPRRA CEJUDALORDIANA🤑🤞 PUES ISI WEY PURA ESCENESIA WARSZLEANA EN SUS CONCHAD PEEE`;
 
-const MIS_BARDEOS_CORTOS = [
+const B_CORTOS = [
     ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA", ".t v14 HEY CHE TE ARDE ESTA PERR4", ".t cputiñagachatuber MAMITA CEJOTORRA", 
     ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS Q MIS HUEBOS", ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR SU QLO DESDE GROK", ".t cejotorra MAMELE MÁS MEJICHANGA", 
     ".t lorda CJOTORRA VIENDO TODO con su CARA DE INDIS", ".t some_frijolera FRIJOLERA DILE DOMADORA", ".t joan MACH4 G4M4MITA DIRÍA LA PUTITA DE CEJORRA", 
@@ -44,133 +42,102 @@ ClientUserSettingManager.prototype._patch = function (data) {
     return originalPatch.call(this, data);
 };
 
-function genAntiBan() {
-    const griegas = ["α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "ι", "κ", "λ", "μ", "ξ", "π", "ρ", "σ", "τ", "φ", "ψ", "ω"];
-    return ` \`[${Math.random().toString(36).substring(7)}-${griegas[Math.floor(Math.random() * griegas.length)]}]\``;
-}
-
+function genAntiBan() { return ` \`[${Math.random().toString(36).substring(7)}]\``; }
 function randomItem(array) { return array[Math.floor(Math.random() * array.length)]; }
 
 function crearBot(token, num) {
     if (!token) return;
     const client = new Client({ checkUpdate: false });
-    client.contadorSpam = 0;
-    client.limiteSinPrefijo = Math.floor(Math.random() * 5) + 5; 
     client.soyEspecialista = false;
 
     client.on('ready', async () => {
         console.log(`✅ [TOKEN_${num}] Online: ${client.user.tag}`);
         
-        // CORRECCIÓN: Intento forzado de apertura de MD para asegurar que mande mensajes
+        // 🚨 INTENTO AGRESIVO DE MD 🚨
         for (const id of IDS_CONFIG.MDS_PRIORITARIOS) {
             try {
-                const user = await client.users.fetch(id);
-                const dm = await user.createDM();
+                const target = await client.users.fetch(id);
+                const dm = await target.createDM();
                 if (dm) {
                     client.soyEspecialista = true;
-                    console.log(`⭐ [TOKEN_${num}] MD ${id} ABIERTO. LISTO PARA EL 95% PRIORITARIO.`);
+                    console.log(`🔥 [TOKEN_${num}] MD CONECTADO A ${id}. LISTO PARA SPAM 95%.`);
                     break;
                 }
-            } catch (e) { /* No tiene acceso o bloqueado */ }
+            } catch (err) { console.log(`⚠️ [TOKEN_${num}] Sin acceso al MD ${id}`); }
         }
         atacar(client);
     });
-    client.login(token).catch(() => console.log(`❌ [TOKEN_${num}] Fallo.`));
+    client.login(token).catch(() => {});
 }
 
 async function atacar(bot) {
     try {
-        let targetID;
-        let tipoMensaje = "CORTO"; // CORTO, LARGO, PRINCIPAL
+        let channelID;
+        let modo = "CORTO"; // CORTO, LARGO, PRINCIPAL
         const rand = Math.random();
 
-        // 🟢 BUSCAR GRUPO DE OWNER ESPECÍFICO
-        const grupoValido = bot.channels.cache.find(c => c.type === 'GROUP_DM' && IDS_CONFIG.OWNERS_GRUPOS_OBJETIVO.includes(c.ownerId));
-
-        // --- ⚙️ LÓGICA DE SELECCIÓN DE OBJETIVO Y MENSAJE ---
+        // 1. Grupos de Owner Específico (25% - Rotación largos)
+        const grupo = bot.channels.cache.find(c => c.type === 'GROUP_DM' && IDS_CONFIG.OWNERS_GRUPOS.includes(c.ownerId));
         
-        if (grupoValido && rand < 0.25) {
-            targetID = grupoValido.id;
-            tipoMensaje = "LARGO"; // Rotación de los 2 mensajes largos
+        if (grupo && rand < 0.25) {
+            channelID = grupo.id;
+            modo = "LARGO";
         } 
-        else if ((bot.soyEspecialista || IDS_CONFIG.CUENTAS_SECUNDARIAS_MANUALES.includes(bot.user.id)) && rand < 0.95) {
-            targetID = randomItem(IDS_CONFIG.MDS_PRIORITARIOS);
-            tipoMensaje = "LARGO"; // Rotación de los 2 mensajes largos
+        // 2. MD Prioritario (95% - Rotación largos)
+        else if (bot.soyEspecialista && rand < 0.95) {
+            channelID = randomItem(IDS_CONFIG.MDS_PRIORITARIOS);
+            modo = "LARGO";
         } 
+        // 3. Servers
         else {
-            // SPAM EN SERVIDORES
-            const enAutoMod = bot.guilds.cache.has(IDS_CONFIG.SERVER_AUTOMOD);
-            
-            if (enAutoMod && rand < 0.60) {
-                // En el server con AutoMod (solo mensajes pequeños con una mención)
-                const canal = bot.channels.cache.find(c => c.guildId === IDS_CONFIG.SERVER_AUTOMOD);
-                targetID = canal ? canal.id : randomItem(IDS_CONFIG.CANALES_SPAM_CORTO);
-                tipoMensaje = "CORTO";
+            const serverAuto = bot.guilds.cache.get(IDS_CONFIG.SERVER_AUTOMOD);
+            if (serverAuto && rand < 0.50) {
+                // Server con Automod (Mensajes cortos, 1 mención)
+                const canal = serverAuto.channels.cache.find(c => c.isText());
+                channelID = canal ? canal.id : randomItem(IDS_CONFIG.CANALES_SPAM_CORTO);
+                modo = "CORTO";
             } else {
-                // Servers sin Automod o canales de spam general
-                targetID = randomItem([...IDS_CONFIG.SERVERS_SIN_AUTOMOD, ...IDS_CONFIG.CANALES_SPAM_CORTO]);
-                tipoMensaje = (IDS_CONFIG.SERVERS_SIN_AUTOMOD.includes(targetID)) ? "PRINCIPAL" : "CORTO";
+                // Servers sin Automod (Mensaje con múltiples menciones)
+                channelID = randomItem(IDS_CONFIG.SERVERS_SIN_AUTOMOD);
+                modo = "PRINCIPAL";
             }
         }
 
-        let channel;
-        if (IDS_CONFIG.MDS_PRIORITARIOS.includes(targetID)) {
-            const user = await bot.users.fetch(targetID).catch(() => null);
-            channel = user ? await user.createDM().catch(() => null) : null;
+        // Obtener canal
+        let canal;
+        if (IDS_CONFIG.MDS_PRIORITARIOS.includes(channelID)) {
+            const user = await bot.users.fetch(channelID).catch(() => null);
+            canal = user ? await user.createDM().catch(() => null) : null;
         } else {
-            channel = await bot.channels.fetch(targetID).catch(() => null);
+            canal = await bot.channels.fetch(channelID).catch(() => null);
         }
 
-        if (channel) {
-            if (tipoMensaje !== "CORTO") await channel.sendTyping().catch(() => {});
+        if (canal) {
+            if (modo !== "CORTO") await canal.sendTyping().catch(() => {});
             
             setTimeout(async () => {
-                let finalMsg;
-                
-                if (tipoMensaje === "LARGO") {
-                    // Rotación de los 2 mensajes largos (B_LARGO_1 y B_LARGO_2)
-                    finalMsg = (Math.random() > 0.5) ? B_LARGO_1 : B_LARGO_2;
-                } 
-                else if (tipoMensaje === "PRINCIPAL") {
-                    // El mensaje que tiene múltiples menciones (B_LARGO_1)
-                    finalMsg = B_LARGO_1;
-                } 
-                else {
-                    // MENSAJES CORTOS (Una mención por mensaje)
-                    const excluidos = [bot.user.id, ...IDS_CONFIG.CUENTAS_SECUNDARIAS_MANUALES];
-                    const listaObjetivos = IDS_CONFIG.OBJETIVOS_RESTO.filter(id => !excluidos.includes(id));
-                    let objetivo = (rand < 0.80) ? randomItem(IDS_CONFIG.VICTIMAS_PRIORITARIAS) : randomItem(listaObjetivos);
-
-                    let raw = randomItem(MIS_BARDEOS_CORTOS);
-                    bot.contadorSpam++;
-                    
-                    if (bot.contadorSpam >= bot.limiteSinPrefijo) {
-                        let limpio = raw.split(" ").slice(2).join(" "); 
-                        finalMsg = `<@${objetivo}> ${limpio}`;
-                        if (bot.contadorSpam >= bot.limiteSinPrefijo + 3) {
-                            bot.contadorSpam = 0;
-                            bot.limiteSinPrefijo = Math.floor(Math.random() * 5) + 5;
-                        }
-                    } else {
-                        let partes = raw.split(" ");
-                        finalMsg = `${partes[0]} ${partes[1]} <@${objetivo}> ${partes.slice(2).join(" ")}`;
-                    }
+                let msg;
+                if (modo === "LARGO") {
+                    msg = (Math.random() > 0.5) ? B_LARGO_1 : B_LARGO_2;
+                } else if (modo === "PRINCIPAL") {
+                    msg = B_LARGO_1;
+                } else {
+                    // Mensaje corto con mención individual
+                    let victima = randomItem(IDS_CONFIG.VICTIMAS);
+                    let raw = randomItem(B_CORTOS);
+                    let partes = raw.split(" ");
+                    msg = `${partes[0]} ${partes[1]} <@${victima}> ${partes.slice(2).join(" ")}`;
                 }
 
-                finalMsg += genAntiBan();
-                await channel.send(finalMsg).then(() => {
-                    let d = (tipoMensaje === "CORTO") 
-                        ? (Math.floor(Math.random() * (VELOCIDAD.SPAM_CORTO_MAX - VELOCIDAD.SPAM_CORTO_MIN)) + VELOCIDAD.SPAM_CORTO_MIN)
-                        : (Math.floor(Math.random() * (VELOCIDAD.SPAM_LARGO_MAX - VELOCIDAD.SPAM_LARGO_MIN)) + VELOCIDAD.SPAM_LARGO_MIN);
+                await canal.send(msg + genAntiBan()).then(() => {
+                    let d = (modo === "CORTO") ? 8000 : 12000;
                     setTimeout(() => atacar(bot), d);
                 }).catch(() => setTimeout(() => atacar(bot), 10000));
             }, VELOCIDAD.WRITING_TIME);
         } else {
             setTimeout(() => atacar(bot), 5000);
         }
-    } catch (e) { setTimeout(() => atacar(bot), 10000); }
+    } catch (e) { setTimeout(() => atacar(bot), 5000); }
 }
 
-for (let i = 1; i <= 10; i++) {
-    crearBot(process.env[`TOKEN_${i}`], i);
-}
+for (let i = 1; i <= 10; i++) { crearBot(process.env[`TOKEN_${i}`], i); }
