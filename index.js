@@ -10,14 +10,16 @@ const VELOCIDAD = {
     WRITING_TIME: 3000     
 };
 
-// --- 🎯 CONFIGURACIÓN DE IDS ---
-const ID_MD_PRIORITARIO = "1485378554991476786"; 
-const ID_SERVER_SIN_AUTOMOD = "1239719951435304960"; 
-const ID_CUENTA_SECUNDARIA = "1481837336080679045"; 
-
-const CANALES_SPAM_CORTO = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
-const ID_VÍCTIMA_80 = "1479755930483691610"; 
-const OBJETIVOS_RESTO = ["1447142638326120458", "1457144912561832182", "1479748142722191514", "1457984414121459856"];
+// --- 🎯 CONFIGURACIÓN DINÁMICA DE IDS (Puedes añadir cuantas quieras) ---
+const IDS_CONFIG = {
+    MDS_PRIORITARIOS: ["1485378554991476786"], // Aquí puedes meter más IDs de MDs
+    OWNERS_GRUPOS_OBJETIVO: ["1469231575311843328"], // IDs de dueños de grupos para spam (25%)
+    SERVERS_SIN_AUTOMOD: ["1239719951435304960"], 
+    CUENTAS_SECUNDARIAS_MANUALES: ["1481837336080679045"], 
+    CANALES_SPAM_CORTO: ["1369181247896817685", "1369174478596345897", "1369174476574687243"],
+    VICTIMAS_PRIORITARIAS: ["1479755930483691610"], // IDs para el 80% de probabilidad
+    OBJETIVOS_RESTO: ["1447142638326120458", "1457144912561832182", "1479748142722191514", "1457984414121459856"]
+};
 
 // --- 📝 BARDEOS ---
 const GRAN_BARDEO_PRINCIPAL = `.t penaldo <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195> \n\nhttps://files.catbox.moe/1nydnn.mp4 \nhttps://media.discordapp.net/attachments/1479303319997644832/1483288563721306222/TikVid.io_7513075642175327496.mp4 \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287824055799870/descarga_6.mp4 \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287857899638928/YouCut_20260310_080237410.mp4 \n\nhttps://files.catbox.moe/d0wcx2.mp4 @everyone CEJOTIÑA AND GAMAMITA IN PREIM DE SER RETIRADA POR NEG4🤣🤣🤣`;
@@ -46,42 +48,73 @@ function genAntiBan() {
     return ` \`[${Math.random().toString(36).substring(7)}-${griegas[Math.floor(Math.random() * griegas.length)]}]\``;
 }
 
+function randomItem(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
 function crearBot(token, num) {
     if (!token) return;
     const client = new Client({ checkUpdate: false });
     client.contadorSpam = 0;
     client.limiteSinPrefijo = Math.floor(Math.random() * 5) + 5; 
+    client.soyEspecialista = false;
 
-    client.on('ready', () => {
+    client.on('ready', async () => {
         console.log(`✅ [TOKEN_${num}] Online: ${client.user.tag}`);
-        const soySecundaria = client.user.id === ID_CUENTA_SECUNDARIA;
-        atacar(client, soySecundaria);
+        
+        // Autodetección: Si la cuenta tiene acceso a AL MENOS UNO de los MDs prioritarios
+        for (const id of IDS_CONFIG.MDS_PRIORITARIOS) {
+            const user = await client.users.fetch(id).catch(() => null);
+            if (user) {
+                const channel = await user.createDM().catch(() => null);
+                if (channel) {
+                    client.soyEspecialista = true;
+                    console.log(`⭐ [TOKEN_${num}] ACCESO CONFIRMADO AL MD ${id}. Rol: Especialista.`);
+                    break;
+                }
+            }
+        }
+        atacar(client);
     });
     
     client.login(token).catch(() => console.log(`❌ [TOKEN_${num}] Error.`));
 }
 
-async function atacar(bot, soySecundaria) {
+async function atacar(bot) {
     try {
         let targetID;
         let esLargo = false;
         const rand = Math.random();
 
-        // Si es la secundaria, tiene 70% de ir al MD prioritario
-        if (soySecundaria) {
-            if (rand < 0.70) { targetID = ID_MD_PRIORITARIO; esLargo = true; }
-            else { targetID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)]; esLargo = false; }
-        } else {
-            // El resto de tokens: 70% canales de spam, 30% servidor sin automod (o MD si quieres rotar más)
-            if (rand < 0.70) { targetID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)]; esLargo = false; }
-            else { targetID = ID_SERVER_SIN_AUTOMOD; esLargo = true; }
+        // 1. Lógica de Grupos por Owner (25%)
+        const grupoValido = bot.channels.cache.find(c => 
+            c.type === 'GROUP_DM' && IDS_CONFIG.OWNERS_GRUPOS_OBJETIVO.includes(c.ownerId)
+        );
+
+        if (grupoValido && rand < 0.25) {
+            targetID = grupoValido.id;
+            esLargo = true;
+        } 
+        // 2. Lógica Especialista (MD Prioritario - 95%)
+        else if ((bot.soyEspecialista || IDS_CONFIG.CUENTAS_SECUNDARIAS_MANUALES.includes(bot.user.id)) && rand < 0.95) {
+            targetID = randomItem(IDS_CONFIG.MDS_PRIORITARIOS);
+            esLargo = true;
+        } 
+        // 3. Lógica General (Servidores y Spam Corto)
+        else {
+            if (rand < 0.75) {
+                targetID = randomItem(IDS_CONFIG.CANALES_SPAM_CORTO);
+                esLargo = false;
+            } else {
+                targetID = randomItem(IDS_CONFIG.SERVERS_SIN_AUTOMOD);
+                esLargo = true;
+            }
         }
 
         let channel;
-        if (targetID === ID_MD_PRIORITARIO) {
+        if (IDS_CONFIG.MDS_PRIORITARIOS.includes(targetID)) {
             const user = await bot.users.fetch(targetID).catch(() => null);
             if (user) channel = await user.createDM().catch(() => null);
-            esLargo = true; // Forzamos bardeo largo si logramos entrar al MD prioritario
         } else {
             channel = await bot.channels.fetch(targetID).catch(() => null);
         }
@@ -92,21 +125,18 @@ async function atacar(bot, soySecundaria) {
             setTimeout(async () => {
                 let finalMsg;
                 if (esLargo) {
-                    // Si el destino es el MD prioritario, rota bardeos largos
-                    if (targetID === ID_MD_PRIORITARIO) {
-                        finalMsg = (Math.random() > 0.5) ? GRAN_BARDEO_MEDIANO : GRAN_BARDEO_PRINCIPAL;
-                    } else {
-                        finalMsg = GRAN_BARDEO_PRINCIPAL;
-                    }
+                    finalMsg = (Math.random() > 0.5) ? GRAN_BARDEO_MEDIANO : GRAN_BARDEO_PRINCIPAL;
                     finalMsg += genAntiBan();
                 } else {
-                    // Filtrar para no mencionarse a sí mismo (la secundaria)
-                    let listaFiltrada = OBJETIVOS_RESTO.filter(id => id !== ID_CUENTA_SECUNDARIA);
-                    let objetivo = (CANALES_SPAM_CORTO.includes(targetID) && Math.random() < 0.80) 
-                        ? ID_VÍCTIMA_80 
-                        : listaFiltrada[Math.floor(Math.random() * listaFiltrada.length)];
+                    // Filtrar para no mencionarse a sí mismo ni a secundarias manuales
+                    const excluidos = [bot.user.id, ...IDS_CONFIG.CUENTAS_SECUNDARIAS_MANUALES];
+                    const listaFiltrada = IDS_CONFIG.OBJETIVOS_RESTO.filter(id => !excluidos.includes(id));
+                    
+                    let objetivo = (IDS_CONFIG.CANALES_SPAM_CORTO.includes(targetID) && Math.random() < 0.80) 
+                        ? randomItem(IDS_CONFIG.VICTIMAS_PRIORITARIAS) 
+                        : randomItem(listaFiltrada);
 
-                    let bardeoOriginal = MIS_BARDEOS[Math.floor(Math.random() * MIS_BARDEOS.length)];
+                    let bardeoOriginal = randomItem(MIS_BARDEOS);
                     bot.contadorSpam++;
                     
                     if (bot.contadorSpam >= bot.limiteSinPrefijo) {
@@ -126,13 +156,13 @@ async function atacar(bot, soySecundaria) {
                     let d = esLargo 
                         ? (Math.floor(Math.random() * (VELOCIDAD.SPAM_LARGO_MAX - VELOCIDAD.SPAM_LARGO_MIN)) + VELOCIDAD.SPAM_LARGO_MIN)
                         : (Math.floor(Math.random() * (VELOCIDAD.SPAM_CORTO_MAX - VELOCIDAD.SPAM_CORTO_MIN)) + VELOCIDAD.SPAM_CORTO_MIN);
-                    setTimeout(() => atacar(bot, soySecundaria), d);
-                }).catch(() => setTimeout(() => atacar(bot, soySecundaria), 15000));
+                    setTimeout(() => atacar(bot), d);
+                }).catch(() => setTimeout(() => atacar(bot), 15000));
             }, VELOCIDAD.WRITING_TIME);
         } else {
-            setTimeout(() => atacar(bot, soySecundaria), 5000);
+            setTimeout(() => atacar(bot), 5000);
         }
-    } catch (e) { setTimeout(() => atacar(bot, soySecundaria), 10000); }
+    } catch (e) { setTimeout(() => atacar(bot), 10000); }
 }
 
 for (let i = 1; i <= 10; i++) {
