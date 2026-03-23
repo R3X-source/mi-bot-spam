@@ -11,22 +11,29 @@ const VELOCIDAD = {
 };
 
 // --- 🎯 CONFIGURACIÓN DE IDS ---
-const IDS_CONFIG = {
-    MDS_PRIORITARIOS: ["1485378554991476786"], 
-    OWNER_GRUPO_OBJETIVO: "1469231575311843328", 
-    SERVER_AUTOMOD: "1367693990492635176",
-    SERVERS_SIN_AUTOMOD: ["1239719951435304960"], 
-    CUENTAS_SECUNDARIAS: ["1481837336080679045"], 
-    CANALES_SPAM_CORTO: ["1369181247896817685", "1369174478596345897", "1369174476574687243"],
-    VICTIMAS: ["1479755930483691610", "1447142638326120458", "1457144912561832182", "1479748142722191514", "1457984414121459856"]
-};
+const ID_MD_PRIORITARIO = "1485378554991476786"; 
+const ID_SERVER_AUTOMOD = "1367693990492635176"; // <--- AGREGADA
+const ID_SERVER_SIN_AUTOMOD = "1239719951435304960"; 
+const ID_CUENTA_SECUNDARIA = "1480854096046198815"; // Enleksmen
 
-// --- 📝 BARDEOS ---
+const CANALES_SPAM_CORTO = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
+const ID_VÍCTIMA_80 = "1479755930483691610"; 
+const OBJETIVOS_RESTO = ["1447142638326120458", "1457144912561832182", "1479748142722191514", "1457984414121459856"];
+
+// --- 📝 BARDEOS COMPLETOS ---
 const B_LARGO_1 = `.t penaldo <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195> \n\nhttps://files.catbox.moe/1nydnn.mp4 \nhttps://media.discordapp.net/attachments/1479303319997644832/1483288563721306222/TikVid.io_7513075642175327496.mp4 \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287824055799870/descarga_6.mp4 \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287857899638928/YouCut_20260310_080237410.mp4 \n\nhttps://files.catbox.moe/d0wcx2.mp4 @everyone CEJOTIÑA AND GAMAMITA IN PREIM DE SER RETIRADA POR NEG4🤣🤣🤣`;
 
 const B_LARGO_2 = `JDKDJLSJFKDJDKS HIJA DE PERR4 NOS VAMOS A SPAM CON TU MAMÁ HASTA SACARTE LA KAGADA DEL ANO CHE, YA KATHYS TE DELATÓ MALDITA Q QUIERE ESCAPARSE DEL SPAM\nLORDA ZORRA AND CEJUDA EN TEMÁS DE DAR EL ANO EN PREIM PEEEE CEJOTIÑA AND GAMAMI APOYAN A CR7 Y ESTE MISMO NO QUIERE PIAAR SU PAÍS DE INDIOS EL DONDE TODOS ESTÁN EN PARTES JAJAJAJAJAJ\n\nhttps://media.discordapp.net/attachments/1479303319997644832/1484181067211735161/IMG_20260319_082519_140.jpg \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1484186305587052595/thegamerlord_es_como_720P_HD_1.mp4 \nmejinalgas fueron delatadas por el spem dem soboslai1✅✅✅ @everyone\nhttps://files.catbox.moe/pzxi3d.mp4 \nhttps://files.catbox.moe/j98zth.mp4 \nhttps://files.catbox.moe/nlvkg4.mp4 \nUFF TU CULO ZPRRA CEJUDALORDIANA🤑🤞 PUES ISI WEY PURA ESCENESIA WARSZLEANA EN SUS CONCHAD PEEE`;
 
-const B_CORTOS = [".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA", ".t v14 HEY CHE TE ARDE ESTA PERR4", ".t cputiñagachatuber MAMITA CEJOTORRA", ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS Q MIS HUEBOS", ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR SU QLO DESDE GROK", ".t cejotorra MAMELE MÁS MEJICHANGA", ".t lorda CJOTORRA VIENDO TODO con su CARA DE INDIS", ".t some_frijolera FRIJOLERA DILE DOMADORA", ".t joan MACH4 G4M4MITA DIRÍA LA PUTITA DE CEJORRA", ".t chichuda VENGAN MEJICHANGAS DENLE TET4 A SU TIO", ".t cjotangaandgamami CEJOTORRA Y GAMAMITA", ".t ceuda2 PINCHE PERRA CJOTIÑA", ".t nito PERRA TIENES Q ENTENDER Q SOS UNA MAMITA", ".t india LA MEJINDIA DE MICHOACAN", ".t insana TE ARDIÓ LAS NALGAS INSANA", ".t cputiña CHINGERO DE SEMEN EN SUS ANOS", ".t kayada JDKDJDJJSS LORDA PUTITA SE CALLO", ".t cjotorr4 VAGINA DE CEJOTIÑA SHE", ".t nalgotanga APURATE NALGOTANGA SALVA A LORDA", ".t cejud4 SE LE DESCONFIGURO LA NALGA A LORDA", ".t cejot4 tu mejinalga lorda", ".t mallorca abjsodemamiericka", ".t tuqlo MAMITA ARACELY QUE PUTIRA DE 20 AÑOS DESEMPLEADA Y CORNEADA ERES JAJAJAJA YA SUPE QUE LILIZ ERA TU PADRE INQUISIDOR QUE TE TENÍA DE PERRA Y TÚ TODA ENAMORADA HACIÉNDOTE LA ROMÁNTICA MIENTRAS TE REVENTABA EL CULO SIN PIEDAD Y TE LLENABA DE MECOS HASTA QUE TE CHORREARAN POR LAS NALGAS GORDAS QUE REBOTAN COMO GELATINA RANCIA"];
+const B_CORTOS = [
+    ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA", ".t v14 HEY CHE TE ARDE ESTA PERR4", ".t cputiñagachatuber MAMITA CEJOTORRA", 
+    ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS Q MIS HUEBOS", ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR SU QLO DESDE GROK", ".t cejotorra MAMELE MÁS MEJICHANGA", 
+    ".t lorda CJOTORRA VIENDO TODO con su CARA DE INDIS", ".t some_frijolera FRIJOLERA DILE DOMADORA", ".t joan MACH4 G4M4MITA DIRÍA LA PUTITA DE CEJORRA", 
+    ".t chichuda VENGAN MEJICHANGAS DENLE TET4 A SU TIO", ".t cjotangaandgamami CEJOTORRA Y GAMAMITA", ".t ceuda2 PINCHE PERRA CJOTIÑA",
+    ".t nito PERRA TIENES Q ENTENDER Q SOS UNA MAMITA", ".t india LA MEJINDIA DE MICHOACAN", ".t insana TE ARDIÓ LAS NALGAS INSANA", 
+    ".t cputiña CHINGERO DE SEMEN EN SUS ANOS", ".t kayada JDKDJDJJSS LORDA PUTITA SE CALLO", ".t cjotorr4 VAGINA DE CEJOTIÑA SHE", 
+    ".t nalgotanga APURATE NALGOTANGA SALVA A LORDA", ".t cejud4 SE LE DESCONFIGURO LA NALGA A LORDA", ".t cejot4 tu mejinalga lorda", ".t mallorca abjsodemamiericka", ".t tuqlo MAMITA ARACELY QUE PUTIRA DE 20 AÑOS DESEMPLEADA Y CORNEADA ERES JAJAJAJA YA SUPE QUE LILIZ ERA TU PADRE INQUISIDOR QUE TE TENÍA DE PERRA Y TÚ TODA ENAMORADA HACIÉNDOTE LA ROMÁNTICA MIENTRAS TE REVENTABA EL CULO SIN PIEDAD Y TE LLENABA DE MECOS HASTA QUE TE CHORREARAN POR LAS NALGAS GORDAS QUE REBOTAN COMO GELATINA RANCIA" 
+];
 
 // --- 🛠️ SISTEMA ---
 const originalPatch = ClientUserSettingManager.prototype._patch;
@@ -36,28 +43,12 @@ ClientUserSettingManager.prototype._patch = function (data) {
 };
 
 function genAntiBan() { return ` \`[${Math.random().toString(36).substring(7)}]\``; }
-function randomItem(array) { return array[Math.floor(Math.random() * array.length)]; }
 
 function crearBot(token, num) {
     if (!token) return;
     const client = new Client({ checkUpdate: false });
-    client.soyEspecialista = false;
-
-    client.on('ready', async () => {
-        console.log(`✅ [TOKEN_${num}] Online: ${client.user.tag}`);
-        
-        // 🛠️ FIX PARA EL BOT 6 (Enleksmen): Abrir MD correctamente
-        for (const id of IDS_CONFIG.MDS_PRIORITARIOS) {
-            try {
-                const user = await client.users.fetch(id);
-                const dm = await user.createDM();
-                if (dm) {
-                    client.soyEspecialista = true;
-                    console.log(`🔥 [TOKEN_${num}] MD ${id} CONECTADO. Prioridad 95% activada.`);
-                    break;
-                }
-            } catch (e) { /* Sin acceso */ }
-        }
+    client.on('ready', () => {
+        console.log(`✅ [${num}] ${client.user.tag} ONLINE`);
         atacar(client);
     });
     client.login(token).catch(() => {});
@@ -65,53 +56,39 @@ function crearBot(token, num) {
 
 async function atacar(bot) {
     try {
-        let channel;
-        let tipoMsg = "CORTO";
+        let channelID;
+        let esLargo = false;
         const rand = Math.random();
 
-        // 1. BUSCAR GRUPOS DEL OWNER (Probabilidad del 25%)
-        const gruposDelOwner = bot.channels.cache.filter(c => c.type === 'GROUP_DM' && c.ownerId === IDS_CONFIG.OWNER_GRUPO_OBJETIVO);
-        
-        if (gruposDelOwner.size > 0 && rand < 0.25) {
-            channel = randomItem(Array.from(gruposDelOwner.values()));
-            tipoMsg = "LARGO";
-        } 
-        // 2. MD PRIORITARIO (95% para especialistas como el Bot 6)
-        else if (bot.soyEspecialista && rand < 0.95) {
-            const user = await bot.users.fetch(randomItem(IDS_CONFIG.MDS_PRIORITARIOS));
-            channel = await user.createDM();
-            tipoMsg = "LARGO";
-        } 
-        // 3. LOGICA DE SERVIDORES
-        else {
-            const serverAuto = bot.guilds.cache.get(IDS_CONFIG.SERVER_AUTOMOD);
-            if (serverAuto && rand < 0.50) {
-                channel = serverAuto.channels.cache.find(c => c.isText());
-                tipoMsg = "CORTO";
-            } else {
-                channel = await bot.channels.fetch(randomItem(IDS_CONFIG.SERVERS_SIN_AUTOMOD)).catch(() => null);
-                tipoMsg = "PRINCIPAL";
-            }
+        // 🚨 LÓGICA DE DESTINOS 🚨
+        if (bot.user.id === ID_CUENTA_SECUNDARIA) {
+            // ENLEKSMEN PRIORIDAD MD (70%)
+            if (rand < 0.70) { channelID = ID_MD_PRIORITARIO; esLargo = true; }
+            else { channelID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)]; esLargo = false; }
+        } else {
+            // RESTO DE BOTS: PRIORIDAD SERVER SIN AUTOMOD O CANALES CORTOS
+            if (rand < 0.30) { channelID = ID_SERVER_SIN_AUTOMOD; esLargo = true; }
+            else { channelID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)]; esLargo = false; }
         }
 
+        const channel = await bot.channels.fetch(channelID).catch(() => null);
         if (channel) {
-            if (tipoMsg !== "CORTO") await channel.sendTyping().catch(() => {});
+            if (esLargo) await channel.sendTyping().catch(() => {});
             
             setTimeout(async () => {
                 let msg;
-                if (tipoMsg === "LARGO") {
-                    msg = (Math.random() > 0.5) ? B_LARGO_1 : B_LARGO_2;
-                } else if (tipoMsg === "PRINCIPAL") {
-                    msg = B_LARGO_1;
+                if (esLargo) {
+                    msg = (bot.user.id === ID_CUENTA_SECUNDARIA) ? B_LARGO_2 : B_LARGO_1;
                 } else {
-                    let v = randomItem(IDS_CONFIG.VICTIMAS);
-                    let raw = randomItem(B_CORTOS);
-                    let p = raw.split(" ");
-                    msg = `${p[0]} ${p[1]} <@${v}> ${p.slice(2).join(" ")}`;
+                    // 🔥 PROBABILIDAD DE MENCIÓN 80% A LA VÍCTIMA 610 🔥
+                    let victimID = (Math.random() < 0.80) ? ID_VÍCTIMA_80 : OBJETIVOS_RESTO[Math.floor(Math.random() * OBJETIVOS_RESTO.length)];
+                    let raw = B_CORTOS[Math.floor(Math.random() * B_CORTOS.length)];
+                    let partes = raw.split(" ");
+                    msg = `${partes[0]} ${partes[1]} <@${victimID}> ${partes.slice(2).join(" ")}`;
                 }
 
                 await channel.send(msg + genAntiBan()).then(() => {
-                    let d = (tipoMsg === "CORTO") ? 8000 : 13000;
+                    let d = esLargo ? 13000 : 8000;
                     setTimeout(() => atacar(bot), d);
                 }).catch(() => setTimeout(() => atacar(bot), 10000));
             }, VELOCIDAD.WRITING_TIME);
