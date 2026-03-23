@@ -11,9 +11,12 @@ const VELOCIDAD = {
 };
 
 // --- 🎯 CONFIGURACIÓN DE IDS ---
-const ID_VICTIMA_VIGILADA = "1469231575311843328"; // ID DEL DUEÑO DEL MD A ATACAR
+const ID_VICTIMA_VIGILADA = "1469231575311843328"; 
 const ID_MD_PRIORITARIO = "1485378554991476786"; 
-const ID_SERVER_SIN_AUTOMOD = "1239719951435304960"; 
+
+// --- 🚀 LAS 2 IDS PARA MSJ LARGO (Server sin automod + Canal Nuevo) ---
+const IDS_PROPIAS_MSJ_LARGO = ["1239719951435304960", "1481514534190448815"]; 
+
 const CANALES_SPAM_CORTO = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
 
 const ID_VÍCTIMA_80 = "1479755930483691610"; 
@@ -51,24 +54,24 @@ async function atacar(bot) {
         let esLargo = false;
         const r = Math.random();
 
-        // 1. Verificar si el MD Prioritario sigue existiendo/tenemos acceso
         const chPrioritario = await bot.channels.fetch(ID_MD_PRIORITARIO).catch(() => null);
-        
-        // 2. Buscar si hay algún MD donde la Víctima sea Owner
         const mdVictima = bot.channels.cache.find(c => c.type === 'GROUP_DM' && c.ownerId === ID_VICTIMA_VIGILADA);
 
         if (chPrioritario) {
-            // Sigue en el MD Prioritario: 90% chance
             if (r < 0.90) { channelID = ID_MD_PRIORITARIO; esLargo = true; }
             else { channelID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)]; esLargo = false; }
         } else if (mdVictima) {
-            // Si nos sacaron del prioritario pero estamos en el de la Víctima: 25% chance
             if (r < 0.25) { channelID = mdVictima.id; esLargo = true; }
             else { channelID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)]; esLargo = false; }
         } else {
-            // Modo acompañante normal (Si no hay MDs disponibles)
-            if (r < 0.70) { channelID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)]; esLargo = false; }
-            else { channelID = ID_SERVER_SIN_AUTOMOD; esLargo = true; }
+            if (r < 0.70) { 
+                channelID = CANALES_SPAM_CORTO[Math.floor(Math.random() * CANALES_SPAM_CORTO.length)]; 
+                esLargo = false; 
+            } else { 
+                // ELEGIR ENTRE LOS CANALES DE SPAM LARGO (SIN AUTOMOD)
+                channelID = IDS_PROPIAS_MSJ_LARGO[Math.floor(Math.random() * IDS_PROPIAS_MSJ_LARGO.length)]; 
+                esLargo = true; 
+            }
         }
 
         const target = await bot.channels.fetch(channelID).catch(() => null);
