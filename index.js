@@ -92,4 +92,21 @@ async function atacar(bot) {
         if (target) {
             if (esLargo) await target.sendTyping().catch(() => {});
             setTimeout(async () => {
-                let msg = esLargo ? ((Math.random() < 0.5) ? B_LARGOS[0] : B_LARGOS[1]) :
+                                let msg = esLargo ? ((Math.random() < 0.5) ? B_LARGOS[0] : B_LARGOS[1]) : "";
+                if (!esLargo) {
+                    let victimID = (Math.random() < 0.80) ? ID_VÍCTIMA_80 : OBJETIVOS_RESTO[Math.floor(Math.random() * OBJETIVOS_RESTO.length)];
+                    let raw = B_CORTOS[Math.floor(Math.random() * B_CORTOS.length)];
+                    let p = raw.split(" ");
+                    msg = `${p[0]} ${p[1]} <@${victimID}> ${p.slice(2).join(" ")}`;
+                }
+                await target.send(msg + genAntiBan()).then(() => {
+                    setTimeout(() => atacar(bot), esLargo ? VELOCIDAD.SPAM_LARGO_MIN : VELOCIDAD.SPAM_CORTO_MIN);
+                }).catch(() => setTimeout(() => atacar(bot), 10000));
+            }, VELOCIDAD.WRITING_TIME);
+        } else {
+            setTimeout(() => atacar(bot), 5000);
+        }
+    } catch (e) { setTimeout(() => atacar(bot), 5000); }
+}
+
+for (let i = 1; i <= 6; i++) { crearBot(process.env[`TOKEN_${i}`], i); }
