@@ -1,8 +1,7 @@
 {
   "name": "bot-spam-railway",
   "version": "1.0.0",
-  "description": "Script de bardeo para Discord",
-  "main": "spam.js",
+  "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
