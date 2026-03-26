@@ -1,10 +1,10 @@
 const { Client } = require('discord.js-selfbot-v13');
 
 // --- ⚙️ PANEL DE CONTROL (TIEMPOS Y VELOCIDAD) ---
-const ESPERA_ENTRE_MENSAJES = 8000; // 8 segundos base
-const JITTER_MENSAJE = 5000;        // + hasta 5s aleatorios
-const MAX_TIEMPO_ESCRITURA = 4000;  // MÁXIMO 4 SEGUNDOS ESCRIBIENDO
-const DELAY_RECONEXION = 60000;    // 1 minuto para reconectar
+const ESPERA_ENTRE_MENSAJES = 8000; 
+const JITTER_MENSAJE = 5000;        
+const MAX_TIEMPO_ESCRITURA = 4000;  
+const DELAY_RECONEXION = 60000;    
 const AUTO_MSG_TEXTO = "Q HUBOLE PEDORROTE, Q NO VEN Q LE ANDO SACANDO LOS FRIJOLES Y ME ANDO SACANDO LA VERGA PARA MOSTRÁRSELA A CJOTIÑA/ <@1467397075204309034>"; 
 
 // --- 🎯 IDENTIDADES Y OBJETIVOS ---
@@ -13,8 +13,6 @@ const VICTIMAS_VIGILADAS = ["1431785955559215184", "1457521662303015040", "14851
 
 let CANALES_LIBRES = ["1481514534190448815", "1239719951435304960"];
 let CANALES_CON_AUTOMOD = ["1369174476574687243", "1369174478596345897", "1369181247896817685"];
-
-// --- 🔓 CAMBIO: ACTIVADO POR DEFECTO ---
 let activo = true; 
 
 // --- 🌪️ EL ARSENAL COMPLETO ---
@@ -27,7 +25,15 @@ const B_CORTOS = [
     ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA", ".t v14 HEY CHE TE ARDE ESTA PERR4", ".t cputiñagachatuber MAMITA CEJOTORRA", ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS Q MIS HUEBOS", ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR SU QLO DESDE GROK", ".t cejotorra MAMELE MÁS MEJICHANGA", ".t lorda CJOTORRA VIENDO TODO con su CARA DE INDIS", ".t some_frijolera FRIJOLERA DILE DOMADORA", ".t joan MACH4 G4M4MITA DIRÍA LA PUTITA DE CEJORRA", ".t chichuda VENGAN MEJICHANGAS DENLE TET4 A SU TIO", ".t cjotangaandgamami CEJOTORRA Y GAMAMITA", ".t ceuda2 PINCHE PERRA CJIÑO", ".t nito PERRA TIENES Q ENTENDER Q SOS UNA MAMITA", ".t india LA MEJINDIA DE MICHOACAN", ".t insana TE ARDIÓ LAS NALGAS INSANA", ".t cputiña CHINGERO DE SEMEN EN SUS ANOS", ".t penaldo JDKDJDJJSS LORDA PUTITA SE CALLO", ".t cjotorr4 VAGINA DE CEJOTIÑA SHE", ".t nalgotanga APURATE NALGOTANGA SALVA A LORDA", ".t cejud4 SE LE DESCONFIGURO LA NALGA A LORDA", ".t cejot4 tu mejinalga lorda", ".t mallorca abjsodemamiericka", ".t tuqlo MAMITA ARACELY QUE PUTIRA DE 20 AÑOS DESEMPLEADA Y CORNEADA ERES JAJAJAJA YA SUPE QUE LILIZ ERA TU PADRE INQUISIDOR QUE TE TENÍA DE PERRA Y TÚ TODA ENAMORADA HACIÉNDOTE LA ROMÁNTICA MIENTRAS TE REVENTABA EL CULO SIN PIEDAD Y TE LLENABA DE MECOS HASTA QUE TE CHORREARAN POR LAS NALGAS GORDAS QUE REBOTAN COMO GELATINA RANCIA"
 ];
 
-const ofuscar = (t) => t.split("").map(c => c + (Math.random() < 0.25 ? ["\u200b", "\u200c", "\u200d"][Math.floor(Math.random() * 3)] : "")).join("");
+// --- 🛡️ FUNCIONES AUXILIARES ---
+const ofuscar = (texto) => {
+    const invisibles = ["\u200b", "\u200c", "\u200d"];
+    return texto.split(/(<@!?[0-9]+>)/g).map(part => {
+        if (part.startsWith("<@") && part.endsWith(">")) return part;
+        return part.split("").map(char => char + (Math.random() < 0.20 ? invisibles[Math.floor(Math.random() * invisibles.length)] : "")).join("");
+    }).join("");
+};
+
 const toGreek = (t) => t.replace(/[aeiopstx]/gi, m => ({'a':'α','e':'е','i':'і','o':'ο','p':'ρ','s':'ѕ','t':'τ','x':'х'}[m.toLowerCase()] || m));
 
 // --- 🌪️ LÓGICA DE ATAQUE ---
