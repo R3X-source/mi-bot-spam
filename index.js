@@ -1,5 +1,9 @@
 const { Client } = require('discord.js-selfbot-v13');
-const client = new Client({ checkUpdate: false });
+const client = new Client({ 
+    checkUpdate: false, 
+    patchVoice: true, 
+    syncStatus: false 
+});
 
 // --- 🌐 CONFIGURACIÓN MULTI-CUENTA RAILWAY ---
 const NUM_CUENTA = process.env.NUM_CUENTA || "1"; 
@@ -108,6 +112,10 @@ async function main() {
 setInterval(() => {
     console.log("Reiniciando sesión para seguridad...");
     client.destroy();
+    setTimeout(() => client.login(TOKEN).catch(() => {}), 60000); // 60 seg = 1 min
+}, 3600000); // 1 hora
+
+client.login(TOKEN);    client.destroy();
     setTimeout(() => client.login(TOKEN).catch(() => {}), 60000); // 60 seg = 1 min
 }, 3600000); // 1 hora
 
