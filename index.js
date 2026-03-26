@@ -19,9 +19,6 @@ const CANALES_SPAM_CORTO = ["1369181247896817685", "1369174478596345897", "13691
 const ID_VÍCTIMA_80 = "1479755930483691610"; 
 const OBJETIVOS_RESTO = ["1447142638326120458", "1457144912561832182", "1479748142722191514", "1457984414121459856"];
 
-const { Client } = require('discord.js-selfbot-v13');
-const ClientUserSettingManager = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager.js');
-
 // --- 🎯 CONFIGURACIÓN DE SEGURIDAD (CONTROL) ---
 const MI_ID = "1486526310607224902"; 
 
