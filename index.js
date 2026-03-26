@@ -2,6 +2,27 @@ const { Client } = require('discord.js-selfbot-v13');
 const ClientUserSettingManager = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager.js');
 
 // --- 🎯 CONFIGURACIÓN DE SEGURIDAD (CONTROL) ---
+const MI_ID = "1485661768037433544"; 
+
+// --- ⚡ CONFIGURACIÓN DE TIEMPOS ---
+const VELOCIDAD = {
+    SPAM_CORTO_MIN: 9000, SPAM_CORTO_MAX: 18000,
+    SPAM_LARGO_MIN: 10000, SPAM_LARGO_MAX: 20000,
+    WRITING_MIN: 2500, WRITING_MAX: 5500  
+};
+
+// --- 📍 CONFIGURACIÓN DE IDS ---
+const IDS_VICTIMAS = ["1469231575311843328", "1431785955559215184", "1485179919523643454"];
+const ID_MD_PRIORITARIO = "1486097221928616027"; 
+const IDS_PROPIAS_MSJ_LARGO = ["1239719951435304960", "1481514534190448815"]; 
+const CANALES_SPAM_CORTO = ["1369181247896817685", "1369174478596345897", "1369174476574687243"];
+const ID_VÍCTIMA_80 = "1479755930483691610"; 
+const OBJETIVOS_RESTO = ["1447142638326120458", "1457144912561832182", "1479748142722191514", "1457984414121459856"];
+
+const { Client } = require('discord.js-selfbot-v13');
+const ClientUserSettingManager = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager.js');
+
+// --- 🎯 CONFIGURACIÓN DE SEGURIDAD (CONTROL) ---
 const MI_ID = "1486526310607224902"; 
 
 // --- ⚡ CONFIGURACIÓN DE TIEMPOS ---
@@ -28,7 +49,7 @@ JSJSJSJA Q PASO MAMORRA CHIE, PIENSAS Q POR PEDIRLE AYUDA A LA NALGA CHIMBONEGRA
 
 const B_CORTOS = [ ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA", ".t v14 HEY CHE TE ARDE ESTA PERR4", ".t cputiñagachatuber MAMITA CEJOTORRA", ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS Q MIS HUEBOS", ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR SU QLO DESDE GROK", ".t cejotorra MAMELE MÁS MEJICHANGA", ".t lorda CJOTORRA VIENDO TODO con su CARA DE INDIS", ".t some_frijolera FRIJOLERA DILE DOMADORA", ".t joan MACH4 G4M4MITA DIRÍA LA PUTITA DE CEJORRA", ".t chichuda VENGAN MEJICHANGAS DENLE TET4 A SU TIO", ".t cjotangaandgamami CEJOTORRA Y GAMAMITA", ".t ceuda2 PINCHE PERRA CJOTIÑA", ".t nito PERRA TIENES Q ENTENDER Q SOS UNA MAMITA", ".t india LA MEJINDIA DE MICHOACAN", ".t insana TE ARDIÓ LAS NALGAS INSANA", ".t cputiña CHINGERO DE SEMEN EN SUS ANOS", ".t penaldo JDKDJDJJSS LORDA PUTITA SE CALLO", ".t cjotorr4 VAGINA DE CEJOTIÑA SHE", ".t nalgotanga APURATE NALGOTANGA SALVA A LORDA", ".t cejud4 SE LE DESCONFIGURO LA NALGA A LORDA", ".t cejot4 tu mejinalga lorda", ".t mallorca abjsodemamiericka", ".t tuqlo MAMITA ARACELY QUE PUTIRA DE 20 AÑOS DESEMPLEADA Y CORNEADA ERES JAJAJAJA YA SUPE QUE LILIZ ERA TU PADRE INQUISIDOR QUE TE TENÍA DE PERRA Y TÚ TODA ENAMORADA HACIÉNDOTE LA ROMÁNTICA MIENTRAS TE REVENTABA EL CULO SIN PIEDAD Y TE LLENABA DE MECOS HASTA QUE TE CHORREARAN POR LAS NALGAS GORDAS QUE REBOTAN COMO GELATINA RANCIA" ];
 
-const MSG_RESPUESTA = "Q PASO PUTITA CHILINDIA O ARJENCHANGA CHE, TU MACHO (YO) AHORITA ANDA CON LA MAMÁ MICHOACANA DE LA NALGA NEGRA Y MARRÓNA DE <@1467397075204309034> CJOTIÑA JSKJSJDKDKSKS PERR4 ENTIENDE Q SIEMPRE ME LA VAS A COMER HASTA EL FINAL Y ERES UNA P3RR4 BIEN SUMISH4 CHE, ERES LA PUTITA DE TODA LA CJ Y LO TIENES Q ENTENDER A BASE DE VERGAZOS DE TUS MACHOS DE LA WARSZLIZA Q TE BOTARON A PATADAS COMO PROSTI DE LA WARSZLIZA 2026 JSKSJSKS";
+const MSG_RESPUESTA = "Q PASO PUTITA CHILINDIA O ARJENCHANGA CHE, TU MACHO (YO) AHORITA ANDA CON LA MAMÁ MICHOACANA DE LA NALGA NEGRA Y MARRÓNA DE <@1467397075204309034> CJOTIÑA JSKJSJDKDKSKS PERR4 ENTIENDE Q SIEMPRE ME LA VAS A COMER HASTA EL FINAL Y ERES UNA P3RR4 BIEN SUMISH4 CHE, ERES LA PUTITA DE TODA LA CJ Y LO TIENES Q ENTENDER A BASE DE VERGAZOS DE TUS MACHOS DE LA WARSZLIZA Q TE BOTARON A PATADAS COMO PROSTI DE LA WARSZLIZA 2026 JSKSJSKS"; 
 
 // --- 🛡️ SISTEMA DE OFUSCACIÓN (Griegos y Números) ---
 const GRIEGOS = ["α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "ι", "κ", "λ", "μ", "ξ", "π", "ρ", "σ", "τ", "υ", "φ", "χ", "ψ", "ω"];
@@ -49,7 +70,7 @@ function genAntiBan() {
     return ` \`[${GRIEGOS[Math.floor(Math.random() * GRIEGOS.length)]}-${Math.floor(100 + Math.random() * 900)}]\``;
 }
 
-// --- 🛠️ CORE ---
+// --- ⚙️ PARCHE DE SEGURIDAD (OBLIGATORIO) ---
 const originalPatch = ClientUserSettingManager.prototype._patch;
 ClientUserSettingManager.prototype._patch = function (data) {
     if (data && !data.friend_source_flags) data.friend_source_flags = { all: false, mutual_friends: false, mutual_guilds: false };
@@ -63,16 +84,17 @@ function crearBot(token, num) {
     const client = new Client({ checkUpdate: false });
     estadoBots[num] = { activo: true, canalActual: null, canalDinamico: null, enPausaIP: false, timeoutActual: null };
 
+    // Ciclo de seguridad IP
     setInterval(() => {
         setTimeout(async () => {
-            console.log(`⏳ [${num}] Seguridad IP: Desconectando 1 min...`);
+            console.log(`⏳ [${num}] Pausa de seguridad IP (1 min)`);
             estadoBots[num].enPausaIP = true;
             client.destroy();
             setTimeout(() => {
                 estadoBots[num].enPausaIP = false;
                 client.login(token).catch(() => {});
             }, 60000);
-        }, Math.floor(Math.random() * 3000000));
+        }, Math.floor(Math.random() * 3000000) + 600000);
     }, 3600000);
 
     client.on('ready', () => {
@@ -85,36 +107,27 @@ function crearBot(token, num) {
         const content = msg.content.toLowerCase();
         if (msg.author.id === MI_ID) {
             if (content === "!cjotiña") setTimeout(() => msg.author.send(`Bot #${num}: ${client.user.username}`).catch(() => {}), 1000);
+            if (content === "mom") { estadoBots[num].canalDinamico = msg.channel.id; msg.react('🎯').catch(() => {}); }
+            if (content === "madres") { estadoBots[num].canalDinamico = null; msg.react('🏳️').catch(() => {}); }
             
-            const regexStop = new RegExp(`(frenar|stop|parar)\\s+bot\\s+${num}|(frenar|stop|parar)\\s+${num}|${num}❌`);
+            const regexStop = new RegExp(`(frenar|stop|parar)\\s+bot\\s+${num}|${num}❌`);
             if (regexStop.test(content)) {
                 estadoBots[num].activo = false;
                 if (estadoBots[num].timeoutActual) clearTimeout(estadoBots[num].timeoutActual);
-                setTimeout(() => msg.react('🚫').catch(() => {}), 1000);
+                msg.react('🚫').catch(() => {});
             }
             if (content === `activar bot ${num}` || content === `${num}️⃣`) {
                 estadoBots[num].activo = true;
-                setTimeout(() => msg.react('✅').catch(() => {}), 1000);
+                msg.react('✅').catch(() => {});
                 atacar(client, num);
             }
-            if (content === "mom") {
-                estadoBots[num].canalDinamico = msg.channel.id;
-                setTimeout(() => msg.react('🎯').catch(() => {}), 1000);
-            }
-            if (content === "madres") {
-                estadoBots[num].canalDinamico = null;
-                setTimeout(() => msg.react('🏳️').catch(() => {}), 1000);
-            }
         }
-
         if (!msg.author.bot && msg.mentions.users.has(client.user.id) && Math.random() <= 0.20) {
-            if (estadoBots[num].canalActual !== msg.channel.id) {
-                setTimeout(() => msg.reply(ofuscarTexto(MSG_RESPUESTA) + genAntiBan()).catch(() => {}), 2500);
-            }
+            setTimeout(() => msg.reply(ofuscarTexto(MSG_RESPUESTA) + genAntiBan()).catch(() => {}), 2500);
         }
     });
 
-    client.login(token).catch(() => {});
+    client.login(token).catch(() => console.log(`❌ [${num}] Error de Login`));
 }
 
 async function atacar(bot, num) {
@@ -142,7 +155,7 @@ async function atacar(bot, num) {
 
         if (target && estadoBots[num].activo) {
             await target.sendTyping().catch(() => {});
-            const tiempoEscritura = Math.floor(Math.random() * (VELOCIDAD.WRITING_MAX - VELOCIDAD.WRITING_MIN + 1)) + VELOCIDAD.WRITING_MIN;
+            const delay = Math.floor(Math.random() * (VELOCIDAD.WRITING_MAX - VELOCIDAD.WRITING_MIN + 1)) + VELOCIDAD.WRITING_MIN;
 
             estadoBots[num].timeoutActual = setTimeout(async () => {
                 let msg = "";
@@ -158,12 +171,19 @@ async function atacar(bot, num) {
                 await target.send(ofuscarTexto(msg) + genAntiBan()).then(() => {
                     estadoBots[num].timeoutActual = setTimeout(() => atacar(bot, num), esLargo ? VELOCIDAD.SPAM_LARGO_MIN : VELOCIDAD.SPAM_CORTO_MIN);
                 }).catch(() => { estadoBots[num].timeoutActual = setTimeout(() => atacar(bot, num), 12000); });
-            }, tiempoEscritura);
+            }, delay);
         } else {
             estadoBots[num].timeoutActual = setTimeout(() => atacar(bot, num), 8000);
         }
     } catch (e) { estadoBots[num].timeoutActual = setTimeout(() => atacar(bot, num), 10000); }
 }
 
-for (let i = 1; i <= 10; i++) { crearBot(process.env[`TOKEN_${i}`], i); }
-
+// 🚀 ARRANQUE ESCALONADO (Evita IP Ban)
+let delayInitial = 0;
+for (let i = 1; i <= 10; i++) {
+    const tkn = process.env[`TOKEN_${i}`];
+    if (tkn) {
+        setTimeout(() => crearBot(tkn, i), delayInitial);
+        delayInitial += 5000; 
+    }
+}
