@@ -1,12 +1,21 @@
 const { Client } = require('discord.js-selfbot-v13');
+
+// PARCHE OBLIGATORIO PARA RAILWAY: patchVoice y syncStatus deben ser estos
 const client = new Client({ 
     checkUpdate: false, 
     patchVoice: true, 
     syncStatus: false 
 });
 
+// --- 🌐 CONFIGURACIÓN MULTI-CUENTA RAILWAY ---
 const NUM_CUENTA = process.env.NUM_CUENTA || "1"; 
+// Usamos corchetes para que busque TOKEN_1, TOKEN_2... hasta TOKEN_10
 const TOKEN = process.env[`TOKEN_${NUM_CUENTA}`]; 
+
+if (!TOKEN) {
+    console.error(`❌ ERROR: No se encontró la variable TOKEN_${NUM_CUENTA} en Railway.`);
+    process.exit(1); 
+} 
 
 const VELOCIDAD_MIN = 8000;
 const VELOCIDAD_MAX = 15000;
