@@ -2,12 +2,12 @@ const { Client } = require('discord.js-selfbot-v13');
 const ClientUserSettingManager = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager.js');
 
 // --- 🎯 CONFIGURACIÓN ---
-const MI_ID_CONTROL = "1486526310607224902"; // ID para mandar comandos (No la borro más)
-const ID_PRIORITARIA = "1481514534190448815"; // Se va al mensaje LARGO
+const MI_ID_CONTROL = "1486526310607224902"; 
+const ID_PRIORITARIA = "1481514534190448815"; 
 const ID_LARGO_OBJETIVO = "1239719951435304960";
 
-const CANAL_AUTOMOD = "1367693990492635176"; // Aquí LARGOS
-const CANALES_CORTOS = ["1369174476574687243", "1369174478596345897", "1369181247896817685"]; // Aquí CORTOS
+const CANAL_AUTOMOD = "1367693990492635176"; 
+const CANALES_CORTOS = ["1369174476574687243", "1369174478596345897", "1369181247896817685"];
 
 // --- 📝 MUNICIÓN ---
 const B_LARGOS = [
@@ -19,6 +19,7 @@ const B_CORTOS = [
     ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA", ".t v14 HEY CHE TE ARDE ESTA PERR4", ".t cputiñagachatuber MAMITA CEJOTORRA", ".t tuqlo MAMITA ARACELY QUE PUTIRA DE 20 AÑOS DESEMPLEADA Y CORNEADA ERES", ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS Q MIS HUEBOS", ".t v14 CALLATE PERRA FRACASADA", ".t warszla ANDA A LLORAR A TU CERRO", ".t cputiñagachatuber GORDA TERMOCÉFALA", ".t tuqlo NADIE TE QUIERE POR CORNEADA", ".t v14 SIGUE LADRANDO HIJA DE PUTA", ".t warszla TE CREES MUCHO Y NO TIENES NI PARA EL BUS", ".t cejotiñaandgamami FEA DE MIERDA", ".t v14 DASH TE DEJO POR OTRA JSJSJS", ".t tuqlo LA VERGÜENZA DE TU FAMILIA", ".t cputiñagachatuber TREMENDA DESEMPLEADA", ".t warszla MONA DE SELVA", ".t cejotiñaandgamami ANDA A BAÑARTE COCHINA", ".t tuqlo EL REY TE USA DE TRAPO", ".t v14 POBRETONA SIN FUTURO", ".t cputiñagachatuber CARA DE ARTESANÍA PRECOBOMBINA", ".t warszla DAS ASCO DE SOLO VERTE", ".t tuqlo SIGUE ESPERANDO A TU PADRE", ".t cejotiñaandgamami GORDA LECHONA", ".t v14 TU VIDA ES UN CHISTE", ".t warszla FRACASADA TOTAL"
 ];
 
+// --- 🛡️ SISTEMA ---
 const GRIEGOS = ["α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "ι", "κ", "λ", "μ", "ξ", "π", "ρ", "σ", "τ", "υ", "φ", "χ", "ψ", "ω"];
 function genAntiBan() { return ` \`[${GRIEGOS[Math.floor(Math.random() * GRIEGOS.length)]}-${Math.floor(100 + Math.random() * 900)}]\``; }
 
@@ -31,42 +32,46 @@ function crearBot(token, num) {
     estadoBots[num] = { activo: true };
 
     client.on('ready', () => {
-        console.log(`✅ [${num}] ONLINE.`);
-        bucleSpam(client, num); 
+        console.log(`✅ [${num}] ONLINE. Bucle Dual activado.`);
+        bucleLargo(client, num);
+        bucleCorto(client, num);
     });
 
     client.on('messageCreate', async (msg) => {
         if (msg.author.id === MI_ID_CONTROL) {
             if (msg.content === `${num}❌`) { estadoBots[num].activo = false; msg.react('🚫'); }
-            if (msg.content === `${num}️⃣`) { estadoBots[num].activo = true; bucleSpam(client, num); msg.react('✅'); }
+            if (msg.content === `${num}️⃣`) { estadoBots[num].activo = true; bucleLargo(client, num); bucleCorto(client, num); msg.react('✅'); }
         }
     });
 
     client.login(token).catch(() => {});
 }
 
-async function bucleSpam(bot, num) {
-    if (!estadoBots[num] || !estadoBots[num].activo) return;
-
+// --- 💣 BUCLE EXCLUSIVO PARA MENSAJES LARGOS (AUTOMOD) ---
+async function bucleLargo(bot, num) {
+    if (!estadoBots[num].activo) return;
     try {
-        const r = Math.random();
-        let targetID, mensaje;
-
-        if (r < 0.5) { 
-            targetID = CANAL_AUTOMOD;
-            mensaje = `${B_LARGOS[Math.floor(Math.random() * B_LARGOS.length)]} <@${ID_PRIORITARIA}> <@${ID_LARGO_OBJETIVO}>`;
-        } else {
-            targetID = CANALES_CORTOS[Math.floor(Math.random() * CANALES_CORTOS.length)];
-            mensaje = B_CORTOS[Math.floor(Math.random() * B_CORTOS.length)];
-        }
-
-        const target = await bot.channels.fetch(targetID).catch(() => null);
+        const target = await bot.channels.fetch(CANAL_AUTOMOD).catch(() => null);
         if (target) {
-            await target.send(mensaje + genAntiBan()).catch(() => {});
+            const msg = `${B_LARGOS[Math.floor(Math.random() * B_LARGOS.length)]} <@${ID_PRIORITARIA}> <@${ID_LARGO_OBJETIVO}>`;
+            await target.send(msg + genAntiBan()).catch(() => {});
         }
     } catch (e) {}
+    setTimeout(() => bucleLargo(bot, num), Math.random() * 5000 + 8000);
+}
 
-    setTimeout(() => bucleSpam(bot, num), Math.random() * 3000 + 6000);
+// --- 🔫 BUCLE EXCLUSIVO PARA MENSAJES CORTOS ---
+async function bucleCorto(bot, num) {
+    if (!estadoBots[num].activo) return;
+    try {
+        const canalRandom = CANALES_CORTOS[Math.floor(Math.random() * CANALES_CORTOS.length)];
+        const target = await bot.channels.fetch(canalRandom).catch(() => null);
+        if (target) {
+            const msg = B_CORTOS[Math.floor(Math.random() * B_CORTOS.length)];
+            await target.send(msg + genAntiBan()).catch(() => {});
+        }
+    } catch (e) {}
+    setTimeout(() => bucleCorto(bot, num), Math.random() * 3000 + 5000);
 }
 
 for (let i = 1; i <= 10; i++) {
