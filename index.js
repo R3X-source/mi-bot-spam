@@ -22,8 +22,6 @@ const VICTIMA_80 = "1479755930483691610";
 
 const MSJ_AUTOREPLY = "JSJSJSJA Q PASA PUTITA CHILINDIA O ARJENCHANGA CHE...<@1467397075204309034> CJOTIÑA ME CHUPA BIEN LA VERGA LA MAMITA VEINTEAÑERA ESTA PEDOFIL4";
 
-// --- 📝 BARDEOS ---
-const B_LARGOS = [
 `.t penaIdo <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195> \n\nhttps://files.catbox.moe/1nydnn.mp4 \nhttps://media.discordapp.net/attachments/1479303319997644832/1483288563721306222/TikVid.io_7513075642175327496.mp4 \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287824055799870/descarga_6.mp4 \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287857899638928/YouCut_20260310_080237410.mp4 \n\nhttps://files.catbox.moe/d0wcx2.mp4 @everyone putita ven acá mejichanga culete roquete \n<@1485179919523643454>\n<@1469231575311843328>\n<@1431785955559215184>`,
 `.t penaIdo <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723> <@1399500980889976902> <@1466878653932634195>\nhttps://media.discordapp.net/attachments/1479303319997644832/1484181067211735161/IMG_20260319_082519_140.jpg \nhttps://cdn.discordapp.com/attachments/1369181247896817685/1484186305587052595/thegamerlord_es_como_720P_HD_1.mp4 \nmejinalgas fueron delatadas por el spem dem soboslai1✅✅✅ @everyone\nhttps://files.catbox.moe/pzxi3d.mp4 \nhttps://files.catbox.moe/j98zth.mp4 \nhttps://files.catbox.moe/nlvkg4.mp4 \nUFF TU CULO ZPRRA CEJUDALORDIANA🤑🤞 PUES ISI WEY PURA ESCENESIA WARSZLEANA EN SUS CONCHAD PEEE, putita ven acá mejichanga culete roquete \n<@1485179919523643454>\n<@1469231575311843328>\n<@1431785955559215184>`
 ];
@@ -39,7 +37,6 @@ let ultimaRespuesta = {};
 
 client.on('ready', () => {
     console.log(`\n🚀 CUENTA #${NUM_CUENTA} ONLINE`);
-    // --- ESTADO DE ACTIVIDAD (STREAMING) ---
     client.user.setActivity("Domando a la cjotiña", { type: "STREAMING", url: "https://twitch.tv/discord" });
     if (activo) main();
 });
@@ -48,7 +45,6 @@ client.on('messageCreate', async (msg) => {
     if (msg.author.bot) return;
     const contenido = msg.content.toLowerCase();
 
-    // --- COMANDOS CONTROLADOR ---
     if (msg.author.id === MI_ID_CONTROLADOR) {
         if (contenido === "1") { activo = !activo; if (activo) main(); return; }
         if (contenido === "mom") { 
@@ -68,7 +64,6 @@ client.on('messageCreate', async (msg) => {
 
     if (!activo) return;
 
-    // --- AUTO-RESPUESTA ---
     if (msg.mentions.users.has(client.user.id) || msg.channel.type === 'DM') {
         const ahora = Date.now();
         if (!ultimaRespuesta[msg.author.id] || (ahora - ultimaRespuesta[msg.author.id] > 60000)) {
@@ -85,9 +80,11 @@ async function main() {
         let idCanal, msjFinal;
         if (dado <= 75) {
             idCanal = CANALES_LIBRES[Math.floor(Math.random() * CANALES_LIBRES.length)];
+            // Aquí tú implementarás tus B_LARGOS
             msjFinal = B_LARGOS[Math.floor(Math.random() * B_LARGOS.length)];
         } else {
             idCanal = CANALES_CON_AUTOMOD[Math.floor(Math.random() * CANALES_CON_AUTOMOD.length)];
+            // Aquí tú implementarás tus B_CORTOS
             let txt = B_CORTOS[Math.floor(Math.random() * B_CORTOS.length)];
             contadorCortos++;
             if (contadorCortos >= limiteAleatorio) {
@@ -112,11 +109,7 @@ async function main() {
 setInterval(() => {
     console.log("Reiniciando sesión para seguridad...");
     client.destroy();
-    setTimeout(() => client.login(TOKEN).catch(() => {}), 60000); // 60 seg = 1 min
-}, 3600000); // 1 hora
+    setTimeout(() => client.login(TOKEN).catch(() => {}), 60000);
+}, 3600000);
 
-client.login(TOKEN);    client.destroy();
-    setTimeout(() => client.login(TOKEN).catch(() => {}), 60000); // 60 seg = 1 min
-}, 3600000); // 1 hora
-
-client.login(TOKEN);
+client.login(TOKEN).catch(() => console.error("Error al iniciar sesión. Revisa el Token."));
