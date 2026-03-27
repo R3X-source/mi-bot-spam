@@ -48,7 +48,7 @@ const B_CORTOS = [
     ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR SU QLO DESDE GROK",
     ".t cejotorra MAMELE MÁS MEJICHANGA",
     ".t lorda CJOTORRA VIENDO TODO con su CARA DE INDIS",
-    ".t some_frijolera FRIJOLERA DILE DOMADORA",
+    ".t frijolera FRIJOLERA DILE DOMADORA",
     ".t joan MACH4 G4M4MITA DIRÍA LA PUTITA DE CEJORRA",
     ".t chichuda VENGAN MEJICHANGAS DENLE TET4 A SU TIO"
 ];
