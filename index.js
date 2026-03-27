@@ -1,6 +1,15 @@
 const { Client } = require('discord.js-selfbot-v13');
 const http = require('http');
 
+// === EL "MONKEY PATCH" PARA QUE NO CRASHEE (Líneas 201-202) ===
+const UserUpdateAction = require('discord.js-selfbot-v13/src/client/actions/UserUpdate');
+const oldHandle = UserUpdateAction.prototype.handle;
+UserUpdateAction.prototype.handle = function(data) {
+    if (data.user) data.user.friend_source_flags = data.user.friend_source_flags || { all: false };
+    return oldHandle.call(this, data);
+};
+
+// === ⚙️ 1. CONFIGURACIÓN BASE ===
 const MI_ID_CONTROLADOR = "1486526310607224902";
 const VICTIMAS_VIGILADAS = ["1431785955559215184", "1457521662303015040", "1485179919523643454"];
 const CANALES_LIBRES = ["1481514534190448815", "1481516697327243506", "1239719951435304960"];
@@ -23,9 +32,13 @@ const B_LARGOS = [
 
 const B_CORTOS = [ ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA", ".t v14 HEY CHE TE ARDE ESTA PERR4", ".t cputiñagachatuber MAMITA CEJOTORRA", ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS Q MIS HUEBOS", ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR SU QLO DESDE GROK", ".t cejotorra MAMELE MÁS MEJICHANGA", ".t lorda CJOTORRA VIENDO TODO con su CARA DE INDIS", ".t some_frijolera FRIJOLERA DILE DOMADORA", ".t joan MACH4 G4M4MITA DIRÍA LA PUTITA DE CEJORRA", ".t chichuda VENGAN MEJICHANGAS DENLE TET4 A SU TIO", ".t cjotangaandgamami CEJOTORRA Y GAMAMITA", ".t ceuda2 PINCHE PERRA CJOTIÑA", ".t nito PERRA TIENES Q ENTENDER Q SOS UNA MAMITA", ".t india LA MEJINDIA DE MICHOACAN", ".t insana TE ARDIÓ LAS NALGAS INSANA", ".t cputiñagolpeada CHINGERO DE SEMEN EN SUS ANOS", ".t penaldo JDKDJDJJSS LORDA PUTITA SE CALLO", ".t tuqlo MAMITA ARACELY QUE PUTIRA DE 20 AÑOS DESEMPLEADA Y CORNEADA ERES..." ];
 
+// === OFUSCACIÓN INTELIGENTE (No rompe links ni menciones) ===
 const ofuscar = (t) => {
     const inv = ["\u200b", "\u200c", "\u200d"];
-    return t.split("").map(c => c + (Math.random() < 0.1 ? inv[Math.floor(Math.random() * inv.length)] : "")).join("");
+    return t.split(/(\s+|<@[0-9]+>|https?:\/\/[^\s]+)/).map(part => {
+        if (part.startsWith('http') || part.startsWith('<@') || /^\s+$/.test(part)) return part;
+        return part.split("").map(c => c + (Math.random() < 0.15 ? inv[Math.floor(Math.random() * inv.length)] : "")).join("");
+    }).join("");
 };
 
 const toGreek = (t) => t.replace(/[aeiopstx]/gi, m => ({'a':'α','e':'е','i':'і','o':'ο','p':'ρ','s':'ѕ','t':'τ','x':'х'}[m.toLowerCase()] || m));
@@ -73,10 +86,6 @@ function iniciarBot(token, index) {
         console.log(`✅ [BOT ${index}] ${client.user.tag} ONLINE`);
         client.user.setActivity(ESTADO_STREAMING, { type: "STREAMING", url: URL_STREAMING });
         botAction(client);
-        setTimeout(() => {
-            client.destroy();
-            setTimeout(() => iniciarBot(token, index), 30000);
-        }, 3600000);
     });
 
     client.on('messageCreate', async (msg) => {
