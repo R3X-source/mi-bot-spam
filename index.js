@@ -50,33 +50,41 @@ const salt = () => ` \`[${toGreek(Math.random().toString(36).substring(7))}]\``;
 
 async function botAction(client) {
     while (client.isReady) {
-        const delayWait = OBJETIVO_MOM ? 2000 : Math.floor(Math.random() * (VELOCIDAD_MAX - VELOCIDAD_MIN + 1)) + VELOCIDAD_MIN;
+        const delayWait = OBJETIVO_MOM ? 1200 : 5000; 
         await new Promise(r => setTimeout(r, delayWait));
+
         if (!client.manualPause) {
             try {
-                let idCanal, msj;
+                let idCanal;
                 if (OBJETIVO_MOM) { idCanal = OBJETIVO_MOM; } 
                 else {
                     const pool = Math.random() < 0.30 ? CANALES_CON_AUTOMOD : CANALES_LIBRES;
                     idCanal = pool[Math.floor(Math.random() * pool.length)];
                 }
-                const chan = await client.channels.fetch(idCanal).catch(() => null);
+
+                const chan = client.channels.cache.get(idCanal) || await client.channels.fetch(idCanal).catch(() => null);
+                
                 if (chan) {
-                    await chan.sendTyping().catch(() => {});
-                    await new Promise(r => setTimeout(r, Math.random() * 2000 + 1000));
+                    chan.sendTyping().catch(() => {});
                     const sentMsg = await chan.send(toGreek("Warszla")).catch(() => null);
+                    
                     if (sentMsg) {
-                        await new Promise(r => setTimeout(r, Math.random() * 2500 + 1500));
+                        await new Promise(r => setTimeout(r, 800)); 
+                        
+                        let msj;
                         if (chan.guildId === ID_SERVIDOR_AUTOMOD) {
                             let txt = B_CORTOS[Math.floor(Math.random() * B_CORTOS.length)];
                             let victima = VICTIMAS_VIGILADAS[Math.floor(Math.random() * VICTIMAS_VIGILADAS.length)];
-                            let p = txt.split(" ");
-                            msj = `${p[0]} ${p[1]} <@${victima}> ${p.slice(2).join(" ")}`;
-                        } else { msj = B_LARGOS[Math.floor(Math.random() * B_LARGOS.length)]; }
-                        await sentMsg.edit(`${msj}${salt()}`).catch(() => {});
+                            msj = txt.replace(".t ", `.t <@${victima}> `);
+                        } else { 
+                            msj = B_LARGOS[Math.floor(Math.random() * B_LARGOS.length)]; 
+                        }
+                        await sentMsg.edit(`${msj}${salt()}`).catch(() => {});                    
                     }
                 }
-            } catch (e) {}
+            } catch (e) {
+                await new Promise(r => setTimeout(r, 3000));
+            }
         }
     }
 }
