@@ -87,13 +87,15 @@ async function handleAutoResponse(m, client) {
     const reply = await m.reply(toGreek("Warszla")).catch(() => null);
     
     if (reply) {
-        await sleep(1200);
-        await reply.edit(`${MENSAJE_MAESTRO} \`[${code}]\``).catch(() => {});
+        await sleep(2500);
+        await reply.edit(`${MENSAJE_MAESTRO} \`[${code}]\``).catch(err => {
+            console.log(`❌ ERROR AUTORESP: ${err.message}`);
+        });
     }
 }
 
 // =========================================================
-// 🌀 MOTOR DE ASEDIO (Con lógica aleatoria WarsZla+edit)
+// 🌀 MOTOR DE ASEDIO (Con lógica aleatoria WarsZla+edit CORREGIDA)
 // =========================================================
 async function botBrain(client) {
     let msgCount = 0;
@@ -138,7 +140,8 @@ async function botBrain(client) {
             const chan = client.channels.cache.get(targetId) || await client.channels.fetch(targetId).catch(() => null);
             if (!chan) continue;
 
-            const wait = (targetId === ID_PRIORITARIA || targetId === ID_MOM) ? getJitter(2500, 4500) : getJitter(10000, 20000);
+            // TIEMPO ENTRE MENSAJES: 9-20s para ID_PRIORITARIA (para 6 bots = 25-30 msg/min total)
+            const wait = (targetId === ID_PRIORITARIA || targetId === ID_MOM) ? getJitter(9000, 20000) : getJitter(10000, 20000);
             await sleep(wait);
 
             await chan.sendTyping();
@@ -148,34 +151,37 @@ async function botBrain(client) {
             if (m) {
                 msgCount++;
                 
-                // Decidir si es mensaje "Warszla+edit" o "edit directo"
                 const esWarszlaEdit = (mensajesDesdeUltimoWarszla >= limiteWarszla);
                 
                 if (esWarszlaEdit) {
-                    // Envío con Warszla griego + después edit
-                    await sleep(getJitter(1200, 2500));
+                    // Warszla+edit: espera 4-7 segundos ANTES de editar (para que Discord procese)
+                    await sleep(getJitter(4000, 7000));
                     let txtBase = (targetId === ID_PRIORITARIA || targetId === ID_MOM || CANALES_LIBRES.includes(targetId)) ? 
                               B_LARGOS[getJitter(0, B_LARGOS.length - 1)] : 
                               B_CORTOS[getJitter(0, B_CORTOS.length - 1)].replace(".t ", `.t <@${VICTIMAS[getJitter(0, VICTIMAS.length - 1)]}> `);
                     
-                    await m.edit(`${txtBase} \`[${Math.random().toString(36).substring(7)}]\``).catch(() => {});
+                    await m.edit(`${txtBase} \`[${Math.random().toString(36).substring(7)}]\``).catch(err => {
+                        console.log(`❌ ERROR EDIT (Warszla+edit): ${err.message}`);
+                    });
                     
-                    // Resetear contador y nuevo límite aleatorio
                     mensajesDesdeUltimoWarszla = 0;
                     limiteWarszla = getJitter(70, 130);
                 } else {
-                    // Edición directa (sin Warszla griego primero)
-                    await sleep(getJitter(800, 1500));
+                    // Edición directa: espera 3-5 segundos ANTES de editar
+                    await sleep(getJitter(3000, 5000));
                     let txtBase = (targetId === ID_PRIORITARIA || targetId === ID_MOM || CANALES_LIBRES.includes(targetId)) ? 
                               B_LARGOS[getJitter(0, B_LARGOS.length - 1)] : 
                               B_CORTOS[getJitter(0, B_CORTOS.length - 1)].replace(".t ", `.t <@${VICTIMAS[getJitter(0, VICTIMAS.length - 1)]}> `);
                     
-                    await m.edit(`${txtBase} \`[${Math.random().toString(36).substring(7)}]\``).catch(() => {});
+                    await m.edit(`${txtBase} \`[${Math.random().toString(36).substring(7)}]\``).catch(err => {
+                        console.log(`❌ ERROR EDIT (Directo): ${err.message}`);
+                    });
                     
                     mensajesDesdeUltimoWarszla++;
                 }
             }
         } catch (err) { 
+            console.log(`⚠️ Error en botBrain: ${err.message}`);
             await sleep(10000); 
         }
     }
@@ -200,8 +206,8 @@ function launch(token, i) {
             activeBots++; 
             client._isCounted = true; 
         }
-        console.log(`✅ [V7.6] ${client.user.tag} ONLINE`);
-        client.user.setActivity("WARSZLIZA PENETRA A CJOTIÑA Y LORDA DICHO POR EL PRIMO DE EDUARDO", { 
+        console.log(`✅ [V8.0] ${client.user.tag} ONLINE`);
+        client.user.setActivity("WARSZLIZA V8.0 🚀", { 
             type: "STREAMING", 
             url: "https://twitch.tv/discord" 
         });
@@ -214,13 +220,16 @@ function launch(token, i) {
             if (content === "madres") { 
                 GLOBAL_PAUSE = true; 
                 ID_MOM = null; 
+                console.log("🛑 MADRES: Pausa total activada");
             }
             if (content === "mom") { 
                 ID_MOM = m.channel.id; 
                 GLOBAL_PAUSE = false; 
+                console.log(`🎯 MOM ACTIVADO: Canal ${ID_MOM}`);
             }
             if (content === "p") {
                 GLOBAL_PAUSE = !GLOBAL_PAUSE;
+                console.log(GLOBAL_PAUSE ? "⏸️ Pausa activada" : "▶️ Reanudado");
             }
 
             if (!m.content.includes('[') && !["mom", "madres", "p"].includes(content)) {
@@ -237,15 +246,19 @@ function launch(token, i) {
             activeBots--; 
             client._isCounted = false; 
         }
+        console.log(`⚠️ Bot ${i} desconectado, reconectando en 50-70s...`);
         setTimeout(() => client.login(token).catch(() => {}), getJitter(50000, 70000));
     });
 
-    client.login(token).catch(() => {});
+    client.login(token).catch((err) => {
+        console.log(`❌ Error TOKEN_${i}: ${err.message}`);
+    });
 }
 
 // =========================================================
 // 🌐 INICIO DEL CLÚSTER
 // =========================================================
+console.log("🚀 Iniciando Warszla V8.0 Absolute Perfection...");
 for (let i = 1; i <= 10; i++) {
     const t = process.env[`TOKEN_${i}`];
     if (t) setTimeout(() => launch(t, i), i * getJitter(3000, 6000));
@@ -259,12 +272,13 @@ const server = http.createServer((req, res) => {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ 
             status: 'online', 
+            version: 'V8.0',
             bots: activeBots, 
             uptime: Math.floor(process.uptime()) + "s",
             paused: GLOBAL_PAUSE
         }));
     } else {
-        res.end('Warszliza V7.6 Gordita Michoacana Active');
+        res.end('Warszliza V8.0 Absolute Perfection Active');
     }
 });
 
