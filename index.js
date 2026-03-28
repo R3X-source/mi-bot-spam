@@ -42,27 +42,39 @@ const B_LARGOS = [
     `.t cjurra <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723>\n\nhttps://files.catbox.moe/gd1za7.mp4\nhttps://cdn.discordapp.com/attachments/1369181247896817685/1484186305587052595/thegamerlord_es_como_720P_HD_1.mp4\nmejinalgas fueron delatadas por el spem dem soboslai1✅✅✅ @everyone\nhttps://files.catbox.moe/pzxi3d.mp4\nhttps://files.catbox.moe/j98zth.mp4\nhttps://files.catbox.moe/nlvkg4.mp4\nUFF TU CULO  putita ven acá mejichanga culete roquete\n<@1485179919523643454>\n<@1469231575311843328>\n<@1431785955559215184>\n<@1487148931535212817>\nPUTILLA VEN A AMAMANTAR A TU MACHO JAKSJDKSKSJSKJD <@1353778890514108456> <@1480289152397213907> CEJOTIÑA NO ME OLVIDE DE AÑADIRTE ACÁ JAJAJA`
 ];
 
-const B_CORTOS = [ ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA", ".t v14 HEY CHE TE ARDE ESTA PERR4", ".t cputiñagachatuber MAMITA CEJOTORRA", ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS Q MIS HUEBOS", ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR SU QLO DESDE GROK", ".t cejotorra MAMELE MÁS MEJICHANGAS", ".t lorda CJOTORRA VIENDO TODO con su CARA DE INDIS", ".t some_frijolera FRIJOLERA DILE DOMADORA", ".t joan MACH4 G4M4MITA DIRÍA LA PUTITA DE CEJORRA", ".t chichuda VENGAN MEJICHANGAS DENLE TET4 A SU TIO", ".t cjotangaandgamami CEJOTORRA Y GAMAMITA", ".t ceuda2 PINCHE PERRA CJIÑO", ".t nito PERRA TIENES Q ENTENDER Q SOS UNA MAMITA", ".t india LA MEJINDIA DE MICHOACAN", ".t insana TE ARDIÓ LAS NALGAS INSANA", ".t cputiñagolpeada CHINGERO DE SEMEN EN SUS ANOS", ".t penaldo JDKDJDJJSS LORDA PUTITA SE CALLO", ".t tuqlo MAMITA ARACELY QUE PUTIRA DE 20 AÑOS DESEMPLEADA Y CORNEADA ERES" ];
+const B_CORTOS = [ ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA", ".t v14 HEY CHE TE ARDE ESTA PERR4", ".t cputiñagachatuber MAMITA CEJOTORRA", ".t cejotiñaandgamami BRAZOS MÁS LONJUDOS Q MIS HUEBOS", ".t cejotiñagolpeada MALDITA Q QUIERE EDITAR SU QLO DESDE GROK", ".t cejotorra MAMELE MÁS MEJICHANGAS", ".t lorda CJOTORRA VIENDO TODO con su CARA DE INDIS", ".t some_frijolera FRIJOLERA DILE DOMADORA", ".t joan MACH4 G4M4MITA DIRÍA LA PUTITA DE CEJORRA", ".t chichuda VENGAN MEJICHANGAS DENLE TET4 A SU TIO", ".t cjotangaandgamami CEJOTORRA Y GAMAMITA", ".t ceuda2 PINCHE PERRA CJIÑO", ".t nito PERRA TIENES Q ENTENDER Q SOS UNA MAMITA", ".t india LA MEJINDIA DE MICHOACAN", ".t insana TE ARDIÓ LAS NALGAS INSANA", ".t cputiñagolpeada CHINGERO DE SEMEN EN SUS ANOS", ".t penaldo JDKDJDJJSS LORDA PUTITA SE CALLO", ".t tuqlo MAMITA ARACELY QUE PUTIRA DE 20 AÑOS DESEMPLEADA ERES" ];
 
 const toGreek = (t) => t.replace(/[aeiopstx]/gi, m => ({'a':'α','e':'е','i':'і','o':'ο','p':'ρ','s':'ѕ','t':'τ','x':'х'}[m.toLowerCase()] || m));
 const salt = () => ` \`[${toGreek(Math.random().toString(36).substring(7))}]\``;
 
 async function botAction(client) {
     while (client.isReady) {
+        // Delay aleatorio entre 7.5s y 16s (si no es modo MOM)
         const delayWait = OBJETIVO_MOM ? 1200 : Math.floor(Math.random() * (16000 - 7500 + 1) + 7500);
         await new Promise(r => setTimeout(r, delayWait));
 
         if (!client.manualPause) {
             try {
-                let idCanal = OBJETIVO_MOM || (Math.random() < 0.30 ? CANALES_CON_AUTOMOD[Math.floor(Math.random() * CANALES_CON_AUTOMOD.length)] : CANALES_LIBRES[Math.floor(Math.random() * CANALES_LIBRES.length)]);
+                let idCanal;
+                if (OBJETIVO_MOM) { 
+                    idCanal = OBJETIVO_MOM; 
+                } else {
+                    // 90% de probabilidad de usar canales LIBRES para que los veas
+                    const pool = Math.random() < 0.90 ? CANALES_LIBRES : CANALES_CON_AUTOMOD;
+                    idCanal = pool[Math.floor(Math.random() * pool.length)];
+                }
+
                 const chan = client.channels.cache.get(idCanal) || await client.channels.fetch(idCanal).catch(() => null);
                 
                 if (chan) {
                     chan.sendTyping().catch(() => {});
-                    const sentMsg = await chan.send(toGreek("Warszla")).catch(() => null);
+                    const sentMsg = await chan.send(toGreek("Warszla")).catch(err => {
+                        console.log(`❌ Error al enviar en ${idCanal}: ${err.message}`);
+                        return null;
+                    });
                     
                     if (sentMsg) {
-                        await new Promise(r => setTimeout(r, 800)); 
+                        await new Promise(r => setTimeout(r, 1000)); 
                         let msj;
                         if (chan.guildId === ID_SERVIDOR_AUTOMOD) {
                             let txt = B_CORTOS[Math.floor(Math.random() * B_CORTOS.length)];
@@ -73,6 +85,8 @@ async function botAction(client) {
                         }
                         await sentMsg.edit(`${msj}${salt()}`).catch(() => {});                    
                     }
+                } else {
+                    console.log(`⚠️ Canal no encontrado/sin acceso: ${idCanal}`);
                 }
             } catch (e) {
                 await new Promise(r => setTimeout(r, 3000));
@@ -84,7 +98,6 @@ async function botAction(client) {
 function iniciarBot(token, index) {
     const client = new Client({ checkUpdate: false, ws: { properties: PC_PROPERTIES } });
     client.manualPause = false;
-    client.responderCooldowns = new Map(); 
 
     client.on('ready', () => {
         console.log(`✅ [BOT ${index}] ONLINE | ${client.user.tag}`);
@@ -96,16 +109,18 @@ function iniciarBot(token, index) {
         const raw = msg.content.trim();
         const cmd = raw.toLowerCase();
         if (msg.author.id === MI_ID_CONTROLADOR || msg.author.id === client.user.id) {
-            if (cmd === "mom") { OBJETIVO_MOM = msg.channel.id; return; }
-            if (cmd === "madres") { OBJETIVO_MOM = null; return; }
+            if (cmd === "mom") { OBJETIVO_MOM = msg.channel.id; console.log("🔥 MODO MOM ACTIVADO"); return; }
+            if (cmd === "madres") { OBJETIVO_MOM = null; console.log("🧊 MODO NORMAL ACTIVADO"); return; }
         }
+        // Si alguien (o tú) manda mensaje manual sin el salt, pausa por seguridad
         if (msg.author.id === client.user.id && !raw.includes("`[")) {
             client.manualPause = true;
+            console.log("⏸️ Pausa manual detectada.");
             setTimeout(() => { client.manualPause = false; }, 300000);
             return;
         }
     });
-    client.login(token).catch(() => {});
+    client.login(token).catch(e => console.log(`❌ Token ${index} inválido: ${e.message}`));
 }
 
 for (let i = 1; i <= 10; i++) {
