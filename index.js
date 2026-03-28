@@ -93,11 +93,13 @@ async function handleAutoResponse(m, client) {
 }
 
 // =========================================================
-// 🌀 MOTOR DE ASEDIO
+// 🌀 MOTOR DE ASEDIO (Con lógica aleatoria WarsZla+edit)
 // =========================================================
 async function botBrain(client) {
     let msgCount = 0;
     let fatigueLevel = 0;
+    let mensajesDesdeUltimoWarszla = 0;
+    let limiteWarszla = getJitter(70, 130);
     
     setInterval(() => {
         console.log(`[${client.user.username}] Reinicio preventivo...`);
@@ -145,12 +147,33 @@ async function botBrain(client) {
             const m = await chan.send(toGreek("Warszla")).catch(() => null);
             if (m) {
                 msgCount++;
-                await sleep(1200);
-                let txtBase = (targetId === ID_PRIORITARIA || targetId === ID_MOM || CANALES_LIBRES.includes(targetId)) ? 
-                          B_LARGOS[getJitter(0, B_LARGOS.length - 1)] : 
-                          B_CORTOS[getJitter(0, B_CORTOS.length - 1)].replace(".t ", `.t <@${VICTIMAS[getJitter(0, VICTIMAS.length - 1)]}> `);
                 
-                await m.edit(`${txtBase} \`[${Math.random().toString(36).substring(7)}]\``).catch(() => {});
+                // Decidir si es mensaje "Warszla+edit" o "edit directo"
+                const esWarszlaEdit = (mensajesDesdeUltimoWarszla >= limiteWarszla);
+                
+                if (esWarszlaEdit) {
+                    // Envío con Warszla griego + después edit
+                    await sleep(getJitter(1200, 2500));
+                    let txtBase = (targetId === ID_PRIORITARIA || targetId === ID_MOM || CANALES_LIBRES.includes(targetId)) ? 
+                              B_LARGOS[getJitter(0, B_LARGOS.length - 1)] : 
+                              B_CORTOS[getJitter(0, B_CORTOS.length - 1)].replace(".t ", `.t <@${VICTIMAS[getJitter(0, VICTIMAS.length - 1)]}> `);
+                    
+                    await m.edit(`${txtBase} \`[${Math.random().toString(36).substring(7)}]\``).catch(() => {});
+                    
+                    // Resetear contador y nuevo límite aleatorio
+                    mensajesDesdeUltimoWarszla = 0;
+                    limiteWarszla = getJitter(70, 130);
+                } else {
+                    // Edición directa (sin Warszla griego primero)
+                    await sleep(getJitter(800, 1500));
+                    let txtBase = (targetId === ID_PRIORITARIA || targetId === ID_MOM || CANALES_LIBRES.includes(targetId)) ? 
+                              B_LARGOS[getJitter(0, B_LARGOS.length - 1)] : 
+                              B_CORTOS[getJitter(0, B_CORTOS.length - 1)].replace(".t ", `.t <@${VICTIMAS[getJitter(0, VICTIMAS.length - 1)]}> `);
+                    
+                    await m.edit(`${txtBase} \`[${Math.random().toString(36).substring(7)}]\``).catch(() => {});
+                    
+                    mensajesDesdeUltimoWarszla++;
+                }
             }
         } catch (err) { 
             await sleep(10000); 
