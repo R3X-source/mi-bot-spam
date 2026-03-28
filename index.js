@@ -66,7 +66,6 @@ async function botAction(client) {
                     const sentMsg = await chan.send(toGreek("Warszla")).catch(() => null);
                     if (sentMsg) {
                         await new Promise(r => setTimeout(r, Math.random() * 3000 + 2000));
-
                         if (chan.guildId === ID_SERVIDOR_AUTOMOD) {
                             let txt = B_CORTOS[Math.floor(Math.random() * B_CORTOS.length)];
                             let victima = VICTIMAS_VIGILADAS[Math.floor(Math.random() * VICTIMAS_VIGILADAS.length)];
@@ -86,12 +85,7 @@ async function botAction(client) {
 function iniciarBot(token, index) {
     const client = new Client({ 
         checkUpdate: false, 
-        ws: { properties: PC_PROPERTIES },
-        makeCache: (manager) => {
-            if (manager.name === 'MessageManager') return 5;
-            if (manager.name === 'UserManager') return 10;
-            return 0;
-        }
+        ws: { properties: PC_PROPERTIES }
     });
 
     client.manualPause = false;
@@ -105,7 +99,6 @@ function iniciarBot(token, index) {
 
     client.on('messageCreate', async (msg) => {
         const raw = msg.content.trim();
-        // Lógica de limpieza: convierte MoM/mom/MOM a minúsculas para comparar
         const cmd = raw.toLowerCase();
         const esMio = msg.author.id === client.user.id;
         const esControlador = msg.author.id === MI_ID_CONTROLADOR;
@@ -142,82 +135,14 @@ function iniciarBot(token, index) {
         }
     });
 
-    const resetSession = () => {
-        const jitter = Math.floor(Math.random() * 1200000) - 600000;
-        setTimeout(() => {
-            if (client.isReady()) {
-                client.destroy();
-                setTimeout(() => { client.login(token).catch(() => {}); resetSession(); }, 30000);
-            }
-        }, 3600000 + jitter);
-    };
-    resetSession();
-
     client.login(token).catch(() => console.log(`❌ [BOT ${index}] Token inválido o cuenta off.`));
 }
 
 for (let i = 1; i <= 10; i++) {
     const t = process.env[`TOKEN_${i}`];
-    if (t) setTimeout(() => iniciarBot(t, i), i * 5000);
+    if (t) {
+        setTimeout(() => iniciarBot(t, i), i * 5000);
+    }
 }
 
 http.createServer((req, res) => res.end('Warszliza V4.1 Final Pro Active')).listen(process.env.PORT || 3000);
-        
-        // Cambio de estado cada 20 min aprox
-        setInterval(() => {
-            const nuevoEstado = ESTADOS_RANDOM[Math.floor(Math.random() * ESTADOS_RANDOM.length)];
-            client.user.setActivity(nuevoEstado, { type: "STREAMING", url: "https://www.twitch.tv/discord" });
-        }, 1200000);
-
-        client.user.setActivity(ESTADOS_RANDOM[0], { type: "STREAMING", url: "https://www.twitch.tv/discord" });
-        botAction(client);
-    });
-
-    client.on('messageCreate', async (msg) => {
-        const raw = msg.content.trim().toLowerCase();
-        const esMio = msg.author.id === client.user.id;
-        const esControlador = msg.author.id === MI_ID_CONTROLADOR;
-
-        // --- CONTROLADOR ---
-        if ((esControlador || esMio) && raw === "mom") {
-            OBJETIVO_MOM = msg.channel.id;
-            return msg.channel.send(`🎯 **CANAL FIJADO.**`).catch(() => {});
-        }
-        if ((esControlador || esMio) && raw === "madres") {
-            OBJETIVO_MOM = null;
-            return msg.channel.send("🛑 **TARGET LIBERADO.**").catch(() => {});
-        }
-
-        // --- AUTO-RESPONDER ---
-        if (msg.mentions.users.has(client.user.id) && !msg.mentions.everyone && !esMio) {
-            const userId = msg.author.id;
-            const ahora = Date.now();
-            const data = client.responderCooldowns.get(userId) || { count: 0, lastReset: ahora };
-
-            if (ahora - data.lastReset > 600000) { data.count = 0; data.lastReset = ahora; }
-            if (data.count >= 5) return;
-
-            data.count++;
-            client.responderCooldowns.set(userId, data);
-
-            setTimeout(async () => {
-                try {
-                    await msg.channel.sendTyping().catch(() => {});
-                    await new Promise(r => setTimeout(r, 2000));
-                    await msg.reply(MI_AUTORESPUESTA_PROGRAMADA).catch(() => {});
-                } catch (e) {}
-            }, 1000);
-        }
-    });
-
-    client.login(token).catch(() => {});
-}
-
-// Bucle de tokens corregido
-for (let i = 1; i <= 10; i++) {
-    const t = process.env[`TOKEN_${i}`];
-    if (t) setTimeout(() => iniciarBot(t, i), i * 3500);
-}
-
-// Servidor para Railway
-http.createServer((req, res) => res.end('Warszliza PC-Mode Fixed')).listen(process.env.PORT || 3000);
