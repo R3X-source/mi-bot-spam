@@ -180,7 +180,7 @@ function launch(token, i) {
             client._isCounted = true; 
         }
         console.log(`✅ [V8.1] ${client.user.tag} ONLINE`);
-        client.user.setActivity("WARSZLIZA V8.1 🔥", { 
+        client.user.setActivity("WARSZLIZA PENETRA A CEJOTIÑA AND GAMAMI BY EL PRIMO DE EDUARDO 🔥", { 
             type: "STREAMING", 
             url: "https://twitch.tv/discord" 
         });
