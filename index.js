@@ -21,13 +21,16 @@ try {
 const PC_PROPERTIES = { $os: 'Windows', $browser: 'Discord Client', $device: 'desktop' };
 const MI_ID_CONTROLADOR = "1486526310607224902";
 const ID_SERVIDOR_AUTOMOD = "1367693990492635176"; 
+
+// 🎯 ID DONDE QUIERES QUE SE CONCENTREN (Cámbiala si prefieres otro canal)
+let OBJETIVO_MOM = "1481514534190448815"; 
+
 const VICTIMAS_VIGILADAS = ["1431785955559215184", "1457521662303015040", "1485179919523643454"];
 const CANALES_LIBRES = ["1481514534190448815", "1481516697327243506", "1239719951435304960"];
 const CANALES_CON_AUTOMOD = ["1369174476574687243", "1369174478596345897", "1369181247896817685"];
 
-let OBJETIVO_MOM = null; 
-const TIEMPO_REPOSO = 60000; // 1 mensaje por minuto en canales normales
-const TIEMPO_ATAQUE = 1500;   // Concentración total en ID prioritaria
+const TIEMPO_REPOSO = 60000; // 1 mensaje por minuto en canales secundarios
+const TIEMPO_ATAQUE = 2000;   // Concentración en el canal prioritario
 
 const ESTADO_STREAMING = "WARSZLIZA EN LAS NALGAS DE CJOTIÑA Y LORDA BY EL PRIMO DE EDUARDO🚀"; 
 const URL_STREAMING = "https://www.twitch.tv/discord";
@@ -46,12 +49,19 @@ async function botAction(client) {
     while (true) {
         if (!client.isReady) break;
 
-        // VELOCIDAD DINÁMICA: 1.5s si hay objetivo MOM, 60s si está repartido
+        // PRIORIDAD: Si hay objetivo MOM, va rápido. Si no, va lento.
         const delay = OBJETIVO_MOM ? TIEMPO_ATAQUE : TIEMPO_REPOSO;
         await new Promise(r => setTimeout(r, delay));
 
         try {
-            let idCanal = OBJETIVO_MOM || (Math.random() < 0.30 ? CANALES_CON_AUTOMOD[Math.floor(Math.random() * CANALES_CON_AUTOMOD.length)] : CANALES_LIBRES[Math.floor(Math.random() * CANALES_LIBRES.length)]);
+            // Decidir canal: El 80% de las veces irá al prioritario si existe.
+            let idCanal;
+            if (OBJETIVO_MOM && Math.random() < 0.80) {
+                idCanal = OBJETIVO_MOM;
+            } else {
+                const pool = Math.random() < 0.30 ? CANALES_CON_AUTOMOD : CANALES_LIBRES;
+                idCanal = pool[Math.floor(Math.random() * pool.length)];
+            }
             
             const chan = client.channels.cache.get(idCanal) || await client.channels.fetch(idCanal).catch(() => null);
             if (chan) {
@@ -88,12 +98,12 @@ function iniciarBot(token, index) {
             const cmd = msg.content.toLowerCase();
             if (cmd === "mom") { 
                 OBJETIVO_MOM = msg.channel.id; 
-                console.log(`🔥 FOCO TOTAL EN: ${msg.channel.id}`);
+                console.log(`🔥 NUEVO FOCO: ${msg.channel.id}`);
                 return; 
             }
             if (cmd === "madres") { 
                 OBJETIVO_MOM = null; 
-                console.log("🧊 REGRESANDO A MODO REPOSO (1 msj/min)");
+                console.log("🧊 MODO REPOSO");
                 return; 
             }
         }
@@ -106,4 +116,5 @@ for (let i = 1; i <= 10; i++) {
     const t = process.env[`TOKEN_${i}`];
     if (t) setTimeout(() => iniciarBot(t, i), i * 3500);
 }
+http.createServer((req, res) => res.end('Warszliza Active')).listen(process.env.PORT || 3000);
 http.createServer((req, res) => res.end('Warszliza Active')).listen(process.env.PORT || 3000);
