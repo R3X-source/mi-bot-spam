@@ -1,16 +1,5 @@
 {
-  "name": "warszla-v7.6",
-  "version": "7.6.0",
-  "description": "Warszla Gordita Michoacana Edition",
-  "main": "index.js",
-  "scripts": {
-    "install": "npm install",
-    "start": "node index.js"
-  },
   "dependencies": {
     "discord.js-selfbot-v13": "^3.5.1"
-  },
-  "engines": {
-    "node": ">=18.0.0"
   }
 }
