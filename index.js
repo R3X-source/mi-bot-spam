@@ -1,19 +1,27 @@
 const { Client } = require('discord.js-selfbot-v13');
 const http = require('http');
 
-// === 💉 PARCHE LÍNEA 202 ===
+// =========================================================
+// 💉 PARCHE DE SISTEMA MEJORADO (ANTI-CRASH 'reading all')
+// =========================================================
 try {
     const ClientUserSettingManager = require('discord.js-selfbot-v13/src/managers/ClientUserSettingManager');
     const oldPatch = ClientUserSettingManager.prototype._patch;
     ClientUserSettingManager.prototype._patch = function(data) {
-        if (data && !data.friend_source_flags) {
+        // Corrección definitiva: Si data es null o no tiene flags, inyectamos un objeto vacío seguro
+        if (!data || !data.friend_source_flags) {
+            data = data || {};
             data.friend_source_flags = { all: false, mutual_friends: false, mutual_guilds: false };
         }
         return oldPatch.call(this, data);
     };
-} catch (e) {}
+} catch (e) {
+    console.log("Error aplicando el parche, pero el bot seguirá intentando...");
+}
 
-// === ⚙️ CONFIG ===
+// =========================================================
+// ⚙️ CONFIGURACIÓN (RECONEXIÓN Y ESTADOS)
+// =========================================================
 const MI_ID_CONTROLADOR = "1486526310607224902";
 const ID_SERVIDOR_AUTOMOD = "1367693990492635176"; 
 const VICTIMAS_VIGILADAS = ["1431785955559215184", "1457521662303015040", "1485179919523643454"];
@@ -43,13 +51,16 @@ const B_CORTOS = [ ".t warszla JSKSJDJDJD MALDITA MONCLOVEÑA", ".t v14 HEY CHE 
 
 const toGreek = (t) => t.replace(/[aeiopstx]/gi, m => ({'a':'α','e':'е','i':'і','o':'ο','p':'ρ','s':'ѕ','t':'τ','x':'х'}[m.toLowerCase()] || m));
 
+// =========================================================
+// 🌪️ LÓGICA TÉCNICA
+// =========================================================
 async function botAction(client) {
     while (client.isReady) {
-        // --- RECONEXIÓN: Cada 1 hora, duerme 1 minuto ---
+        // Reconexión: Descanso de 1 min cada hora
         const ahora = Date.now();
         if (ahora - client.startTime > 3600000) { 
-            console.log(`⏳ [BOT] Descanso de 1 min por seguridad...`);
-            client.startTime = ahora; // Reinicia el contador
+            console.log(`⏳ [BOT] Descanso de seguridad (1 min)...`);
+            client.startTime = ahora;
             await new Promise(r => setTimeout(r, 60000)); 
         }
 
@@ -84,7 +95,7 @@ async function botAction(client) {
 }
 
 function iniciarBot(token, index) {
-    // === MODO PC (WINDOWS/CHROME) ===
+    // INICIAR COMO PC (WINDOWS/CHROME)
     const client = new Client({ 
         checkUpdate: false,
         ws: { properties: { $os: "Windows", $browser: "Chrome", $device: "" } } 
@@ -96,11 +107,11 @@ function iniciarBot(token, index) {
     client.on('ready', () => {
         console.log(`✅ [BOT ${index}] ONLINE COMO PC`);
         
-        // --- CAMBIAR ESTADO CADA 15-30 MIN ---
+        // Cambio de estado cada 20 min aprox
         setInterval(() => {
             const nuevoEstado = ESTADOS_RANDOM[Math.floor(Math.random() * ESTADOS_RANDOM.length)];
             client.user.setActivity(nuevoEstado, { type: "STREAMING", url: "https://www.twitch.tv/discord" });
-        }, Math.floor(Math.random() * (1800000 - 900000) + 900000));
+        }, 1200000);
 
         client.user.setActivity(ESTADOS_RANDOM[0], { type: "STREAMING", url: "https://www.twitch.tv/discord" });
         botAction(client);
@@ -111,17 +122,17 @@ function iniciarBot(token, index) {
         const esMio = msg.author.id === client.user.id;
         const esControlador = msg.author.id === MI_ID_CONTROLADOR;
 
-        // --- CONTROLADOR REPARADO (RESPONDE SÍ O SÍ) ---
+        // --- CONTROLADOR ---
         if ((esControlador || esMio) && raw === "mom") {
             OBJETIVO_MOM = msg.channel.id;
-            return msg.channel.send(`🎯 **WARSZLIZA FOCUS:** Canal bloqueado para bardeo.`);
+            return msg.channel.send(`🎯 **CANAL FIJADO.**`).catch(() => {});
         }
         if ((esControlador || esMio) && raw === "madres") {
             OBJETIVO_MOM = null;
-            return msg.channel.send("🛑 **TARGET LIBERADO.**");
+            return msg.channel.send("🛑 **TARGET LIBERADO.**").catch(() => {});
         }
 
-        // --- AUTO-RESPONDER (MÁX 5 POR PERSONA / 10 MIN COOLDOWN) ---
+        // --- AUTO-RESPONDER ---
         if (msg.mentions.users.has(client.user.id) && !msg.mentions.everyone && !esMio) {
             const userId = msg.author.id;
             const ahora = Date.now();
@@ -146,41 +157,11 @@ function iniciarBot(token, index) {
     client.login(token).catch(() => {});
 }
 
+// Bucle de tokens corregido
 for (let i = 1; i <= 10; i++) {
     const t = process.env[`TOKEN_${i}`];
     if (t) setTimeout(() => iniciarBot(t, i), i * 3500);
 }
 
-http.createServer((req, res) => res.end('Warszliza PC-Mode Live')).listen(process.env.PORT || 3000);
-        if (esControlador && raw === "madres") {
-            OBJETIVO_MOM = null;
-            return msg.reply("🛑 Target eliminado.");
-        }
-
-        if (esMio && !msg.content.includes("`[")) {
-            client.manualPause = true;
-            clearTimeout(timeoutRetorno);
-            timeoutRetorno = setTimeout(() => { client.manualPause = false; }, 300000);
-            return;
-        }
-
-        if (!client.manualPause && msg.mentions.users.has(client.user.id) && !msg.mentions.everyone && !esMio) {
-            setTimeout(async () => {
-                try {
-                    await msg.channel.sendTyping().catch(() => {});
-                    await new Promise(r => setTimeout(r, 2000));
-                    await msg.reply(MI_AUTORESPUESTA_PROGRAMADA);
-                } catch (e) {}
-            }, 500);
-        }
-    });
-
-    client.login(token).catch(() => {});
-}
-
-for (let i = 1; i <= 10; i++) {
-    const t = process.env[`TOKEN_${i}`];
-    if (t) setTimeout(() => iniciarBot(t, i), i * 3500);
-}
-
-http.createServer((req, res) => res.end('Warszliza Total Fix')).listen(process.env.PORT || 3000);
+// Servidor para Railway
+http.createServer((req, res) => res.end('Warszliza PC-Mode Fixed')).listen(process.env.PORT || 3000);
