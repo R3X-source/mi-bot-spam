@@ -109,9 +109,9 @@ function launch(token, i) {
     client.login(token).catch(() => console.error(`❌ [TOKEN_${i}] MUERTO`));
 }
 
-for (let i = 1; i <= 5; i++) {
+for (let i = 1; i <= 7; i++) {
     const t = process.env[`TOKEN_${i}`];
-    if (t) setTimeout(() => launch(t, i), i * 3500); 
+    if (t) setTimeout(() => launch(t, i), i * 24000); 
 }
 
 http.createServer((req, res) => res.end("V9.7-SNIPER-HEAVY")).listen(process.env.PORT || 3000);
