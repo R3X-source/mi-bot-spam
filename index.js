@@ -6,7 +6,7 @@ const http = require('http');
 // =========================================================
 const ID_PRIORITARIA = "1481514534190448815";
 const CANALES_AM = ["1369174476574687243", "1369174478596345897", "1369181247896817685"];
-const CANALES_LIBRES = ["1481516697327243506", "1239719951435304960", "1487148931535212817"];
+const CANALES_LIBRES = ["1481516697327243506", "1270239207071420450", "1487148931535212817"];
 
 // 🎯 VÍCTIMAS: aquí están todas las IDs que vigilará y responderá
 const VIGILADOS = [
