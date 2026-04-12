@@ -2,63 +2,100 @@ const { Client } = require('discord.js-selfbot-v13');
 const http = require('http');
 
 // =========================================================
-// ⚙️ CONFIGURACIÓN DE GUERRA (V10.5 - DEFINITIVA)
+// ⚙️ CONFIGURACIÓN DE GUERRA (V11.1 - SPAM CONTINUO Y UNIFICADO)
 // =========================================================
 const ID_PRIORITARIA = "1481514534190448815";
 const CANALES_AM = ["1369174476574687243", "1369174478596345897", "1369181247896817685"];
 const CANALES_LIBRES = ["1481516697327243506", "1270239207071420450", "1487148931535212817"];
 
-// 🎯 VÍCTIMAS (Con la nueva ID 1457175804290007197 incluida)
-const VIGILADOS = [
+// 🎯 VÍCTIMAS NORMALES (Sin límites, el bot siempre dispara)
+const VIGILADOS_NORMALES = [
     "1431785955559215184", "1457521662303015040", "1485179919523643454",
-    "1003450010702205030", "1480289152397213907", "1490277865818689700", 
-    "1467397075204309034", "1457175804290007197" 
+    "1003450010702205030", "1480289152397213907", "1467397075204309034", 
+    "1457175804290007197" 
+];
+
+// 🤡 VÍCTIMAS SPAMMERS (Todas con la regla de 1 respuesta cada 10 minutos)
+const VIGILADOS_SPAMMERS = [
+    "1487148931535212817", 
+    "1492675664682287277", 
+    "1490277865818689700"
 ];
 
 const SERVER_ID_OBLIGATORIO = "1481514532932161538";
 const COMANDOS_OBLIGATORIOS = [".t warszla", ".t lorda", ".t gamamit4", ".t lorda4", ".t dibujos", ".t insanorra", ".t vendedora", ".t monclova", ".t aracely", ".t brazos", ".t paredes", ".t ch", ".t lorda2", ".t lorda6", ".t eltiodelorda", ".t doxxlorda", ".t chichuda", ".t jsk4"];
 
-// 💣 MUNICIÓN (Limpiados y con el texto exacto que mandaste)
+// 💣 MUNICIÓN 
 const B_LARGOS = [
-    `.t cjurra <@1425209744603218020> <@1490277865818689700> <@1457521662303015040> <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723>\n\nhttps://files.catbox.moe/gd1za7.mp4\nhttps://cdn.discordapp.net/attachments/1369181247896817685/1484186305587052595/thegamerlord_es_como_720P_HD_1.mp4\nmejinalgas fueron delatadas por el spem dem soboslai1✅✅✅ @everyone\nhttps://files.catbox.moe/pzxi3d.mp4\nhttps://files.catbox.moe/j98zth.mp4\nhttps://files.catbox.moe/nlvkg4.mp4\nUFF TU CULO  putita ven acá mejichanga culete roquete\n<@1485179919523643454>\n<@1469231575311843328>\n<@1431785955559215184>\n<@1487148931535212817>\n <@1353778890514108456> <@1480289152397213907>\n\n<@1490277865818689700> \nhttps://files.catbox.moe/sss6ma.mp4 JAJAJA\n<@1457175804290007197> cierr4 el qlo veneka a spam por don nadia`,
+    `.t cjurra <@1425209744603218020> <@1490277865818689700> <@1457521662303015040> <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723>\n\nhttps://files.catbox.moe/gd1za7.mp4\nhttps://cdn.discordapp.net/attachments/1369181247896817685/1484186305587052595/thegamerlord_es_como_720P_HD_1.mp4\nmejinalgas fueron delatadas por el spem dem soboslai1✅✅✅ @everyone\nhttps://files.catbox.moe/pzxi3d.mp4\nhttps://files.catbox.moe/j98zth.mp4\nhttps://files.catbox.moe/nlvkg4.mp4\nUFF TU CULO  putita ven acá mejichanga culete roquete\n<@1485179919523643454>\n<@1469231575311843328>\n<@1431785955559215184>\n<@1487148931535212817>\n <@1353778890514108456> <@1480289152397213907>\n\n<@1490277865818689700> \nhttps://files.catbox.moe/sss6ma.mp4 JAJAJA\n<@1457175804290007197> <@1492675664682287277> cierr4 el qlo veneka a spam por don nadia`,
 
-    `.t cejuda17 <@1425209744603218020> <@1490277865818689700>  <@1457521662303015040> <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723>\n\n<@1003450010702205030>  https://files.catbox.moe/hjepth.jpg\nhttps://files.catbox.moe/7q6n62.jpg\nhttps://files.catbox.moe/qkuhmd.jpg <@1480289152397213907>\n\n<@1490277865818689700> \nhttps://files.catbox.moe/sss6ma.mp4\n<@1457175804290007197> cierr4 el qlo veneka a spam por don nadia`,
+    `.t cejuda17 <@1425209744603218020> <@1490277865818689700>  <@1457521662303015040> <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723>\n\n<@1003450010702205030>  https://files.catbox.moe/hjepth.jpg\nhttps://files.catbox.moe/7q6n62.jpg\nhttps://files.catbox.moe/qkuhmd.jpg <@1480289152397213907>\n\n<@1490277865818689700> \nhttps://files.catbox.moe/sss6ma.mp4\n<@1457175804290007197> <@1492675664682287277> cierr4 el qlo veneka a spam por don nadia`,
 
-    `.t penaldo <@1425209744603218020> <@1490277865818689700> \n<@1457521662303015040>  <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723>\n\nhttps://files.catbox.moe/1nydnn.mp4\nhttps://media.discordapp.net/attachments/1479303319997644832/1483288563721306222/TikVid.io_7513075642175327496.mp4\nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287824055799870/descarga_6.mp4\nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287857899638928/YouCut_20260310_080237410.mp4\n\nhttps://files.catbox.moe/d0wcx2.mp4 @everyone putita ven acá mejichanga culete roquete\n<@1485179919523643454>\n<@1469231575311843328>\n<@1431785955559215184>\n<@1487148931535212817> <@1480289152397213907>\n\n<@1490277865818689700> \nhttps://files.catbox.moe/sss6ma.mp4 \n<@1353778890514108456> <@1480289152397213907>\n<@1457175804290007197> cierr4 el qlo veneka a spam por don nadia`
+    `.t penaldo <@1425209744603218020> <@1490277865818689700> \n<@1457521662303015040>  <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723>\n\nhttps://files.catbox.moe/1nydnn.mp4\nhttps://media.discordapp.net/attachments/1479303319997644832/1483288563721306222/TikVid.io_7513075642175327496.mp4\nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287824055799870/descarga_6.mp4\nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287857899638928/YouCut_20260310_080237410.mp4\n\nhttps://files.catbox.moe/d0wcx2.mp4 @everyone putita ven acá mejichanga culete roquete\n<@1485179919523643454>\n<@1469231575311843328>\n<@1431785955559215184>\n<@1487148931535212817> <@1480289152397213907>\n\n<@1490277865818689700> \nhttps://files.catbox.moe/sss6ma.mp4 \n<@1353778890514108456> <@1480289152397213907>\n<@1457175804290007197> <@1492675664682287277> cierr4 el qlo veneka a spam por don nadia`
 ];
 
 const B_CORTOS = [".t warszla JSKSJDJDJD", ".t v14 HEY CHE", ".t cputiñagachatuber", ".t cejotiñaandgamami", ".t cejotiñagolpeada", ".t cejotorra", ".t lorda", ".t frijolera", ".t joan", ".t chichuda", ".t cjotangaandgamami", ".t cejuda2", ".t nito", ".t india", ".t insana", ".t cputiñagolpeada", ".t penaldo", ".t tuqlo MAMITA ARACELY"];
 
 // =========================================================
-// 🎯 FUNCIONES AUXILIARES
+// 🎯 FUNCIONES AUXILIARES & CANDADOS GLOBALES
 // =========================================================
 function agregarComandosObligatorios(mensaje) {
     const comandoAleatorio = COMANDOS_OBLIGATORIOS[Math.floor(Math.random() * COMANDOS_OBLIGATORIOS.length)];
-    // Reemplazo inteligente: Cambia el .t original por el comando aleatorio sin agregar basura extra
     return mensaje.replace(/^\.t \w+/, comandoAleatorio);
 }
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 const getJitter = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
-// Candado global
 const ocupadoSpameando = new Map();
 
+// 🔥 MAPA GLOBAL PARA CONTROLAR A TODOS LOS SPAMMERS POR IGUAL
+const cooldownSpammers = new Map(); 
+
+function objetivoAgotado(idVíctima) {
+    const ahora = Date.now();
+
+    // Si la víctima es un spammer, le aplicamos la regla estricta de 10 minutos
+    if (VIGILADOS_SPAMMERS.includes(idVíctima)) {
+        let ultimoAtaque = cooldownSpammers.get(idVíctima) || 0;
+        
+        if (ahora - ultimoAtaque < 600000) { // 600,000ms = 10 minutos
+            return true; // Aún no han pasado 10 minutos, IGNORARLA
+        }
+        
+        // Si ya pasaron los 10 minutos (o es la primera vez), se le responde y se resetea su tiempo
+        cooldownSpammers.set(idVíctima, ahora); 
+        return false; 
+    }
+
+    // Para los vigilados normales, nunca se agota
+    return false;
+}
+
 // =========================================================
-// 🤖 AUTORRESPONDEDOR (MODO CAZADOR INFALIBLE)
+// 🤖 AUTORRESPONDEDOR (CON DISCRIMINACIÓN UNIFICADA)
 // =========================================================
 function setupVigilancia(client, index) {
     client.on('messageCreate', async (msg) => {
-        if (VIGILADOS.includes(msg.author.id) && msg.author.id !== client.user.id) {
+        const id = msg.author.id;
+        if (id === client.user.id) return;
+
+        const esNormal = VIGILADOS_NORMALES.includes(id);
+        const esSpammer = VIGILADOS_SPAMMERS.includes(id);
+
+        if (esNormal || esSpammer) {
             
-            // Si está spameando, espera silenciosamente hasta que termine la ráfaga
+            // Si es un spammer y no ha cumplido su castigo de 10 minutos, el bot lo ignora.
+            if (objetivoAgotado(id)) {
+                return; 
+            }
+
+            // Si está disparando spam normal en otro canal, espera en silencio
             while (ocupadoSpameando.get(index)) {
                 await sleep(1000); 
             }
-
-            console.log(`🔫 [TOKEN_${index}] VÍCTIMA DETECTADA: ${msg.author.tag}`);
             
-            // Tiempo de reacción humano
+            console.log(`🔫 [TOKEN_${index}] VÍCTIMA EN LA MIRA: ${msg.author.tag}`);
             await sleep(getJitter(2000, 5000));
             
             let finalMsg = B_LARGOS[Math.floor(Math.random() * B_LARGOS.length)];
@@ -67,38 +104,31 @@ function setupVigilancia(client, index) {
             if (msg.guild && msg.guild.id === SERVER_ID_OBLIGATORIO) {
                 finalMsg = agregarComandosObligatorios(finalMsg);
             }
-            
-            // Firma final aleatoria intacta
             await msg.reply(`${finalMsg} \`${codigo}\``).catch(() => {});
         }
     });
 }
 
 // =========================================================
-// 🌀 MOTOR DE SPAM (50% ID | 8% AM | 42% LIBRES)
+// 🌀 MOTOR DE SPAM (SPAM NORMAL Y CONTINUO, SIN RÁFAGAS)
 // =========================================================
 async function botBrain(client, index) {
-    let msgCount = 0, burstLimit = getJitter(20, 35);
+    // Bucle infinito continuo. Cero esperas largas.
     while (true) {
         try {
             if (!client.isReady) { await sleep(5000); continue; }
-            if (msgCount >= burstLimit) {
-                await sleep(getJitter(60000, 120000));
-                msgCount = 0; burstLimit = getJitter(20, 35);
-                continue;
-            }
             
             let targetId, finalMsg;
             let esModoLibre = false; 
             const rand = Math.random();
 
-            if (rand < 0.50) { // 50%
+            if (rand < 0.50) { 
                 targetId = ID_PRIORITARIA;
                 finalMsg = B_LARGOS[Math.floor(Math.random() * B_LARGOS.length)];
-            } else if (rand < 0.58) { // 8%
+            } else if (rand < 0.58) { 
                 targetId = CANALES_AM[Math.floor(Math.random() * CANALES_AM.length)];
-                finalMsg = B_CORTOS[Math.floor(Math.random() * B_CORTOS.length)].replace(".t ", `.t <@${VIGILADOS[Math.floor(Math.random() * VIGILADOS.length)]}> `);
-            } else { // 42%
+                finalMsg = B_CORTOS[Math.floor(Math.random() * B_CORTOS.length)].replace(".t ", `.t <@${VIGILADOS_NORMALES[Math.floor(Math.random() * VIGILADOS_NORMALES.length)]}> `);
+            } else { 
                 targetId = CANALES_LIBRES[Math.floor(Math.random() * CANALES_LIBRES.length)];
                 finalMsg = B_LARGOS[Math.floor(Math.random() * B_LARGOS.length)];
                 esModoLibre = true; 
@@ -113,7 +143,8 @@ async function botBrain(client, index) {
             if (chan) {
                 ocupadoSpameando.set(index, true); 
 
-                await sleep(getJitter(8000, 15000));
+                // 🔥 SPAM NORMAL: Pausa constante entre 8 y 18 segundos. Se verá un flujo perfecto.
+                await sleep(getJitter(8000, 18000)); 
                 await chan.sendTyping();
                 await sleep(getJitter(1000, 3000));
                 
@@ -122,21 +153,9 @@ async function botBrain(client, index) {
                 if (chan.guild?.id === SERVER_ID_OBLIGATORIO && (targetId === ID_PRIORITARIA || esModoLibre)) {
                     msg1 = agregarComandosObligatorios(msg1);
                 }
+                
                 await chan.send(`${msg1} \`${codigo1}\``).catch(() => {});
-                msgCount++;
-
-                // SEGUNDO MENSAJE OBLIGATORIO (SOLO EN LIBRES)
-                if (esModoLibre) {
-                    await sleep(getJitter(4000, 7000)); 
-                    const codigo2 = `[${Math.random().toString(36).substring(7)}]`;
-                    let msg2 = B_LARGOS[Math.floor(Math.random() * B_LARGOS.length)]; 
-                    if (chan.guild?.id === SERVER_ID_OBLIGATORIO) {
-                        msg2 = agregarComandosObligatorios(msg2);
-                    }
-                    await chan.send(`${msg2} \`${codigo2}\``).catch(() => {});
-                    msgCount++;
-                }
-
+                
                 ocupadoSpameando.set(index, false); 
             }
         } catch (err) { 
@@ -165,10 +184,9 @@ function launch(token, i) {
         console.log(`✅ [TOKEN_${i}] ONLINE: ${client.user.tag}`);
         ocupadoSpameando.set(i, false);
         
-        // Calentamiento extendido de 1 a 4.5 mins
         console.log(`⏳ [TOKEN_${i}] Iniciando fase de calentamiento (hasta 4.5 min)...`);
         await sleep(getJitter(60000, 270000)); 
-        console.log(`🔥 [TOKEN_${i}] Calentamiento listo, entrando a combate.`);
+        console.log(`🔥 [TOKEN_${i}] Calentamiento listo, entrando al asedio continuo.`);
         
         setupVigilancia(client, i);
         botBrain(client, i);
@@ -181,9 +199,9 @@ function launch(token, i) {
 // =========================================================
 // 🌐 ARRANQUE DE LAS 10 CUENTAS
 // =========================================================
-console.log("🚀 WARSZLA V10.5 | VERSIÓN DEFINITIVA Y SIN ERRORES");
+console.log("🚀 WARSZLA V11.1 | LÓGICA UNIFICADA | 10 MINS COOLDOWN PARA TODOS LOS SPAMMERS");
 for (let i = 1; i <= 10; i++) {
     const t = process.env[`TOKEN_${i}`];
     if (t) setTimeout(() => launch(t, i), i * 15000); 
 }
-http.createServer((req, res) => res.end("W10.5-ONLINE")).listen(process.env.PORT || 3000);
+http.createServer((req, res) => res.end("W11.1-ONLINE")).listen(process.env.PORT || 3000);
