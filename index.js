@@ -2,13 +2,13 @@ const { Client } = require('discord.js-selfbot-v13');
 const http = require('http');
 
 // =========================================================
-// ⚙️ CONFIGURACIÓN DE GUERRA (V11.1 - SPAM CONTINUO Y UNIFICADO)
+// ⚙️ CONFIGURACIÓN DE GUERRA (V11.3 - RECONEXIÓN TÁCTICA 1-6H)
 // =========================================================
 const ID_PRIORITARIA = "1481514534190448815";
 const CANALES_AM = ["1369174476574687243", "1369174478596345897", "1369181247896817685"];
 const CANALES_LIBRES = ["1481516697327243506", "1270239207071420450", "1487148931535212817"];
 
-// 🎯 VÍCTIMAS NORMALES (Sin límites, el bot siempre dispara)
+// 🎯 VÍCTIMAS NORMALES 
 const VIGILADOS_NORMALES = [
     "1431785955559215184", "1457521662303015040", "1485179919523643454",
     "1003450010702205030", "1480289152397213907", "1467397075204309034", 
@@ -48,32 +48,21 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 const getJitter = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
 const ocupadoSpameando = new Map();
-
-// 🔥 MAPA GLOBAL PARA CONTROLAR A TODOS LOS SPAMMERS POR IGUAL
 const cooldownSpammers = new Map(); 
 
 function objetivoAgotado(idVíctima) {
     const ahora = Date.now();
-
-    // Si la víctima es un spammer, le aplicamos la regla estricta de 10 minutos
     if (VIGILADOS_SPAMMERS.includes(idVíctima)) {
         let ultimoAtaque = cooldownSpammers.get(idVíctima) || 0;
-        
-        if (ahora - ultimoAtaque < 600000) { // 600,000ms = 10 minutos
-            return true; // Aún no han pasado 10 minutos, IGNORARLA
-        }
-        
-        // Si ya pasaron los 10 minutos (o es la primera vez), se le responde y se resetea su tiempo
+        if (ahora - ultimoAtaque < 600000) return true; // 10 minutos
         cooldownSpammers.set(idVíctima, ahora); 
         return false; 
     }
-
-    // Para los vigilados normales, nunca se agota
     return false;
 }
 
 // =========================================================
-// 🤖 AUTORRESPONDEDOR (CON DISCRIMINACIÓN UNIFICADA)
+// 🤖 AUTORRESPONDEDOR (TIEMPOS DE ESCRITURA 2-4s)
 // =========================================================
 function setupVigilancia(client, index) {
     client.on('messageCreate', async (msg) => {
@@ -84,19 +73,14 @@ function setupVigilancia(client, index) {
         const esSpammer = VIGILADOS_SPAMMERS.includes(id);
 
         if (esNormal || esSpammer) {
-            
-            // Si es un spammer y no ha cumplido su castigo de 10 minutos, el bot lo ignora.
-            if (objetivoAgotado(id)) {
-                return; 
-            }
+            if (objetivoAgotado(id)) return; 
 
-            // Si está disparando spam normal en otro canal, espera en silencio
-            while (ocupadoSpameando.get(index)) {
-                await sleep(1000); 
-            }
+            while (ocupadoSpameando.get(index)) { await sleep(1000); }
             
             console.log(`🔫 [TOKEN_${index}] VÍCTIMA EN LA MIRA: ${msg.author.tag}`);
-            await sleep(getJitter(2000, 5000));
+            
+            await msg.channel.sendTyping().catch(() => {});
+            await sleep(getJitter(2000, 4000)); // <-- Escritura estricta de 2 a 4s
             
             let finalMsg = B_LARGOS[Math.floor(Math.random() * B_LARGOS.length)];
             const codigo = `[${Math.random().toString(36).substring(7)}]`;
@@ -110,13 +94,25 @@ function setupVigilancia(client, index) {
 }
 
 // =========================================================
-// 🌀 MOTOR DE SPAM (SPAM NORMAL Y CONTINUO, SIN RÁFAGAS)
+// 🌀 MOTOR DE SPAM 
 // =========================================================
 async function botBrain(client, index) {
-    // Bucle infinito continuo. Cero esperas largas.
+    let msgCount = 0;
+    let burstLimit = getJitter(15, 30); 
+
     while (true) {
         try {
+            // Si el cliente está desconectado (por el ciclo de 1-6h), el loop solo pausa y no crashea
             if (!client.isReady) { await sleep(5000); continue; }
+
+            // 🔥 CORRECCIÓN: Pausa corta de 2 a 5 minutos (120k a 300k ms)
+            if (msgCount >= burstLimit) {
+                console.log(`☕ [TOKEN_${index}] Tomando un café (2-5 mins) tras ${msgCount} mensajes...`);
+                await sleep(getJitter(120000, 300000)); 
+                msgCount = 0; 
+                burstLimit = getJitter(15, 30);
+                continue;
+            }
             
             let targetId, finalMsg;
             let esModoLibre = false; 
@@ -143,10 +139,9 @@ async function botBrain(client, index) {
             if (chan) {
                 ocupadoSpameando.set(index, true); 
 
-                // 🔥 SPAM NORMAL: Pausa constante entre 8 y 18 segundos. Se verá un flujo perfecto.
-                await sleep(getJitter(8000, 18000)); 
-                await chan.sendTyping();
-                await sleep(getJitter(1000, 3000));
+                await sleep(getJitter(8000, 18000)); // Pausa entre mensajes
+                await chan.sendTyping().catch(() => {});
+                await sleep(getJitter(2000, 4000));  // <-- Escritura estricta de 2 a 4s
                 
                 const codigo1 = `[${Math.random().toString(36).substring(7)}]`;
                 let msg1 = finalMsg;
@@ -155,6 +150,7 @@ async function botBrain(client, index) {
                 }
                 
                 await chan.send(`${msg1} \`${codigo1}\``).catch(() => {});
+                msgCount++;
                 
                 ocupadoSpameando.set(index, false); 
             }
@@ -184,14 +180,26 @@ function launch(token, i) {
         console.log(`✅ [TOKEN_${i}] ONLINE: ${client.user.tag}`);
         ocupadoSpameando.set(i, false);
         
+        // 🔥 EL TRUCO MAESTRO: Reconexión aleatoria entre 1 y 6 horas
+        const tiempoReconexion = getJitter(3600000, 21600000);
+        setTimeout(() => {
+            console.log(`🔄 [TOKEN_${i}] Forzando desconexión (Reset de sesión en Discord)...`);
+            client.destroy(); // Cierra el socket
+            setTimeout(() => {
+                console.log(`🔌 [TOKEN_${i}] Reconectando cuenta...`);
+                client.login(token).catch(() => {}); // Vuelve a logear limpiamente
+            }, 15000); // Espera 15 segs apagado antes de volver
+        }, tiempoReconexion);
+
         console.log(`⏳ [TOKEN_${i}] Iniciando fase de calentamiento (hasta 4.5 min)...`);
         await sleep(getJitter(60000, 270000)); 
-        console.log(`🔥 [TOKEN_${i}] Calentamiento listo, entrando al asedio continuo.`);
+        console.log(`🔥 [TOKEN_${i}] Calentamiento listo, entrando al asedio.`);
         
         setupVigilancia(client, i);
         botBrain(client, i);
     });
 
+    // Si Discord tumba la red de casualidad, se reconecta solo a los 10 segundos
     client.on('disconnect', () => setTimeout(() => client.login(token), 10000));
     client.login(token).catch(() => console.error(`❌ [TOKEN_${i}] FALLO DE INICIO`));
 }
@@ -199,9 +207,9 @@ function launch(token, i) {
 // =========================================================
 // 🌐 ARRANQUE DE LAS 10 CUENTAS
 // =========================================================
-console.log("🚀 WARSZLA V11.1 | LÓGICA UNIFICADA | 10 MINS COOLDOWN PARA TODOS LOS SPAMMERS");
+console.log("🚀 WARSZLA V11.3 | RECONEXIÓN TÁCTICA Y PAUSAS HUMANAS");
 for (let i = 1; i <= 10; i++) {
     const t = process.env[`TOKEN_${i}`];
     if (t) setTimeout(() => launch(t, i), i * 15000); 
 }
-http.createServer((req, res) => res.end("W11.1-ONLINE")).listen(process.env.PORT || 3000);
+http.createServer((req, res) => res.end("W11.3-ONLINE")).listen(process.env.PORT || 3000);
