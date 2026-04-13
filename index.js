@@ -205,10 +205,10 @@ function launch(token, i) {
 }
 
 // =========================================================
-// 🌐 ARRANQUE DE LAS 10 CUENTAS
+// 🌐 ARRANQUE DE LAS 15 CUENTAS
 // =========================================================
-console.log("🚀 WARSZLA V11.3 | RECONEXIÓN TÁCTICA Y PAUSAS HUMANAS");
-for (let i = 1; i <= 10; i++) {
+console.log("🚀 WARSZLA V11.3 | RECONEXIÓN TÁCTICA Y PAUSAS HUMANAS (15 CUENTAS)");
+for (let i = 1; i <= 15; i++) { // Límite expandido a 15 cuentas
     const t = process.env[`TOKEN_${i}`];
     if (t) setTimeout(() => launch(t, i), i * 15000); 
 }
