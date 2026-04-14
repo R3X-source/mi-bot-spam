@@ -2,17 +2,21 @@ const { Client, Options } = require('discord.js-selfbot-v13');
 const http = require('http');
 
 // =========================================================
-// ⚙️ CONFIGURACIÓN DE GUERRA (V11.5 - MODO FANTASMA & AHORRO EXTREMO)
+// 🚀 V11.12 PERFECTO | 15 CUENTAS | TODO INTEGRADO
+// =========================================================
+
+// 🎯 1. PEGA TU MENSAJE AQUÍ (ENTRE LAS COMILLAS)
+const MENSAJE_AUTORESPONDEDOR = `0 TROLEO DE TUS NALGAS PVTITA GAMAMITA MIS HUEBOTS INSOPORTABLES PARA TUS POBRES NALGAS Q NI LAS DEJAREMOS EXTENDER PUESTO A Q ACABAMOS https://files.catbox.moe/d0wcx2.mp4 <@1425209744603218020> <@1492265983165862029> <@1427713721479987232> <@984956970014486528> <@1072352198836621385> <@1429177016703516764> <@1438314463970328578> <@1446586105553227807> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@1394021604127936772> <@1452533908699611236> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1462897561894649876> <@1386330375952793723> <@1353778890514108456> <@1480289152397213907> <@1457175804290007197> <@1490277865818689700> <@1492675664682287277> <@1487148931535212817> <@1490277865818689700> <@1457521662303015040>`;
+
 // =========================================================
 const ID_PRIORITARIA = "1481514534190448815";
 const CANALES_AM = ["1369174476574687243", "1369174478596345897", "1369181247896817685"];
 const CANALES_LIBRES = ["1481516697327243506", "1270239207071420450", "1487148931535212817"];
 
-// 🎯 VÍCTIMAS 
 const VIGILADOS_NORMALES = [
     "1431785955559215184", "1457521662303015040", "1485179919523643454",
     "1003450010702205030", "1480289152397213907", "1467397075204309034", 
-    "1457175804290007197", "1492265983165862029" 
+    "1457175804290007197" 
 ];
 const VIGILADOS_SPAMMERS = [
     "1487148931535212817", "1492675664682287277", "1490277865818689700"
@@ -21,22 +25,14 @@ const VIGILADOS_SPAMMERS = [
 const SERVER_ID_OBLIGATORIO = "1481514532932161538";
 const COMANDOS_OBLIGATORIOS = [".t warszla", ".t lorda", ".t gamamit4", ".t lorda4", ".t dibujos", ".t insanorra", ".t vendedora", ".t monclova", ".t aracely", ".t brazos", ".t paredes", ".t ch", ".t lorda2", ".t lorda6", ".t eltiodelorda", ".t doxxlorda", ".t chichuda", ".t jsk4"];
 
-// 💣 MUNICIÓN 
+// 💣 2. MUNICIÓN DEL SPAM (LOS 3 ORIGINALES)
 const B_LARGOS = [
-    `.t cjurra <@1425209744603218020> <@1492265983165862029> <@1492265983165862029> <@1427713721479987232> CPUTIÑA<@1490277865818689700> <@1457521662303015040> <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723>\n\nhttps://files.catbox.moe/gd1za7.mp4\nhttps://cdn.discordapp.net/attachments/1369181247896817685/1484186305587052595/thegamerlord_es_como_720P_HD_1.mp4\nmejinalgas fueron delatadas por el spem dem soboslai1✅✅✅ @everyone\nhttps://files.catbox.moe/pzxi3d.mp4\nhttps://files.catbox.moe/j98zth.mp4\nhttps://files.catbox.moe/nlvkg4.mp4\nUFF TU CULO  putita ven acá mejichanga culete roquete\n<@1485179919523643454>\n<@1469231575311843328>\n<@1431785955559215184>\n<@1487148931535212817>\n <@1353778890514108456> <@1480289152397213907>\n\n<@1490277865818689700> \nhttps://files.catbox.moe/sss6ma.mp4 JAJAJA\n<@1457175804290007197> <@1492675664682287277> cierr4 el qlo veneka a spam por don nadia`,
-    `.t cejuda17 <@1425209744603218020> <@1427713721479987232> <@1492265983165862029> <@1490277865818689700>  <@1492265983165862029><@1457521662303015040> <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723>\n\n<@1003450010702205030>  https://files.catbox.moe/hjepth.jpg\nhttps://files.catbox.moe/7q6n62.jpg\nhttps://files.catbox.moe/qkuhmd.jpg <@1480289152397213907>\n\n<@1490277865818689700> \nhttps://files.catbox.moe/sss6ma.mp4\n<@1457175804290007197> <@1492675664682287277> cierr4 el qlo veneka a spam por don nadia`,
-    `.t penaldo <@1425209744603218020> <@1492265983165862029> <@1427713721479987232> MAMITA AUI REIXEN TE ADOESTRA EL CULTIO PE CJOTIÑA<@1492265983165862029> <@1490277865818689700> \n<@1457521662303015040>  <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723>\n\nhttps://files.catbox.moe/1nydnn.mp4\nhttps://media.discordapp.net/attachments/1479303319997644832/1483288563721306222/TikVid.io_7513075642175327496.mp4\nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287824055799870/descarga_6.mp4\nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287857899638928/YouCut_20260310_080237410.mp4\n\nhttps://files.catbox.moe/d0wcx2.mp4 @everyone putita ven acá mejichanga culete roquete\n<@1485179919523643454>\n<@1469231575311843328>\n<@1431785955559215184>\n<@1487148931535212817> <@1480289152397213907>\n\n<@1490277865818689700> \nhttps://files.catbox.moe/sss6ma.mp4 \n<@1353778890514108456> <@1480289152397213907>\n<@1457175804290007197> <@1492675664682287277> cierr4 el qlo veneka a spam por don nadia`
+    `.t cjurra <@1425209744603218020> <@1490277865818689700> <@1457521662303015040> <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723>\n\nhttps://files.catbox.moe/gd1za7.mp4\nhttps://cdn.discordapp.net/attachments/1369181247896817685/1484186305587052595/thegamerlord_es_como_720P_HD_1.mp4\nmejinalgas fueron delatadas por el spem dem soboslai1✅✅✅ @everyone\nhttps://files.catbox.moe/pzxi3d.mp4\nhttps://files.catbox.moe/j98zth.mp4\nhttps://files.catbox.moe/nlvkg4.mp4\nUFF TU CULO  putita ven acá mejichanga culete roquete\n<@1485179919523643454>\n<@1469231575311843328>\n<@1431785955559215184>\n<@1487148931535212817>\n <@1353778890514108456> <@1480289152397213907>\n\n<@1490277865818689700> \nhttps://files.catbox.moe/sss6ma.mp4 JAJAJA\n<@1457175804290007197> <@1492675664682287277> cierr4 el qlo veneka a spam por don nadia`,
+    `.t cejuda17 <@1425209744603218020> <@1490277865818689700>  <@1457521662303015040> <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723>\n\n<@1003450010702205030>  https://files.catbox.moe/hjepth.jpg\nhttps://files.catbox.moe/7q6n62.jpg\nhttps://files.catbox.moe/qkuhmd.jpg <@1480289152397213907>\n\n<@1490277865818689700> \nhttps://files.catbox.moe/sss6ma.mp4\n<@1457175804290007197> <@1492675664682287277> cierr4 el qlo veneka a spam por don nadia`,
+    `.t penaldo <@1425209744603218020> <@1490277865818689700> \n<@1457521662303015040>  <@1425209744603218020> <@1195495311045558272> <@1369070242684473485> <@984956970014486528> <@1072352198836621385> CULOMBIANO ARGENCHANGAS <@1435003733393281055> <@1400251089361567885> <@1429177016703516764> DANIELA <@1438314463970328578> <@1384045898958508085> <@1446586105553227807> <@1452154841676775567> <@957014429822750771> <@1423439348430405722> <@1455444386421674007> <@765971830442819674> <@1394021604127936772> <@1452533908699611236> <@1438662990021922869> <@1459077041637953651> <@1468117706099396816> <@1467397075204309034> <@1466878653932634195> <@1458314974794616902> <@1403986874153832550> <@1470913175401533543> <@1464354934785839155> <@1394023020896714762> <@1399500980889976902> <@1470230646529069086> <@1462897561894649876> @everyone DANIELA <@1386330375952793723>\n\nhttps://files.catbox.moe/1nydnn.mp4\nhttps://media.discordapp.net/attachments/1479303319997644832/1483288563721306222/TikVid.io_7513075642175327496.mp4\nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287824055799870/descarga_6.mp4\nhttps://cdn.discordapp.com/attachments/1369181247896817685/1483287857899638928/YouCut_20260310_080237410.mp4\n\nhttps://files.catbox.moe/d0wcx2.mp4 @everyone putita ven acá mejichanga culete roquete\n<@1485179919523643454>\n<@1469231575311843328>\n<@1431785955559215184>\n<@1487148931535212817> <@1480289152397213907>\n\n<@1490277865818689700> \nhttps://files.catbox.moe/sss6ma.mp4 \n<@1353778890514108456> <@1480289152397213907>\n<@1457175804290007197> <@1492675664682287277> cierr4 el qlo veneka a spam por don nadia`
 ];
 
 const B_CORTOS = [".t warszla JSKSJDJDJD", ".t v14 HEY CHE", ".t cputiñagachatuber", ".t cejotiñaandgamami", ".t cejotiñagolpeada", ".t cejotorra", ".t lorda", ".t frijolera", ".t joan", ".t chichuda", ".t cjotangaandgamami", ".t cejuda2", ".t nito", ".t india", ".t insana", ".t cputiñagolpeada", ".t penaldo", ".t tuqlo MAMITA ARACELY"];
-
-// =========================================================
-// 🎯 FUNCIONES AUXILIARES & CANDADOS GLOBALES
-// =========================================================
-function agregarComandosObligatorios(mensaje) {
-    const comandoAleatorio = COMANDOS_OBLIGATORIOS[Math.floor(Math.random() * COMANDOS_OBLIGATORIOS.length)];
-    return mensaje.replace(/^\.t \w+/, comandoAleatorio);
-}
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 const getJitter = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
@@ -55,22 +51,28 @@ function objetivoAgotado(idVíctima) {
     return false;
 }
 
+function agregarComandosObligatorios(mensaje) {
+    const comandoAleatorio = COMANDOS_OBLIGATORIOS[Math.floor(Math.random() * COMANDOS_OBLIGATORIOS.length)];
+    return mensaje.replace(/^\.t \w+/, comandoAleatorio);
+}
+
+// =========================================================
+// 🛡️ AUTORESPONDEDOR MULTI-OBJETIVO (Escritura 2-4s)
+// =========================================================
 function setupVigilancia(client, index) {
     client.on('messageCreate', async (msg) => {
         const id = msg.author.id;
         if (id === client.user.id) return;
 
-        const esNormal = VIGILADOS_NORMALES.includes(id);
-        const esSpammer = VIGILADOS_SPAMMERS.includes(id);
-
-        if (esNormal || esSpammer) {
+        // Dispara a ambos grupos (Normales y Spammers) usando tu mensaje único
+        if (VIGILADOS_NORMALES.includes(id) || VIGILADOS_SPAMMERS.includes(id)) {
             if (objetivoAgotado(id)) return; 
             while (ocupadoSpameando.get(index)) { await sleep(1000); }
             
             await msg.channel.sendTyping().catch(() => {});
-            await sleep(getJitter(2000, 4000));
+            await sleep(getJitter(2000, 4000)); // 🎯 TIEMPO DE ESCRITURA 2-4s
             
-            let finalMsg = B_LARGOS[Math.floor(Math.random() * B_LARGOS.length)];
+            let finalMsg = MENSAJE_AUTORESPONDEDOR;
             const codigo = `[${Math.random().toString(36).substring(7)}]`;
             
             if (msg.guild && msg.guild.id === SERVER_ID_OBLIGATORIO) {
@@ -81,6 +83,9 @@ function setupVigilancia(client, index) {
     });
 }
 
+// =========================================================
+// 🚀 MOTOR DE SPAM
+// =========================================================
 async function botBrain(client, index) {
     let msgCount = 0;
     let burstLimit = getJitter(15, 30); 
@@ -123,7 +128,7 @@ async function botBrain(client, index) {
 
                 await sleep(getJitter(8000, 18000)); 
                 await chan.sendTyping().catch(() => {});
-                await sleep(getJitter(2000, 4000)); 
+                await sleep(getJitter(2000, 4000)); // Escritura spam 2-4s
                 
                 const codigo1 = `[${Math.random().toString(36).substring(7)}]`;
                 let msg1 = finalMsg;
@@ -144,63 +149,43 @@ async function botBrain(client, index) {
 }
 
 // =========================================================
-// 🚀 LANZAMIENTO (MÁXIMO SIGILO Y MEMORIA EN CERO)
+// 👻 INICIO FANTASMA (AHORRO MÁXIMO DE RAM)
 // =========================================================
 function launch(token, i) {
     const client = new Client({ 
         checkUpdate: false,
-        // 👻 MODO FANTASMA: No envía estados, ahorra CPU y red.
-        presence: {
-            status: 'invisible'
-        },
-        // 🧠 LOBOTOMÍA: No guarda nada en memoria.
+        presence: { status: 'invisible' },
         makeCache: Options.cacheWithLimits({
-            MessageManager: 0,
-            PresenceManager: 0,
-            UserManager: 0,
-            GuildMemberManager: 0,
-            ThreadManager: 0,
-            GuildEmojiManager: 0,
-            ReactionManager: 0,
-            VoiceStateManager: 0
+            MessageManager: 0, PresenceManager: 0, UserManager: 0,
+            GuildMemberManager: 0, ThreadManager: 0, GuildEmojiManager: 0,
+            ReactionManager: 0, VoiceStateManager: 0
         }),
-        ws: {
-            properties: {
-                $os: 'Windows', 
-                $browser: 'Discord Client',
-                $device: 'desktop'
-            }
-        }
+        ws: { properties: { $os: 'Windows', $browser: 'Discord Client', $device: 'desktop' } }
     });
 
     client.on('ready', async () => {
-        console.log(`✅ [TOKEN_${i}] ONLINE FANTASMA`); // Único registro permitido
         ocupadoSpameando.set(i, false);
+        console.log(`✅ [TOKEN_${i}] ONLINE Y LISTO`);
+        
+        setupVigilancia(client, i); // Todos vigilan a ambas IDs con el mensaje personalizado
+        botBrain(client, i);        // Todos hacen spam con los mensajes largos
         
         const tiempoReconexion = getJitter(3600000, 21600000);
         setTimeout(() => {
             console.log(`🔄 [TOKEN_${i}] Reconectando...`);
             client.destroy(); 
-            setTimeout(() => {
-                client.login(token).catch(() => {}); 
-            }, 15000); 
+            setTimeout(() => { client.login(token).catch(() => {}); }, 15000); 
         }, tiempoReconexion);
-
-        await sleep(getJitter(60000, 270000)); 
-        setupVigilancia(client, i);
-        botBrain(client, i);
     });
 
     client.on('disconnect', () => setTimeout(() => client.login(token), 10000));
     client.login(token).catch(() => console.error(`❌ [TOKEN_${i}] FALLO DE INICIO`));
 }
 
-// =========================================================
-// 🌐 ARRANQUE DE LAS 15 CUENTAS
-// =========================================================
-console.log("🚀 WARSZLA V11.5 | MODO FANTASMA INICIADO");
+// Inicia las 15 cuentas en Railway
+console.log("🚀 WARSZLA V11.12-RAILWAY PERFECTO | INICIANDO TODA LA LEGIÓN");
 for (let i = 1; i <= 15; i++) { 
     const t = process.env[`TOKEN_${i}`];
     if (t) setTimeout(() => launch(t, i), i * 15000); 
 }
-http.createServer((req, res) => res.end("W11.5-ONLINE")).listen(process.env.PORT || 3000);
+http.createServer((req, res) => res.end("W11.12-RAILWAY-ONLINE")).listen(process.env.PORT || 3000);
